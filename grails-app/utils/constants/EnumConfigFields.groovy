@@ -1,0 +1,13 @@
+package constants
+
+/**
+ * Created by Asiel on 1/16/2017.
+ */
+enum EnumConfigFields {
+    DEFAULT_ADMIN_UN_SETUP,
+    DEFAULT_ADMIN_UN_SET_UP_CONFIGURED,
+    DEFAULT_USER_CREATED,
+    DEFAULT_OWNED_ENTITY_CREATED,
+    LAST_ACCESSED_ENTITY_CREATED,
+    LAST_ACCESSED_ENTITY
+}
