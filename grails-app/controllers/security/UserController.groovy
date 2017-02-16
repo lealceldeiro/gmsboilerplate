@@ -6,7 +6,7 @@ import grails.converters.JSON
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
 
-@Secured("hasRole('MANAGE_USER')")
+@Secured("hasRole('MANAGE__USER')")
 class UserController{
 
     def userService
@@ -36,7 +36,7 @@ class UserController{
      * @return A json containing the user's info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    @Secured("hasRole('READ_USER')")
+    @Secured("hasRole('READ__USER')")
     def search(SearchCommand cmd, long eid) {
         def body = ['success': false]
         if(cmd.validate()){
@@ -57,7 +57,7 @@ class UserController{
      * @return A json containing the user's info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    @Secured("hasRole('READ_USER') and hasRole('READ_ALL_USER')")
+    @Secured("hasRole('READ__USER') and hasRole('READ_ALL__USER')")
     def searchAll(SearchCommand cmd) {
         def body = ['success': false]
         if(cmd.validate()){
@@ -82,7 +82,7 @@ class UserController{
      * @return JSON informing whether the action was successful or not. If successful, it also contains the id of the
      * just created/edited user
      */
-    @Secured("hasRole('CREATE_USER')")
+    @Secured("hasRole('CREATE__USER')")
     def create(UserCommand cmd){
         save(cmd)
     }
@@ -99,7 +99,7 @@ class UserController{
      * @return JSON informing whether the action was successful or not. If successful, it also contains the id of the
      * just created/edited user
      */
-    @Secured("hasRole('CREATE_USER')")
+    @Secured("hasRole('CREATE__USER')")
     def update(UserCommand cmd, long id){
         save(cmd, id)
     }
@@ -122,7 +122,7 @@ class UserController{
      * @return A json containing the user's info if the operation was successful with the following structure
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
-    @Secured("hasRole('READ_USER')")
+    @Secured("hasRole('READ__USER')")
     def show(long id){
         def body = ['success' : false]
         def e = userService.show(id)
@@ -139,7 +139,7 @@ class UserController{
      * @return A json containing the user's id if the operation was successful with the following structure
      * <p><code>{success: true|false, id: <identifier></code></p>
      */
-    @Secured("hasRole('DELETE_USER')")
+    @Secured("hasRole('DELETE__USER')")
     def delete(long id){
         boolean markDefaultAdminAsUnset = false
 
@@ -173,7 +173,7 @@ class UserController{
      * @return A json containing the user's info if the operation was successful with the following structure
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
-    @Secured("hasAnyRole('READ_USER', 'READ_PROFILE')")
+    @Secured("hasAnyRole('READ__USER', 'READ__PROFILE')")
     def getByUsername(String username){
         def body = ['success' : false]
         def e = userService.getByUsername(username)
@@ -190,7 +190,7 @@ class UserController{
      * @param id user's id
      * @return A <code>List</code> of roles
      */
-    @Secured("hasRole('READ_USER')")
+    @Secured("hasRole('READ__USER')")
     def roles(long id, long eid){
         def body = ['success': false]
         if(id){
@@ -209,7 +209,7 @@ class UserController{
      * @param id user's id
      * @return A <code>List</code> of entities
      */
-    @Secured("hasRole('READ_USER', 'READ_OWNED_ENTITY')")
+    @Secured("hasRole('READ__USER', 'READ_OWNED__ENTITY')")
     def entities(long id){
         def body = ['success': false]
         SearchCommand cmd = new SearchCommand()

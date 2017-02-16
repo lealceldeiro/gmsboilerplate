@@ -4,6 +4,6 @@
 		<meta name="layout" content="main"/>
 	</head>
 	<body>
-	Sistema de Gesti&oacute;n de Casas de Renta - API
+	General Management System - API
 	</body>
 </html>

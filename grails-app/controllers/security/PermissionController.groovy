@@ -5,7 +5,7 @@ import grails.converters.JSON
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
 
-@Secured("hasRole('MANAGE_PERMISSION')")
+@Secured("hasRole('MANAGE__PERMISSION')")
 class PermissionController {
 
     def permissionService
@@ -21,7 +21,7 @@ class PermissionController {
      * @return A json containing the permissions' info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    @Secured("hasRole('READ_PERMISSION')")
+    @Secured("hasRole('READ__PERMISSION')")
     def search(SearchCommand cmd) {
         def body = ['success': false]
         if(cmd.validate()){

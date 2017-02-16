@@ -30,7 +30,7 @@ class UrlMappings {
 
                 //OWNED_ENTITY...
                 "/api/entity/user/$uid"         (controller: "ownedEntity")                     {action= [GET: "search", PUT: "create"]}
-                "/api/entity"                   (controller: "ownedEntity")                     {action= [GET: "sea     rchAll"]}
+                "/api/entity"                   (controller: "ownedEntity")                     {action= [GET: "searchAll"]}
                 "/api/entity/$id"               (controller: "ownedEntity")                     {action= [GET: "show", POST: "update", DELETE: "delete"]}
                 "/api/entity/$id/users"         (controller: "ownedEntity", action: "users")
 

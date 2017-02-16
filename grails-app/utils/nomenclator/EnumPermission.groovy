@@ -5,39 +5,39 @@ package nomenclator
  */
 enum EnumPermission {
     /*USER*/
-    MANAGE_USER,
-        CREATE_USER,
-        READ_USER,
-        READ_ALL_USER,
-        UPDATE_USER,
-        DELETE_USER,
+    MANAGE__USER,
+        CREATE__USER,
+        READ__USER,
+        READ_ALL__USER,
+        UPDATE__USER,
+        DELETE__USER,
 
     /*ROLE*/
-    MANAGE_ROLE,
-        CREATE_ROLE,
-        READ_ROLE,
-        READ_ALL_ROLE,
-        UPDATE_ROLE,
-        DELETE_ROLE,
+    MANAGE__ROLE,
+        CREATE__ROLE,
+        READ__ROLE,
+        READ_ALL__ROLE,
+        UPDATE__ROLE,
+        DELETE__ROLE,
 
     /*PERMISSION*/
-    MANAGE_PERMISSION,
-        CREATE_PERMISSION,
-        READ_PERMISSION,
-        UPDATE_PERMISSION,
-        DELETE_PERMISSION,
+    MANAGE__PERMISSION,
+        CREATE__PERMISSION,
+        READ__PERMISSION,
+        UPDATE__PERMISSION,
+        DELETE__PERMISSION,
 
     /*OWNED_ENTITY*/
-    MANAGE_OWNED_ENTITY,
-        CREATE_OWNED_ENTITY,
-        READ_OWNED_ENTITY,
-        READ_ALL_OWNED_ENTITY,
-        UPDATE_OWNED_ENTITY,
-        DELETE_OWNED_ENTITY,
+    MANAGE_OWNED__ENTITY,
+        CREATE_OWNED__ENTITY,
+        READ_OWNED__ENTITY,
+        READ_ALL_OWNED__ENTITY,
+        UPDATE_OWNED__ENTITY,
+        DELETE_OWNED__ENTITY,
 
     /*PROFILE*/
-    MANAGE_PROFILE,
-        READ_PROFILE,
+    MANAGE__PROFILE,
+        READ__PROFILE,
 
 
 }

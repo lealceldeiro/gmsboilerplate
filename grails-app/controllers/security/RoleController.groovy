@@ -6,7 +6,7 @@ import grails.converters.JSON
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
 
-@Secured("hasRole('MANAGE_ROLE')")
+@Secured("hasRole('MANAGE__ROLE')")
 class RoleController {
 
     def roleService
@@ -31,7 +31,7 @@ class RoleController {
      * @return A json containing the roles' info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    @Secured("hasRole('READ_ROLE')")
+    @Secured("hasRole('READ__ROLE')")
     def search(SearchCommand cmd, long uid, long eid) {
         def body = ['success': false]
         if(cmd.validate()){
@@ -53,7 +53,7 @@ class RoleController {
      * @return A json containing the roles' info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    @Secured("hasRole('READ_ROLE') and hasRole('READ_ALL_ROLE')")
+    @Secured("hasRole('READ__ROLE') and hasRole('READ_ALL__ROLE')")
     def searchAll(SearchCommand cmd) {
         def body = ['success': false]
         if(cmd.validate()){
@@ -77,7 +77,7 @@ class RoleController {
      * @return JSON informing whether the action was successful or not. If successful, it also contains the id of the
      * just created/edited role
      */
-    @Secured("hasRole('CREATE_ROLE')")
+    @Secured("hasRole('CREATE__ROLE')")
     def create(RoleCommand cmd){
         save(cmd)
     }
@@ -92,7 +92,7 @@ class RoleController {
      * @return JSON informing whether the action was successful or not. If successful, it also contains the id of the
      * just created/edited role
      */
-    @Secured("hasRole('UPDATE_ROLE')")
+    @Secured("hasRole('UPDATE__ROLE')")
     def update(RoleCommand cmd, long id){
         save(cmd, id)
     }
@@ -115,7 +115,7 @@ class RoleController {
      * @return A json containing the role's info if the operation was successful with the following structure
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
-    @Secured("hasRole('READ_ROLE')")
+    @Secured("hasRole('READ__ROLE')")
     def show(long id){
         def body = ['success' : false]
         def e = roleService.show(id)
@@ -132,7 +132,7 @@ class RoleController {
      * @return  A json containing the role's id if the operation was successful with the following structure
      * <p><code>{success: true|false, id: <identifier></code></p>
      */
-    @Secured("hasRole('DELETE_ROLE')")
+    @Secured("hasRole('DELETE__ROLE')")
     def delete(long id){
         def body = ['success': false]
         final e = roleService.delete(id)
@@ -149,7 +149,7 @@ class RoleController {
      * @param id role's id
      * @return A <code>List</code> of permissions
      */
-    @Secured("hasRole('READ_ROLE')")
+    @Secured("hasRole('READ__ROLE')")
     def permissions(long id){
         def body = ['success': false]
         if(id){

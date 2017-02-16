@@ -6,7 +6,7 @@ import grails.converters.JSON
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
 
-@Secured("hasRole('MANAGE_OWNED_ENTITY')")
+@Secured("hasRole('MANAGE_OWNED__ENTITY')")
 class OwnedEntityController {
 
     def ownedEntityService
@@ -31,7 +31,7 @@ class OwnedEntityController {
      * @return A json containing the owned entities' info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    @Secured("hasRole('READ_OWNED_ENTITY')")
+    @Secured("hasRole('READ_OWNED__ENTITY')")
     def search(SearchCommand cmd, long uid) {
         def body = ['success': false]
         if(cmd.validate()){
@@ -53,7 +53,7 @@ class OwnedEntityController {
      * @return A json containing the roles' info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    @Secured("hasRole('READ_ALL_OWNED_ENTITY')")
+    @Secured("hasRole('READ_ALL__OWNED_ENTITY')")
     def searchAll(SearchCommand cmd) {
         def body = ['success': false]
         if(cmd.validate()){
@@ -77,7 +77,7 @@ class OwnedEntityController {
      * @return JSON informing whether the action was successful or not. If successful, it also contains the id of the
      * just created/edited Owned Entity
      */
-    @Secured("hasRole('CREATE_OWNED_ENTITY')")
+    @Secured("hasRole('CREATE__OWNED_ENTITY')")
     def create(OwnedEntityCommand cmd, long uid){
         save(cmd, uid)
     }
@@ -91,7 +91,7 @@ class OwnedEntityController {
      * @return JSON informing whether the action was successful or not. If successful, it also contains the id of the
      * just created/edited Owned Entity
      */
-    @Secured("hasRole('UPDATE_OWNED_ENTITY')")
+    @Secured("hasRole('UPDATE__OWNED_ENTITY')")
     def update(OwnedEntityCommand cmd, long id, long uid){
         save(cmd, id, uid)
     }
@@ -114,7 +114,7 @@ class OwnedEntityController {
      * @return A json containing the role's info if the operation was successful with the following structure
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
-    @Secured("hasRole('READ_OWNED_ENTITY')")
+    @Secured("hasRole('READ__OWNED_ENTITY')")
     def show(long id){
         def body = ['success' : false]
         def e = ownedEntityService.show(id)
@@ -131,7 +131,7 @@ class OwnedEntityController {
      * @return  A json containing the Owned Entity's id if the operation was successful with the following structure
      * <p><code>{success: true|false, id: <identifier></code></p>
      */
-    @Secured("hasRole('DELETE_OWNED_ENTITY')")
+    @Secured("hasRole('DELETE__OWNED_ENTITY')")
     def delete(long id){
         def body = ['success': false]
         final e = ownedEntityService.delete(id)
@@ -148,7 +148,7 @@ class OwnedEntityController {
      * @param id Owned Entity's id
      * @return A <code>List</code> of users
      */
-    @Secured("hasRole('READ_OWNED_ENTITY')")
+    @Secured("hasRole('READ__OWNED_ENTITY')")
     def users(long id){
         def body = ['success': false]
         if(id){
