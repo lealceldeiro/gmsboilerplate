@@ -18,6 +18,7 @@ class RoleController {
             searchAll       : HttpMethod.GET.name(),
             create          : HttpMethod.PUT.name(),
             update          : HttpMethod.POST.name(),
+            activate        : HttpMethod.POST.name(),
             show            : HttpMethod.GET.name(),
             delete          : HttpMethod.DELETE.name(),
             permissions     : HttpMethod.GET.name()
@@ -143,6 +144,18 @@ class RoleController {
         render body as JSON
     }
     //endregion
+
+    @Secured("hasRole('UPDATE__ROLE')")
+    def activate (long id, boolean value){
+        def body = ['success' : false]
+        final e = roleService.activate(id, value)
+        if(e){
+            body.success = true
+            body.id = e.id
+        }
+
+        render body as JSON
+    }
 
     /**
      * Returns a role's permissions by its id

@@ -186,4 +186,16 @@ class RoleService {
         }
 
     }
+
+    def activate(long id, boolean activate = true){
+        final BRole e = BRole.get(id)
+        if(!e){
+            return false
+        }
+        else{
+            e.enabled = activate
+            e.save(flush: true, failOnError: true)
+            return e
+        }
+    }
 }

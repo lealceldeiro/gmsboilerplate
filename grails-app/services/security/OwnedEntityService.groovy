@@ -219,7 +219,7 @@ class OwnedEntityService {
         def mapped = []
         def list = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(uid, eid, params, cmd)
         list.each{
-            mapped << new RoleBean(id: it.id, label: it.label, description: it.description)
+            mapped << new RoleBean(id: it.id, label: it.label, description: it.description, enabled: it.enabled)
         }
 
         response.items = mapped

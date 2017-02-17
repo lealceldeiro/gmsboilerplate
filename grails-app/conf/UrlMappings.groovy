@@ -22,6 +22,7 @@ class UrlMappings {
                 "/api/role"                     (controller: "role")                            {action= [GET: "searchAll", PUT: "create"]}
                 "/api/role/$uid/$eid"           (controller: "role", action: "search")
                 "/api/role/$id"                 (controller: "role")                            {action= [GET: "show", POST: "update", DELETE: "delete"]}
+                "/api/role/$id/activate/$value" (controller: "role", action: "activate")
                 "/api/role/$id/permissions"     (controller: "role", action: "permissions")
 
                  //PERMISSION
