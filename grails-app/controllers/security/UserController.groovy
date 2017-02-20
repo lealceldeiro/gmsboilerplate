@@ -20,6 +20,7 @@ class UserController{
             searchAll       : HttpMethod.GET.name(),
             create          : HttpMethod.PUT.name(),
             update          : HttpMethod.POST.name(),
+            activate        : HttpMethod.POST.name(),
             show            : HttpMethod.GET.name(),
             delete          : HttpMethod.DELETE.name(),
             roles           : HttpMethod.GET.name(),
@@ -99,7 +100,7 @@ class UserController{
      * @return JSON informing whether the action was successful or not. If successful, it also contains the id of the
      * just created/edited user
      */
-    @Secured("hasRole('CREATE__USER')")
+    @Secured("hasRole('UPDATE__USER')")
     def update(UserCommand cmd, long id){
         save(cmd, id)
     }
@@ -165,6 +166,18 @@ class UserController{
         render body as JSON
     }
     //endregion
+
+    @Secured("hasRole('UPDATE__USER')")
+    def activate (long id, boolean value){
+        def body = ['success' : false]
+        final e = userService.activate(id, value)
+        if(e){
+            body.success = true
+            body.id = e.id
+        }
+
+        render body as JSON
+    }
 
 
     /**

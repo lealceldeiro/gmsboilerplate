@@ -2,10 +2,9 @@ package security
 
 import command.SearchCommand
 import command.security.role.RoleCommand
+import grails.transaction.Transactional
 import mapping.security.PermissionBean
 import mapping.security.RoleBean
-
-import grails.transaction.Transactional
 
 @Transactional
 class RoleService {

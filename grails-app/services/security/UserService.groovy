@@ -2,10 +2,9 @@ package security
 
 import command.SearchCommand
 import command.security.user.UserCommand
+import grails.transaction.Transactional
 import mapping.security.RoleBean
 import mapping.security.UserBean
-
-import grails.transaction.Transactional
 
 @Transactional
 class UserService {
@@ -23,7 +22,7 @@ class UserService {
         Map response = [:]
 
         def list = EUser.createCriteria().list(params) {
-            order("enabled", "asc")
+            order("enabled", "desc")
             order("username", "asc")
             order("name", "asc")
             order("email", "asc")
@@ -241,6 +240,18 @@ class UserService {
         def r = BRole.findByLabel('ROLE_ADMIN')
         if(r){
             BUser_Role_OwnedEntity.addRole((u as EUser), (r as BRole), (oe as EOwnedEntity))
+        }
+    }
+
+    def activate(long id, boolean activate = true){
+        final EUser e = EUser.get(id)
+        if(!e){
+            return false
+        }
+        else{
+            e.enabled = activate
+            e.save(flush: true, failOnError: true)
+            return e
         }
     }
 }
