@@ -32,16 +32,20 @@ class BootStrap {
             if(!configurationService.isDefaultOwnedEntityCreated()){
                 oe = ownedEntityService.createDefaultOwnedEntity()
                 configurationService.setDefaultOwnedEntityCreated()
-                configurationService.setLastAccessedOwnedEntity(oe.id)
             }
             else{
                 oe = ownedEntityService.getDefaultOwnedEntity()
             }
 
+            def u
             if(!configurationService.isDefaultUserCreated()){
-                def u = userService.createDefaultUser()
+                u = userService.createDefaultUser()
                 configurationService.setDefaultUserCreated()
                 userService.addDefaultRoleToUser(u, oe)
+            }
+
+            if(configurationService.isDefaultOwnedEntityCreated() && configurationService.isDefaultUserCreated() && u && oe){
+                configurationService.setLastAccessedOwnedEntity(oe.id as long, u.id as long)
             }
         }
 

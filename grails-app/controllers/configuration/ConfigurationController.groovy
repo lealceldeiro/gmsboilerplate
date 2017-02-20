@@ -14,9 +14,9 @@ class ConfigurationController {
             lastAccessedOwnedEntity: HttpMethod.GET.name()
     ]
 
-    def lastAccessedOwnedEntity(){
+    def lastAccessedOwnedEntity(Long userId){
         def body = ['success': false]
-        long id = configurationService.getLastAccessedOwnedEntity()
+        long id = configurationService.getLastAccessedOwnedEntity(userId)
         def r = ownedEntityService.show(id)
         if(r){
             body.success = true

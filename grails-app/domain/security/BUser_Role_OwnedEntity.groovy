@@ -96,7 +96,7 @@ class BUser_Role_OwnedEntity implements Serializable{
      * @param params filter params
      * @return
      */
-    static def getRolesByUserByOwnedEntity(long uid, long eid, Map params, SearchCommand cmd = null){
+    static def getRolesByUserByOwnedEntity(Long uid, Long eid, Map params, SearchCommand cmd = null){
         createCriteria().list(params) {
 
             projections { property("role") }

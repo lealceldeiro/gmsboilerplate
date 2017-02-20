@@ -38,7 +38,7 @@ class UrlMappings {
 
 
                 //CONFIGURATION
-                "/api/config/entity/last"       (controller: "configuration", action: "lastAccessedOwnedEntity")
+                "/api/config/entity/last/$userId"       (controller: "configuration", action: "lastAccessedOwnedEntity")
                 
                 //default
                 "/"(view:"/index")

@@ -27,8 +27,9 @@ class ConfigurationService {
         isThere(EnumConfigFields.DEFAULT_OWNED_ENTITY_CREATED, true)
     }
 
-    static long getLastAccessedOwnedEntity(){
-        findBy(EnumConfigFields.LAST_ACCESSED_ENTITY)
+    static Long getLastAccessedOwnedEntity(Long userId){
+        BConfiguration c = BConfiguration.findByParamAndUserid(String.valueOf(EnumConfigFields.LAST_ACCESSED_ENTITY), String.valueOf(userId))
+        return c ? Long.parseLong(c.value) : null
     }
 
     boolean setDefaultAdminUnSetUp() {
@@ -54,21 +55,21 @@ class ConfigurationService {
         return true
     }
 
-    boolean setLastAccessedOwnedEntity(long id){
-        setField(EnumConfigFields.LAST_ACCESSED_ENTITY, id)
+    boolean setLastAccessedOwnedEntity(Long id, Long userid){
+        setField(EnumConfigFields.LAST_ACCESSED_ENTITY, id, userid)
     }
 
-    private static boolean setField(Object field, Object value){
+    private static BConfiguration setField(Object field, Object value, Long userid = null){
         def t = BConfiguration.findByParam(String.valueOf(field))
         if(!t){
-            t = new BConfiguration(param: String.valueOf(field), value: String.valueOf(value))
+            t = new BConfiguration(param: String.valueOf(field), value: String.valueOf(value), userid: userid)
         }
         else{
             t.value = value
         }
         t.save(flush: true, failOnError: true)
 
-        return true
+        return t
     }
 
     private static boolean isThere(Object field, Object value){

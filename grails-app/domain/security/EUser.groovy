@@ -35,8 +35,9 @@ class EUser implements Serializable {
 
     static mapping = {password column: '`password`'}
 
+    /*for SPRING SECURITY PLUGIN*/
     Set<BPermission> getAuthorities(){
-        def oe = ConfigurationService.getLastAccessedOwnedEntity()
+        def oe = ConfigurationService.getLastAccessedOwnedEntity(this.id)
         Set<BPermission> a = []
         def roles = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(this.id, oe, [:])
 
@@ -67,6 +68,7 @@ class EUser implements Serializable {
                 springSecurityService.encodePassword(password) :
                 password
     }
+    /*end for SPRING SECURITY PLUGIN*/
 
 
 }
