@@ -31,7 +31,7 @@ class OwnedEntityController {
      * @return A json containing the owned entities' info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    @Secured("hasRole('READ_OWNED__ENTITY')")
+    @Secured("hasRole('READ__OWNED_ENTITY')")
     def search(SearchCommand cmd, long uid) {
         def body = ['success': false]
         if(cmd.validate()){

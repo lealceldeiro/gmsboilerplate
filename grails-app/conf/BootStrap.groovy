@@ -10,7 +10,7 @@ class BootStrap {
     def init = { servletContext ->
 
         //PERMISSIONS
-        //todo: check out this initial config latter in time when authentication is working properly
+        //todo: check out this initial config later in time when authentication is working properly
         if(!configurationService.isThereAnyConfiguration()){
             configurationService.createDefaultConfig()
         }
