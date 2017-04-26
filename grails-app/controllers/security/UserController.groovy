@@ -222,7 +222,7 @@ class UserController{
      * @param id user's id
      * @return A <code>List</code> of entities
      */
-    @Secured("hasRole('READ__USER', 'READ_OWNED__ENTITY')")
+    @Secured("isFullyAuthenticated()")
     def entities(long id){
         def body = ['success': false]
         SearchCommand cmd = new SearchCommand()
