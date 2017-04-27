@@ -123,9 +123,6 @@ class BUser_Role_OwnedEntity implements Serializable{
                 }
             }
         }.unique {it.id}
-
-        /*list.metaClass.totalCount = list.size()
-        return list*/
     }
 
     /**
@@ -142,7 +139,7 @@ class BUser_Role_OwnedEntity implements Serializable{
             ownedEntity { eq "id", eid }
 
             user {
-                order("enabled", "asc")
+                order("enabled", "des")
                 order("username", "asc")
                 order("name", "asc")
                 order("email", "asc")
@@ -204,6 +201,6 @@ class BUser_Role_OwnedEntity implements Serializable{
 
                 }
             }
-        }
+        }.unique {it.id}
     }
 }

@@ -59,7 +59,7 @@ class OwnedEntityService {
 
     /**
      * Search an ownedEntities(s) according to optional parameters
-     * @param cmd       [optional] Grails command containing the parameters for searching the role(s)
+     * @param cmd       [optional] Grails command containing the parameters for searching the ownedEntities(s)
      *                  q: Criteria for searching
      * @param id        User id
      * @param params    [optional] Parameters for paging the result
