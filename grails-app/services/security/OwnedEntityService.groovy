@@ -66,7 +66,7 @@ class OwnedEntityService {
      * @return          A json containing a list of roles with the following structure if the operation was successful
      * <p><code>{success: true|false, items:[<it1>,...,<itn>], total: <totalCount>}</code></p>
      */
-    def searchByUser(SearchCommand cmd, long id, Map params) {
+    def searchByUser(SearchCommand cmd, Long id, Map params) {
         Map response = [:]
 
         def l = BUser_Role_OwnedEntity.getOwnedEntitiesByUser(id, params)
@@ -149,7 +149,7 @@ class OwnedEntityService {
      * @param id Identifier of the entity that is going to be shown
      * @return An OwnedEntityBean entity with the entity's info or false if none role is found
      */
-    def show (long id){
+    def show (Long id){
         def e = Optional.ofNullable(EOwnedEntity.get(id))
         if(e.isPresent()){
             def i = e.value
