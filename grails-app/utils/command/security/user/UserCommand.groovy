@@ -15,7 +15,7 @@ class UserCommand {
     String email
     String name
     String password
-    boolean enabled
+    boolean enabled = true
 
     @BindUsing({object, source ->
         String r = (source['roles'] as String)
@@ -41,7 +41,7 @@ class UserCommand {
 
     def call(){
         //roles are not added here, but in the controller, using the BUser_Role_OwnedEntity domain class
-        EUser u = new EUser(username: username, email: email, name: name, password: password, enabled: true)
+        EUser u = new EUser(username: username, email: email, name: name, password: password, enabled: enabled)
         u.id = id
         return u
     }
