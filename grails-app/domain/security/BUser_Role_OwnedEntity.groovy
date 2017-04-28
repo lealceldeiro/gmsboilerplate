@@ -139,7 +139,7 @@ class BUser_Role_OwnedEntity implements Serializable{
             ownedEntity { eq "id", eid }
 
             user {
-                order("enabled", "des")
+                order("enabled", "desc")
                 order("username", "asc")
                 order("name", "asc")
                 order("email", "asc")
