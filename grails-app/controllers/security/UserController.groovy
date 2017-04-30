@@ -16,16 +16,17 @@ class UserController{
     def ownedEntityService
 
     static allowedMethods = [
-            search          : HttpMethod.GET.name(),
-            searchAll       : HttpMethod.GET.name(),
-            create          : HttpMethod.PUT.name(),
-            update          : HttpMethod.POST.name(),
-            activate        : HttpMethod.POST.name(),
-            show            : HttpMethod.GET.name(),
-            delete          : HttpMethod.DELETE.name(),
-            roles           : HttpMethod.GET.name(),
-            getByUsername   : HttpMethod.GET.name(),
-            entities        : HttpMethod.GET.name()
+            search                  : HttpMethod.GET.name(),
+            searchAll               : HttpMethod.GET.name(),
+            create                  : HttpMethod.PUT.name(),
+            update                  : HttpMethod.POST.name(),
+            activate                : HttpMethod.POST.name(),
+            show                    : HttpMethod.GET.name(),
+            delete                  : HttpMethod.DELETE.name(),
+            roles                   : HttpMethod.GET.name(),
+            getByUsername           : HttpMethod.GET.name(),
+            entities                : HttpMethod.GET.name(),
+            getAssociatedToEntities : HttpMethod.GET.name()
     ]
 
     //region CRUD
@@ -199,6 +200,25 @@ class UserController{
 
 
     /**
+     * Return a user's info
+     * @param e A List of long with the entities ids
+     * @return A json containing the user's info if the operation was successful with the following structure
+     * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
+     */
+    @Secured("hasAnyRole('READ__USER', 'READ__PROFILE')")
+    def getAssociatedToEntities(List<Long> e, SearchCommand cmd){
+        def body = ['success' : false]
+        def es = ownedEntityService.getUsersByOwnedEntities(e, params, cmd)
+        if(es){
+            body.items = es['items']
+            body.total = es['total']
+        }
+        body.success = true
+        render body as JSON
+    }
+
+
+    /**
      * Returns a user's roles by its id
      * @param id user's id
      * @return A <code>List</code> of roles
@@ -227,7 +247,7 @@ class UserController{
         def body = ['success': false]
         SearchCommand cmd = new SearchCommand()
         if(id){
-            final r = ownedEntityService.search(cmd, params)
+            final r = ownedEntityService.searchByUser(cmd, id, params)
             if(r){
                 body.success = true
                 body.items = r['items']

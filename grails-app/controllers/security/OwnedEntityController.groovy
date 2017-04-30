@@ -42,7 +42,6 @@ class OwnedEntityController {
             body.items = result['items']
         }
 
-
         render body as JSON
     }
 
@@ -78,8 +77,8 @@ class OwnedEntityController {
      * just created/edited Owned Entity
      */
     @Secured("hasRole('CREATE__OWNED_ENTITY')")
-    def create(OwnedEntityCommand cmd, long uid){
-        save(cmd, uid)
+    def create(OwnedEntityCommand cmd){
+        save(cmd)
     }
 
     /**
@@ -92,14 +91,14 @@ class OwnedEntityController {
      * just created/edited Owned Entity
      */
     @Secured("hasRole('UPDATE__OWNED_ENTITY')")
-    def update(OwnedEntityCommand cmd, long id, long uid){
-        save(cmd, id, uid)
+    def update(OwnedEntityCommand cmd, long id){
+        save(cmd, id)
     }
 
-    protected save(OwnedEntityCommand cmd, long id = 0, long uid = 0){
+    protected save(OwnedEntityCommand cmd, long id = 0){
         def body = ['success' : false]
 
-        final e = ownedEntityService.save(cmd, id, uid)
+        final e = ownedEntityService.save(cmd, id)
         if(e){
             body.success = true
             body.id = e.id

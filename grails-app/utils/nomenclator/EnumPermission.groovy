@@ -9,6 +9,7 @@ enum EnumPermission {
         CREATE__USER,
         READ__USER,
         READ_ALL__USER,
+        READ_ASSOCIATED__USER, //read all users given the ids of several entities
         UPDATE__USER,
         DELETE__USER,
 

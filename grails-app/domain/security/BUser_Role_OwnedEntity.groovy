@@ -96,7 +96,7 @@ class BUser_Role_OwnedEntity implements Serializable{
      * @param params filter params
      * @return
      */
-    static def getRolesByUserByOwnedEntity(Long uid, Long eid, Map params, SearchCommand cmd = null){
+    static def getRolesByUserByOwnedEntity(long uid, Long eid, Map params, SearchCommand cmd = null){
         createCriteria().list(params) {
 
             projections { property("role") }
@@ -153,9 +153,7 @@ class BUser_Role_OwnedEntity implements Serializable{
                     }
                 }
             }
-        }
-
-        list = list.unique {
+        }.unique {
             it.id
         }
 
@@ -171,7 +169,56 @@ class BUser_Role_OwnedEntity implements Serializable{
             aux << list.get(i)
         }
 
-        aux.metaClass.totalCount = list.size()
+        aux.metaClass.totalCount = s
+
+        return aux
+    }
+
+    /**
+     * Returns all ownedEntities' users in a specific entities
+     * @param eids ownedEntities' ids
+     * @param params filter params
+     * @return
+     */
+    static def getUsersByOwnedEntities(List<Long> eids, Map params, SearchCommand cmd = null){
+        def list = createCriteria().list() {
+            projections { property("user") }
+
+            //for these specific entities
+            ownedEntity { inList "id", eids }
+
+            user {
+                order("enabled", "desc")
+                order("username", "asc")
+                order("name", "asc")
+                order("email", "asc")
+
+                //filter for searching
+                if(cmd?.q){
+                    or{
+                        ilike("username", "%${cmd.q}%")
+                        ilike("name", "%${cmd.q}%")
+                        ilike("email", "%${cmd.q}%")
+                    }
+                }
+            }
+        }.unique {
+            it.id
+        }
+
+        int s = list.size()
+        int offset = params?.offset ? params?.offset as int: 0
+        int max = (params?.max ? (params?.max as int) : s) + offset
+        if(max > s){
+            max = s
+        }
+
+        def aux = []
+        for(int i = offset; i < max; i++){
+            aux << list.get(i)
+        }
+
+        aux.metaClass.totalCount = s
 
         return aux
     }
@@ -192,11 +239,13 @@ class BUser_Role_OwnedEntity implements Serializable{
             ownedEntity {
                 order("name", "asc")
                 order("username", "asc")
+                order("description", "asc")
                 //filter for searching
                 if(cmd?.q){
                     or{
                         ilike("username", "%${cmd.q}%")
                         ilike("name", "%${cmd.q}%")
+                        ilike("description", "%${cmd.q}%")
                     }
 
                 }

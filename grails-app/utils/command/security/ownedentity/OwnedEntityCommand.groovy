@@ -15,22 +15,16 @@ class OwnedEntityCommand {
 
     String name
     String username
-
-    @BindUsing({ object, source ->
-        String r = (source['roles'] as String)
-        r = r.substring(1, r.length() - 1).replaceAll(" ", "")
-        r.split(',')
-    })
-    List<Long> roles
+    String description
 
     static constraints = {
         name nullable: false, blank: false
         username nullable: false, blank: false
-        roles nullable: false, blank: false
+        description nullable: false, blank: false
     }
 
     def call(){
-        EOwnedEntity e = new EOwnedEntity(name: name, username: username, id: id)
+        EOwnedEntity e = new EOwnedEntity(name: name, username: username, id: id, description: description)
         return e
     }
 }

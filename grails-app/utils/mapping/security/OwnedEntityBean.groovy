@@ -7,4 +7,5 @@ class OwnedEntityBean {
     Integer id
     String name
     String username
+    String description
 }

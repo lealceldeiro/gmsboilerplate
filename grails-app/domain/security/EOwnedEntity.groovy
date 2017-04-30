@@ -9,9 +9,11 @@ class EOwnedEntity implements Serializable{
 
     String name
     String username
+    String description
 
     static constraints = {
         name blank: false, nullable: false
         username unique: true, blank: false, nullable: false
+        description blank: false, nullable: false
     }
 }
