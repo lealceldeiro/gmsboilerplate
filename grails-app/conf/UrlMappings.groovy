@@ -17,7 +17,6 @@ class UrlMappings {
                 "/api/user/$id"                 (controller: "user")                            {action= [GET: "show", POST: "update", DELETE: "delete"]}
                 "/api/user/$id/$eid/roles"      (controller: "user", action: "roles")
                 "/api/user/$id/activate/$value" (controller: "user", action: "activate")
-                "/api/user/$id/entities"        (controller: "user", action: "entities")
                 "/api/user/get/$username"       (controller: "user", action: "getByUsername")
 
                 //ROLE...

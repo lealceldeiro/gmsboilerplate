@@ -236,24 +236,4 @@ class UserController{
         }
         render body as JSON
     }
-
-    /**
-     * Returns a user's entities by its id
-     * @param id user's id
-     * @return A <code>List</code> of entities
-     */
-    @Secured("isFullyAuthenticated()")
-    def entities(long id){
-        def body = ['success': false]
-        SearchCommand cmd = new SearchCommand()
-        if(id){
-            final r = ownedEntityService.searchByUser(cmd, id, params)
-            if(r){
-                body.success = true
-                body.items = r['items']
-                body.total = r['total']
-            }
-        }
-        render body as JSON
-    }
 }
