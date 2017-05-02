@@ -6,7 +6,7 @@ import grails.converters.JSON
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
 
-@Secured("hasRole('MANAGE_OWNED__ENTITY')")
+@Secured("isFullyAuthenticated()")
 class OwnedEntityController {
 
     def ownedEntityService
@@ -26,12 +26,11 @@ class OwnedEntityController {
      * Searches for owned entities which belong to a user whose id match with the specified id passed as parameter and
      * their attributes match the "params" param
      * @param cmd Search criteria:
-     *                              q: Criteria for searching the roles
+     *                              q: Criteria for searching the owned entities
      * @param id User's id
      * @return A json containing the owned entities' info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    @Secured("isFullyAuthenticated()")
     def search(SearchCommand cmd, long uid) {
         def body = ['success': false]
         if(cmd.validate()){
@@ -48,7 +47,7 @@ class OwnedEntityController {
     /**
      * Searches for all owned entities which match with the specified params
      * @param cmd Search criteria:
-     *                              q: Criteria for searching the roles
+     *                              q: Criteria for searching the owned entities
      * @return A json containing the roles' info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
@@ -110,7 +109,7 @@ class OwnedEntityController {
     /**
      * Return a Owned Entity's info
      * @param id Owned Entity's identifier
-     * @return A json containing the role's info if the operation was successful with the following structure
+     * @return A json containing the owned entity's info if the operation was successful with the following structure
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
     @Secured("hasRole('READ__OWNED_ENTITY')")

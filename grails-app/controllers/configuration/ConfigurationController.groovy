@@ -1,6 +1,7 @@
 package configuration
 
 import command.SearchCommand
+import command.configuration.ConfigurationCommand
 import grails.converters.JSON
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
@@ -15,12 +16,18 @@ class ConfigurationController {
             lastAccessedOwnedEntity: HttpMethod.GET.name()
     ]
 
-    def lastAccessedOwnedEntity(Long userId){
+    /**
+     * Return the last accessed Owned Entity's info given a user's id
+     * @param userId User's id whose is being searched for the last accessed Owned Entity
+     * @return A json containing the Owned Entity's info if the operation was successful with the following structure
+     * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
+     */
+    def lastAccessedOwnedEntity(long userId){
         def body = ['success': false]
         def id = configurationService.getLastAccessedOwnedEntity(userId)
         def r
         if(id == null){
-            r = getDefaultOwnedEntity(userId)
+            r = getDefaultOwnedEntityForUser(userId)
         }
         else {
             r = ownedEntityService.show(id as Long)
@@ -31,12 +38,34 @@ class ConfigurationController {
         render body as JSON
     }
 
-    def getDefaultOwnedEntity(Long userId){
+    private def getDefaultOwnedEntityForUser(Long userId){
         def r = ownedEntityService.searchByUser(new SearchCommand(), userId, [:])
         if(r && r.total > 0){
             configurationService.setLastAccessedOwnedEntity(r.items[0].id as Long, userId)
             return r.items[0]
         }
         return null
+    }
+
+    @Secured("permitAll")
+    def getConfig() {
+        def body = ['success': false, 'items': ['multiEntity': false]]
+        def r = configurationService.isMultiEntityApplication()
+        if(r){
+            body.items.multiEntity = true
+        }
+        body.success = true
+
+        render body as JSON
+    }
+
+    @Secured("hasRole('MANAGE_CONFIGURATION')")
+    def saveConfig(ConfigurationCommand cmd) {
+        def body = ['success': false]
+        if(cmd.validate()){
+            configurationService.setIsMultiEntityApp(cmd.multiEntity)
+            body.success = true
+        }
+        render body as JSON
     }
 }

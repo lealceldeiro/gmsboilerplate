@@ -72,28 +72,6 @@ class OwnedEntityService {
 
         def l = BUser_Role_OwnedEntity.getOwnedEntitiesByUser(id, params, cmd)
 
-        /*List<EOwnedEntity> list = EOwnedEntity.createCriteria().list(params) {
-            order("name", "asc")
-            order("username", "asc")
-            if(cmd?.q) {
-                or{
-                    ilike("name", "%${cmd.q}%")
-                    ilike("username", "%${cmd.q}%")
-                }
-            }
-
-        } as List
-
-        def mapped = []
-        int g = 0
-        l.each {e ->
-            if(list.contains(e)){
-                mapped << new OwnedEntityBean(id: e.id, name: e.name, username: e.username,
-                description: e.description)
-                g++
-            }
-        }*/
-
         response.items = l
         response.total = l.size()
         return response

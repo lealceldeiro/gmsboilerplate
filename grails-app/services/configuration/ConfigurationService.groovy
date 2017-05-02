@@ -27,6 +27,10 @@ class ConfigurationService {
         isThere(EnumConfigFields.DEFAULT_OWNED_ENTITY_CREATED, true)
     }
 
+    boolean isMultiEntityApplication(){
+        isThere(EnumConfigFields.IS_MULTI_ENTITY_APP, true)
+    }
+
     static Long getLastAccessedOwnedEntity(Long userId){
         BConfiguration c = BConfiguration.findByParamAndUserid(String.valueOf(EnumConfigFields.LAST_ACCESSED_ENTITY), String.valueOf(userId))
         return c ? Long.parseLong(c.value) : null
@@ -37,6 +41,7 @@ class ConfigurationService {
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SET_UP_CONFIGURED, true)
         return true
     }
+
     boolean setDefaultOwnedEntityCreated() {
         setField(EnumConfigFields.DEFAULT_OWNED_ENTITY_CREATED, true)
         return true
@@ -45,6 +50,7 @@ class ConfigurationService {
     boolean createDefaultConfig(){
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SET_UP_CONFIGURED, false)
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SETUP, false)
+        setField(EnumConfigFields.IS_MULTI_ENTITY_APP, false)
 
         return true
     }
@@ -52,6 +58,11 @@ class ConfigurationService {
     boolean setDefaultUserCreated(){
         setField(EnumConfigFields.DEFAULT_USER_CREATED, true)
 
+        return true
+    }
+
+    boolean setIsMultiEntityApp(boolean multi = false) {
+        setField(EnumConfigFields.IS_MULTI_ENTITY_APP, multi)
         return true
     }
 
