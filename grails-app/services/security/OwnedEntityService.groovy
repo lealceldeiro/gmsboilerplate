@@ -68,11 +68,14 @@ class OwnedEntityService {
      * <p><code>{success: true|false, items:[<it1>,...,<itn>], total: <totalCount>}</code></p>
      */
     def searchByUser(SearchCommand cmd, long id, Map params) {
-        Map response = [:]
+        Map response = [items: []]
 
         def l = BUser_Role_OwnedEntity.getOwnedEntitiesByUser(id, params, cmd)
 
-        response.items = l
+        l.each {
+            response.items << new OwnedEntityBean(id: it.id, name: it.name, username: it.username,
+                    description: it.description)
+        }
         response.total = l.size()
         return response
     }

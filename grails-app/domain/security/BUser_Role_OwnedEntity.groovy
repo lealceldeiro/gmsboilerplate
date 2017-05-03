@@ -32,12 +32,10 @@ class BUser_Role_OwnedEntity implements Serializable{
      * @return
      */
     static BUser_Role_OwnedEntity addRole(EUser user, BRole role, EOwnedEntity ownedEntity) {
-        if(findByUserAndRoleAndOwnedEntity(user, role, ownedEntity)){
-            return null
-            //todo: inform error
+        if(!findByUserAndRoleAndOwnedEntity(user, role, ownedEntity)){
+            def e = new BUser_Role_OwnedEntity(user: user, role: role, ownedEntity: ownedEntity)
+            e.save(flush: true, insert: true)
         }
-        def e = new BUser_Role_OwnedEntity(user: user, role: role, ownedEntity: ownedEntity)
-        e.save(flush: true, insert: true)
     }
 
     /**
@@ -96,7 +94,7 @@ class BUser_Role_OwnedEntity implements Serializable{
      * @param params filter params
      * @return
      */
-    static def getRolesByUserByOwnedEntity(long uid, Long eid, Map params, SearchCommand cmd = null){
+    static def getRolesByUserByOwnedEntity(long uid, long eid, Map params = [:], SearchCommand cmd = null){
         createCriteria().list(params) {
 
             projections { property("role") }

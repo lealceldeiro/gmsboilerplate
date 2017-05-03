@@ -1,7 +1,7 @@
 package command.security.user
 
 import grails.validation.Validateable
-import org.grails.databinding.BindUsing
+import mapping.request.EntityRoleRequestMap
 import security.EUser
 
 /**
@@ -17,17 +17,7 @@ class UserCommand {
     String password
     boolean enabled = true
 
-    @BindUsing({object, source ->
-        String r = (source['roles'] as String)
-        r = r.substring(1, r.length() - 1).replaceAll(" ", "")
-        r.split(',')
-    })
-    List<Long> roles
-
-    /**
-     * Entity over which the user will have the permissions (roles)s
-     */
-    long entity
+    List<EntityRoleRequestMap> roles
 
     static constraints = {
         username nullable: false, blank: false
@@ -36,7 +26,6 @@ class UserCommand {
         password nullable: false, blank: false
         roles nullable: false
         enabled nullable: true
-        entity nullable: false
     }
 
     def call(){
