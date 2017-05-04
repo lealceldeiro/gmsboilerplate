@@ -77,7 +77,8 @@ class UserService {
                 aux.enabled = cmd.enabled
             }
             else {
-                error = true
+                //todo: inform error
+                return false
             }
         }
         //creating
@@ -100,36 +101,38 @@ class UserService {
         def role
 
         if(update) {
-            //delete all roles for this user
-            if(cmd.roles.isEmpty()){
-                BUser_Role_OwnedEntity.removeAllRolesFromAll(aux)
-            }
-            else {
+            if(!cmd.roles.isEmpty()) {
                 //update (add/delete) roles
-                int rS = cmd.roles.size()
-                int orS, nrS
-                List<BRole> oldRolesAux
-                BRole rToBeAssgined
+                int rS = cmd.roles.size(), orS, nrS
+                List<BRole> oldRolesAux, notPresent, rolesToBeAdded
+                BRole rToBeAssigned
                 EOwnedEntity oEntityToBeAssigned
-                for(int i = 0; i < rS; i++){
-                    oldRolesAux = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(aux.id, cmd.roles[i].entity) as List<BRole>
-                    orS = oldRolesAux.size()
 
+                for(int i = 0; i < rS; i++){
                     oEntityToBeAssigned = EOwnedEntity.get(cmd.roles[i].entity)
 
-                    if(!oEntityToBeAssigned) {
-                        error = true
-                    } else {
+                    if(!oEntityToBeAssigned) { error = true } else {
+                        oldRolesAux = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(aux.id, cmd.roles[i].entity) as List<BRole>
+                        orS = oldRolesAux.size()
                         //there were roles previously assigned to this user on this entity
                         if(orS > 0){
-                            //put new roles
-                            //todo
-
                             //remove those which are not present now and were present before
-                            for(int j = 0; j < orS; j++) {
-                                if (!isNewRoleHere(oldRolesAux[j], cmd.roles[i].roles) != -1){
-                                    //todo
-                               }
+                            if(cmd.roles[i].roles.size() < 1){ //(entity come with an empty array of roles)
+                                BUser_Role_OwnedEntity.removeAllRolesFrom(aux, oEntityToBeAssigned)
+                            }
+                            else {
+                                notPresent = getNotPresent(cmd.roles[i].roles, oldRolesAux)
+                                if(!notPresent.isEmpty()) {
+                                    BUser_Role_OwnedEntity.removeRoles(aux, notPresent, oEntityToBeAssigned)
+                                }
+                            }
+                            //put new roles
+                            rolesToBeAdded = getNewRoles(cmd.roles[i].roles, oldRolesAux)
+                            int l = rolesToBeAdded.size()
+                            if(l > 0) {
+                                for(int j = 0; j < l; j++) {
+                                    BUser_Role_OwnedEntity.addRole(aux, rolesToBeAdded[j], oEntityToBeAssigned)
+                                }
                             }
                         }
                         //there were no roles assigned to this user on this entity previously
@@ -137,11 +140,11 @@ class UserService {
                             nrS = cmd.roles[i].roles.size()
                             if(nrS > 0) { //new roles are being assigned now
                                 for(int j = 0; j < nrS; j++){
-                                    rToBeAssgined = BRole.get(cmd.roles[i].roles[j])
-                                    if(!rToBeAssgined){
+                                    rToBeAssigned = BRole.get(cmd.roles[i].roles[j])
+                                    if(!rToBeAssigned){
                                         error = true
                                     } else {
-                                        BUser_Role_OwnedEntity.addRole(aux, rToBeAssgined, oEntityToBeAssigned)
+                                        BUser_Role_OwnedEntity.addRole(aux, rToBeAssigned, oEntityToBeAssigned)
                                     }
                                 }
                             }
@@ -177,14 +180,31 @@ class UserService {
         return aux
     }
 
-    private static int isNewRoleHere (BRole role, List<Long> rolesArray) {
-        int idx = rolesArray.size() - 1
-        while (idx >= 0) {
-            if(rolesArray.contains(role.id)){
-                return idx
+    private static List<BRole> getNotPresent(List<Long> roleIds, List<BRole> oldRoles) {
+        List<BRole> r = []
+        BRole oldRole
+        int s = oldRoles.size() - 1
+        while (s >= 0) {
+            oldRole = oldRoles.get(s--)
+            if(!roleIds.contains(oldRole.id)){
+                r << oldRole
             }
         }
-        return -1
+        return r
+    }
+
+    private static List<BRole> getNewRoles(List<Long> roleIds, List<BRole> oldRoles) {
+        List<BRole> r = []
+        Integer idx, s = roleIds.size() - 1
+
+        while (s >= 0) {
+            idx = oldRoles.findIndexOf {it.id == roleIds[s]}
+            if(idx == -1) {
+                r.add(BRole.get(roleIds[s]))
+            }
+            s--
+        }
+        return r
     }
 
     /**

@@ -32,10 +32,7 @@ class BUser_Role_OwnedEntity implements Serializable{
      * @return
      */
     static BUser_Role_OwnedEntity addRole(EUser user, BRole role, EOwnedEntity ownedEntity) {
-        if(!findByUserAndRoleAndOwnedEntity(user, role, ownedEntity)){
-            def e = new BUser_Role_OwnedEntity(user: user, role: role, ownedEntity: ownedEntity)
-            e.save(flush: true, insert: true)
-        }
+        findOrSaveWhere(user: user, role: role, ownedEntity: ownedEntity)
     }
 
     /**
@@ -73,7 +70,7 @@ class BUser_Role_OwnedEntity implements Serializable{
      */
     static def removeAllRolesFrom(EUser user, EOwnedEntity ownedEntity){
         executeUpdate(
-                "delete from BUser_Role_OwnedEntity ur where ur.user = :user and ur.ownedEntity = : entity",
+                "delete from BUser_Role_OwnedEntity ur where ur.user = :user and ur.ownedEntity = :entity",
                 [user: user, entity: ownedEntity]
         )
     }
