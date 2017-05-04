@@ -159,9 +159,9 @@ class UserService {
                 if(!oEntity){
                     error = true
                 } else {
-                    s2 = cmd.roles[s].roles.size()
+                    s2 = cmd.roles[i].roles.size()
                     for (int j = 0; j < s2; j++) {
-                        role = BRole.get(cmd.roles[s].roles[j])
+                        role = BRole.get(cmd.roles[i].roles[j])
                         if(!role){
                             error = true
                         }

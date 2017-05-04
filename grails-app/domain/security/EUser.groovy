@@ -37,9 +37,12 @@ class EUser implements Serializable {
 
     /*for SPRING SECURITY PLUGIN*/
     Set<BPermission> getAuthorities(){
-        def oe = ConfigurationService.getLastAccessedOwnedEntity(this.id)
+        Long oeId = ConfigurationService.getLastAccessedOwnedEntity(this.id)
+        if(!oeId) {
+            oeId = BUser_Role_OwnedEntity.getOwnedEntitiesByUser(this.id, [max: 1])[0].id
+        }
         Set<BPermission> a = []
-        def roles = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(this.id, oe, [:])
+        def roles = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(this.id, oeId)
 
         def permissions
         roles.each {
