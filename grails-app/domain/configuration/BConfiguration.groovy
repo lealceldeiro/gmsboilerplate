@@ -7,7 +7,7 @@ class BConfiguration implements Serializable{
     String userid
 
     static constraints = {
-        param(nullable: false, blank: false, unique: true)
+        param(nullable: false, blank: false)
         value(nullable: false, blank: false)
         userid(nullable: true, blank: false)
     }

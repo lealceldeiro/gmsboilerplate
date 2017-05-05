@@ -4,7 +4,7 @@ import command.SearchCommand
 import command.security.user.UserCommand
 import grails.converters.JSON
 import org.springframework.http.HttpMethod
-import org.springframework.security.access.annotation.Secured
+import grails.plugin.springsecurity.annotation.Secured
 
 @Secured("hasRole('MANAGE__USER')")
 class UserController{
@@ -214,26 +214,6 @@ class UserController{
             body.total = es['total']
         }
         body.success = true
-        render body as JSON
-    }
-
-
-    /**
-     * Returns a user's roles by its id
-     * @param id user's id
-     * @return A <code>List</code> of roles
-     */
-    @Secured("hasRole('READ__USER')")
-    def roles(long id, long eid){
-        def body = ['success': false]
-        if(id){
-            final r = userService.roles(id, eid, params)
-            if(r){
-                body.success = true
-                body.items = r['items']
-                body.total = r['total']
-            }
-        }
         render body as JSON
     }
 }

@@ -9,6 +9,7 @@ import groovy.transform.ToString
 class EUser implements Serializable {
 
     def springSecurityService
+    def configurationService
 
     String username
     String email
@@ -37,21 +38,36 @@ class EUser implements Serializable {
 
     /*for SPRING SECURITY PLUGIN*/
     Set<BPermission> getAuthorities(){
-        Long oeId = ConfigurationService.getLastAccessedOwnedEntity(this.id)
-        if(!oeId) {
-            oeId = BUser_Role_OwnedEntity.getOwnedEntitiesByUser(this.id, [max: 1])[0].id
-        }
         Set<BPermission> a = []
-        def roles = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(this.id, oeId)
+
+        Long oeId = ConfigurationService.getLastAccessedOwnedEntity(this.id)
+        List allOE = null
+
+        List roles = null
+        if(oeId) {
+            roles = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(this.id, oeId) as List
+        }
+        if(!oeId || !roles || roles.isEmpty()) {
+            allOE = BUser_Role_OwnedEntity.getOwnedEntitiesByUser(this.id) as List
+        }
+
+        int g = -10
+        if(allOE && !allOE.isEmpty()) {
+            g = allOE.size() - 1
+            while((!roles || roles.isEmpty()) && g >= 0){
+                roles = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(this.id, (allOE.get(g--) as EOwnedEntity).id) as List
+            }
+        }
+
+        if(g != -10){
+            configurationService.setLastAccessedOwnedEntity((allOE.get(g + 1) as EOwnedEntity).id, this.id)
+        }
 
         def permissions
         roles.each {
             if(it.enabled){
                 permissions = BRole_Permission.getPermissionsByRole((it.id as Long), [:])
-                permissions.each {
-                    p ->
-                        a << new BPermission(name: p.name, label: p.label, id: p.id)
-                }
+                a.addAll(permissions as List)
             }
         }
 

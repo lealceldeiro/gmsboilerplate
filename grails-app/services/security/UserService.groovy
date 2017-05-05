@@ -9,6 +9,8 @@ import mapping.security.UserBean
 @Transactional
 class UserService {
 
+    def configurationService
+
     //region CRUD
     /**
      * Search a user(s) according to optional parameters
@@ -247,6 +249,7 @@ class UserService {
         def e = EUser.get(id)
         if(e){
             BUser_Role_OwnedEntity.removeAllRolesFromAll(e)
+            configurationService.deleteUserConfiguration(id)
             e.delete()
             return true
         }
