@@ -215,4 +215,18 @@ class OwnedEntityService {
         response.total = list.totalCount ? list.totalCount : 0
         return response
     }
+
+    /**
+     * Shows some OwnedEntity's info
+     * @param username Identifier of the OE that is going to be shown
+     * @return A OwnedEntity entity with the OE's info or false if none user is found
+     */
+    def getByUsername (String username){
+        def e = EOwnedEntity.findByUsername(username)
+        if(e){
+            return new OwnedEntityBean(id: e.id, username: e.username, name: e.name, description: e.description)
+        }
+        //todo: inform about the error
+        return false
+    }
 }

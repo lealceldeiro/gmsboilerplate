@@ -1,6 +1,7 @@
 package security
 
 import command.SearchCommand
+import command.security.user.SearchUserCommand
 import command.security.user.UserCommand
 import grails.converters.JSON
 import org.springframework.http.HttpMethod
@@ -192,9 +193,20 @@ class UserController{
         def body = ['success' : false]
         def e = userService.getByUsername(username)
         if(e){
-            body.success = true
             body.item = e
         }
+        body.success = true
+        render body as JSON
+    }
+
+    @Secured("hasAnyRole('READ__USER','READ__PROFILE')")
+    def getByEmail(String email){
+        def body = ['success' : false]
+        def e = userService.getByEmail(email)
+        if(e){
+            body.item = e
+        }
+        body.success = true
         render body as JSON
     }
 
@@ -206,9 +218,9 @@ class UserController{
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
     @Secured("hasAnyRole('READ__USER', 'READ__PROFILE')")
-    def getAssociatedToEntities(List<Long> e, SearchCommand cmd){
+    def getAssociatedToEntities(SearchUserCommand cmd){
         def body = ['success' : false]
-        def es = ownedEntityService.getUsersByOwnedEntities(e, params, cmd)
+        def es = ownedEntityService.getUsersByOwnedEntities(cmd.e, params, cmd)
         if(es){
             body.items = es['items']
             body.total = es['total']

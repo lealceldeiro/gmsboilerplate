@@ -12,11 +12,12 @@ class UrlMappings {
 
                 //USER...
                 "/api/user"                             (controller: "user")                            {action = [GET: "searchAll", PUT: "create"]}
-                "/api/user/associated/$e"               (controller: "user", action: "getAssociatedToEntities")
+                "/api/user/associated"                  (controller: "user", action: "getAssociatedToEntities")
                 "/api/user/entity/$eid"                 (controller: "user", action: "search")
                 "/api/user/$id"                         (controller: "user")                            {action = [GET: "show", POST: "update", DELETE: "delete"]}
                 "/api/user/$id/activate/$value"         (controller: "user", action: "activate")
                 "/api/user/get/$username"               (controller: "user", action: "getByUsername")
+                "/api/user/email/$email"                (controller: "user", action: "getByEmail")
 
                 //ROLE...
                 "/api/role"                             (controller: "role")                            {action = [GET: "searchAll", PUT: "create"]}
@@ -34,6 +35,7 @@ class UrlMappings {
                 "/api/entity"                           (controller: "ownedEntity")                     {action = [GET: "searchAll", PUT: "create"]}
                 "/api/entity/$id"                       (controller: "ownedEntity")                     {action = [GET: "show", POST: "update", DELETE: "delete"]}
                 "/api/entity/users/$id"                 (controller: "ownedEntity", action: "users")
+                "/api/entity/get/$username"             (controller: "ownedEntity", action: "getByUsername")
 
 
                 //CONFIGURATION

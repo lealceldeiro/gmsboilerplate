@@ -239,6 +239,19 @@ class UserService {
         //todo: inform about the error
         return false
     }
+    /**
+     * Shows some User's info
+     * @param email Email of the user that is going to be shown
+     * @return A UserBean entity with the user's info or false if none user is found
+     */
+    def getByEmail (String email){
+        def e = EUser.findByEmail(email)
+        if(e){
+            return new UserBean(id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled)
+        }
+        //todo: inform about the error
+        return false
+    }
 
     /**
      * Deletes some user's info

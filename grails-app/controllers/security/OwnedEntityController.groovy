@@ -18,7 +18,8 @@ class OwnedEntityController {
             update          : HttpMethod.POST.name(),
             show            : HttpMethod.GET.name(),
             delete          : HttpMethod.DELETE.name(),
-            permissions     : HttpMethod.GET.name()
+            permissions     : HttpMethod.GET.name(),
+            getByUsername     : HttpMethod.GET.name()
     ]
 
     //region CRUD
@@ -157,6 +158,17 @@ class OwnedEntityController {
                 body.total = r['total']
             }
         }
+        render body as JSON
+    }
+
+    @Secured("hasRole('READ__OWNED_ENTITY')")
+    def getByUsername(String username){
+        def body = ['success' : false]
+        def e = ownedEntityService.getByUsername(username)
+        if(e){
+            body.item = e
+        }
+        body.success = true
         render body as JSON
     }
 }
