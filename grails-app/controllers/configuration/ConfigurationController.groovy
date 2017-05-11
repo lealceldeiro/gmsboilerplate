@@ -13,7 +13,11 @@ class ConfigurationController {
     def ownedEntityService
 
     static allowedMethods = [
-            lastAccessedOwnedEntity: HttpMethod.GET.name()
+            lastAccessedOwnedEntity : HttpMethod.GET.name(),
+            getConfig               : HttpMethod.GET.name(),
+            saveConfig              : HttpMethod.POST.name(),
+            setLanguage              : HttpMethod.POST.name(),
+            setLanguage              : HttpMethod.GET.name()
     ]
 
     /**
@@ -48,11 +52,15 @@ class ConfigurationController {
     }
 
     @Secured("permitAll")
-    def getConfig() {
+    def getConfig(Long uid) {
         def body = ['success': false, 'items': ['multiEntity': false]]
-        def r = configurationService.isMultiEntityApplication()
-        if(r){
+        def me = configurationService.isMultiEntityApplication()
+        if(me){
             body.items.multiEntity = true
+        }
+        if(uid){
+            def lan = configurationService.getLanguage(uid)
+            body.items.language = lan
         }
         body.success = true
 
@@ -66,6 +74,27 @@ class ConfigurationController {
             configurationService.setIsMultiEntityApp(cmd.multiEntity)
             body.success = true
         }
+        render body as JSON
+    }
+
+    @Secured("isFullyAuthenticated()")
+    def setLanguage(ConfigurationCommand cmd) {
+        def body = ['success': false]
+        configurationService.setLanguage(cmd.userId, cmd.lan)
+        body.success = true
+
+        render body as JSON
+    }
+
+    @Secured("isFullyAuthenticated()")
+    def getLanguage(ConfigurationCommand cmd) {
+        def body = ['success': false]
+        def lan = configurationService.getLanguage(cmd.userId)
+        if(lan){
+            body.item = lan
+        }
+        body.success = true
+
         render body as JSON
     }
 }

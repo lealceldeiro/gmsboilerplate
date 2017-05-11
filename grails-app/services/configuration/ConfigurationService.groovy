@@ -45,6 +45,19 @@ class ConfigurationService {
         return c ? Long.parseLong(c.value) : null
     }
 
+    boolean setLanguage(Long userId, String lan) {
+        setField(EnumConfigFields.LANGUAGE, lan, userId)
+        return true
+    }
+
+    String getLanguage(Long userId) {
+        def lan =  BConfiguration.findByParamAndUserid(String.valueOf(EnumConfigFields.LANGUAGE), String.valueOf(userId)).value
+        if(lan) {
+            return String.valueOf(lan)
+        }
+        return null
+    }
+
 
     boolean setDefaultAdminUnSetUp() {
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SETUP, true)

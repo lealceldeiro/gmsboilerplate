@@ -41,6 +41,7 @@ class UrlMappings {
                 //CONFIGURATION
                 "/api/config/entity/last/$userId"       (controller: "configuration", action: "lastAccessedOwnedEntity")
                 "/api/config"                           (controller: "configuration")                   {action = [GET: "getConfig", POST: "saveConfig"]}
+                "/api/config/lan"                       (controller: "configuration")                   {action = [GET: "getLanguage", POST: "setLanguage"]}
 
                 //default
                 "/"(view:"/index")
