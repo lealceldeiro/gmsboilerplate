@@ -30,7 +30,7 @@ class RoleCommand {
     }
 
     def call(){
-        BRole e = new BRole(label: label, description: description ? description : "security.role.no_description",
+        BRole e = new BRole(label: label, description: description ? description : "security.role.no_found",
                 enabled: enabled ? enabled : false)
         e.id = id
         return e

@@ -2,12 +2,15 @@ package security
 
 import command.SearchCommand
 import command.security.ownedentity.OwnedEntityCommand
+import constants.LAN
 import grails.converters.JSON
+import lan.LangChecker
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
+import responseHandlers.ExceptionHandler
 
 @Secured("isFullyAuthenticated()")
-class OwnedEntityController {
+class OwnedEntityController implements ExceptionHandler{
 
     def ownedEntityService
 
@@ -132,13 +135,12 @@ class OwnedEntityController {
      */
     @Secured("hasRole('DELETE__OWNED_ENTITY')")
     def delete(long id){
-        def body = ['success': false]
-        final e = ownedEntityService.delete(id)
-        if(e){
-            body.success = true
-            body.id = id
+        String p0 = g.message(code:"article.the_female_singular"), p1 = g.message(code:"security.owned_entity.entity")
+
+        final e =ownedEntityService.delete(id)
+        if(e) {
+            doSuccess g.message(code: "general.action.DELETE.success", args: [p0, p1, "a"]) as String, [id: id]
         }
-        render body as JSON
     }
     //endregion
 

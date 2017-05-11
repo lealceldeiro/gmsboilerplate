@@ -2,6 +2,8 @@ package security
 
 import command.SearchCommand
 import command.security.ownedentity.OwnedEntityCommand
+import exceptions.CannotDeleteDueToAssociationException
+import exceptions.NotFoundException
 import grails.transaction.Transactional
 import mapping.security.OwnedEntityBean
 import mapping.security.RoleBean
@@ -50,7 +52,7 @@ class OwnedEntityService {
         def mapped = []
         list.each {
             mapped << new OwnedEntityBean(id: it.id, name: it.name, username: it.username,
-            description: it.description)
+                    description: it.description)
         }
 
         response.items = mapped
@@ -123,7 +125,7 @@ class OwnedEntityService {
             def i = e.value
             if(i){
                 return new OwnedEntityBean(name: i.name, username: i.username, id: i.id,
-                description: i.description)
+                        description: i.description)
             }
         }
         //todo: inform about the error
@@ -144,13 +146,11 @@ class OwnedEntityService {
                 e.delete()
                 return true
             }
-            else{
-                //todo: inform about error
-                return false
+            else { throw new CannotDeleteDueToAssociationException("general.cannot.delete.due.to.association",
+                    "security.owned_entity.entity", "security.user.user", false, true)
             }
         }
-        //todo: inform about the error
-        return false
+        else { throw new NotFoundException("general.not_found", "security.owned_entity.entity", false) }
     }
 
     //endregion
