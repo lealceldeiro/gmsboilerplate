@@ -224,7 +224,7 @@ class BUser_Role_OwnedEntity implements Serializable{
      * @param params filter params
      * @return
      */
-    static def getOwnedEntitiesByUser(long id, Map params = [:], SearchCommand cmd = null){
+    static def getOwnedEntitiesByUser(Long id, Map params = [:], SearchCommand cmd = null){
         createCriteria().list(params) {
             projections { property("ownedEntity") }
 

@@ -2,6 +2,9 @@ package security
 
 import command.SearchCommand
 import command.security.user.UserCommand
+import exceptions.GenericException
+import exceptions.NotFoundException
+import exceptions.ValidationsException
 import grails.transaction.Transactional
 import mapping.security.RoleBean
 import mapping.security.UserBean
@@ -56,7 +59,7 @@ class UserService {
      * @return A json containing the id of the user if the operation was successful
      * <p><code>{success: true|false, id: <userId>}</code></p>
      */
-    def save(UserCommand cmd, long id) {
+    def save(UserCommand cmd, Long id = null) {
         EUser aux  = cmd()
         boolean update = true
         boolean error = false
@@ -66,32 +69,18 @@ class UserService {
             aux = EUser.get(id)
             if(aux) {
                 //mandatory fields, but if not provided, then not changed
-                if (cmd.username != null) {
-                    aux.username = cmd.username
-                }
-                if (cmd.name != null) {
-                    aux.name = cmd.name
-                }
-                if (cmd.password != null) {
-                    aux.password = cmd.password
-                }
+                if (cmd.username != null) { aux.username = cmd.username }
+                if (cmd.name != null) { aux.name = cmd.name }
+                if (cmd.password != null) { aux.password = cmd.password }
                 aux.email = cmd.email
                 aux.enabled = cmd.enabled
             }
-            else {
-                //todo: inform error
-                return false
-            }
+            else { throw new NotFoundException("general.not_found" ,"security.user.user", true) }
         }
         //creating
         else {
-            if(aux.validate()) {
-                update = false
-            }
-            else {
-                return false
-                //todo: inform error
-            }
+            if(aux.validate()) { update = false }
+            else { throw new ValidationsException() }
         }
 
         //save before adding roles relationships
@@ -103,55 +92,62 @@ class UserService {
         def role
 
         if(update) {
-            if(!cmd.roles.isEmpty()) {
-                //update (add/delete) roles
-                int rS = cmd.roles.size(), orS, nrS
-                List<BRole> oldRolesAux, notPresent, rolesToBeAdded
-                BRole rToBeAssigned
-                EOwnedEntity oEntityToBeAssigned
+            if(cmd.roles != null) {
+                if (!cmd.roles.isEmpty()) {
+                    //update (add/delete) roles
+                    int rS = cmd.roles.size(), orS, nrS
+                    List<BRole> oldRolesAux, notPresent, rolesToBeAdded
+                    BRole rToBeAssigned
+                    EOwnedEntity oEntityToBeAssigned
 
-                for(int i = 0; i < rS; i++){
-                    oEntityToBeAssigned = EOwnedEntity.get(cmd.roles[i].entity)
+                    for (int i = 0; i < rS; i++) {
+                        oEntityToBeAssigned = EOwnedEntity.get(cmd.roles[i].entity)
 
-                    if(!oEntityToBeAssigned) { error = true } else {
-                        oldRolesAux = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(aux.id, cmd.roles[i].entity) as List<BRole>
-                        orS = oldRolesAux.size()
-                        //there were roles previously assigned to this user on this entity
-                        if(orS > 0){
-                            //remove those which are not present now and were present before
-                            if(cmd.roles[i].roles.size() < 1){ //(entity come with an empty array of roles)
-                                BUser_Role_OwnedEntity.removeAllRolesFrom(aux, oEntityToBeAssigned)
+                        if (!oEntityToBeAssigned) {
+                            error = true
+                        } else {
+                            oldRolesAux = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(aux.id, cmd.roles[i].entity) as List<BRole>
+                            orS = oldRolesAux.size()
+                            //there were roles previously assigned to this user on this entity
+                            if (orS > 0) {
+                                /*remove those which are not present now and were present before*/
+                                if (cmd.roles[i].roles.size() < 1) { //(entity come with an empty array of roles)
+                                    BUser_Role_OwnedEntity.removeAllRolesFrom(aux, oEntityToBeAssigned)
+                                } else {
+                                    notPresent = getNotPresent(cmd.roles[i].roles, oldRolesAux)
+                                    if (!notPresent.isEmpty()) {
+                                        BUser_Role_OwnedEntity.removeRoles(aux, notPresent, oEntityToBeAssigned)
+                                    }
+                                }
+                                //put new roles
+                                rolesToBeAdded = getNewRoles(cmd.roles[i].roles, oldRolesAux)
+                                int l = rolesToBeAdded.size()
+                                if (l > 0) {
+                                    for (int j = 0; j < l; j++) {
+                                        BUser_Role_OwnedEntity.addRole(aux, rolesToBeAdded[j], oEntityToBeAssigned)
+                                    }
+                                }
                             }
+                            //there were no roles assigned to this user on this entity previously
                             else {
-                                notPresent = getNotPresent(cmd.roles[i].roles, oldRolesAux)
-                                if(!notPresent.isEmpty()) {
-                                    BUser_Role_OwnedEntity.removeRoles(aux, notPresent, oEntityToBeAssigned)
-                                }
-                            }
-                            //put new roles
-                            rolesToBeAdded = getNewRoles(cmd.roles[i].roles, oldRolesAux)
-                            int l = rolesToBeAdded.size()
-                            if(l > 0) {
-                                for(int j = 0; j < l; j++) {
-                                    BUser_Role_OwnedEntity.addRole(aux, rolesToBeAdded[j], oEntityToBeAssigned)
-                                }
-                            }
-                        }
-                        //there were no roles assigned to this user on this entity previously
-                        else {
-                            nrS = cmd.roles[i].roles.size()
-                            if(nrS > 0) { //new roles are being assigned now
-                                for(int j = 0; j < nrS; j++){
-                                    rToBeAssigned = BRole.get(cmd.roles[i].roles[j])
-                                    if(!rToBeAssigned){
-                                        error = true
-                                    } else {
-                                        BUser_Role_OwnedEntity.addRole(aux, rToBeAssigned, oEntityToBeAssigned)
+                                nrS = cmd.roles[i].roles.size()
+                                if (nrS > 0) { //new roles are being assigned now
+                                    for (int j = 0; j < nrS; j++) {
+                                        rToBeAssigned = BRole.get(cmd.roles[i].roles[j])
+                                        if (!rToBeAssigned) {
+                                            error = true
+                                        } else {
+                                            BUser_Role_OwnedEntity.addRole(aux, rToBeAssigned, oEntityToBeAssigned)
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                }
+                //delete all roles
+                else {
+                    BUser_Role_OwnedEntity.removeAllRolesFromAll(aux)
                 }
             }
         }
@@ -175,9 +171,7 @@ class UserService {
             }
         }
 
-        if(error) {
-            //todo: inform entity or role(s) not present
-        }
+        if(error) { throw new GenericException("general.exception.error_on_resources") }
 
         return aux
     }
@@ -233,11 +227,8 @@ class UserService {
      */
     def getByUsername (String username){
         def e = EUser.findByUsername(username)
-        if(e){
-            return new UserBean(id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled)
-        }
-        //todo: inform about the error
-        return false
+        if(e) { return new UserBean(id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled) }
+        else throw new NotFoundException("general.not_found" ,"security.user.user", true)
     }
     /**
      * Shows some User's info
@@ -246,11 +237,8 @@ class UserService {
      */
     def getByEmail (String email){
         def e = EUser.findByEmail(email)
-        if(e){
-            return new UserBean(id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled)
-        }
-        //todo: inform about the error
-        return false
+        if(e){ return new UserBean(id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled) }
+        else throw new NotFoundException("general.not_found" ,"security.user.userCamel", true)
     }
 
     /**
@@ -258,7 +246,7 @@ class UserService {
      * @param id Identifier of the user that is going to be deleted
      * @return <code>true</code> or <code>false</code> depending on the result of the operation
      */
-    def delete(long id) {
+    def delete(Long id) {
         def e = EUser.get(id)
         if(e){
             BUser_Role_OwnedEntity.removeAllRolesFromAll(e)
@@ -266,8 +254,7 @@ class UserService {
             e.delete()
             return true
         }
-        //todo: inform about the error
-        return false
+        else throw new NotFoundException("general.not_found" ,"security.user.user", true)
     }
     //endregion
 
@@ -279,12 +266,9 @@ class UserService {
      * @return A json containing a list of roles with the following structure if the operation was successful
      * <p><code>{success: true|false, items:[<it1>,...,<itn>], total: <totalCount>}</code></p>
      */
-    def roles(long uid, long eid, Map params){
+    def roles(Long uid, Long eid, Map params){
         def e = EOwnedEntity.get(eid)
-        if(!e){
-            //todo: inform error, entity isn't present
-            return false
-        }
+        if(!e){ throw new NotFoundException("general.not_found" ,"security.user.user", true) }
         Map response = [:]
         def mapped = []
         def list = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(uid, eid, params)
@@ -297,7 +281,7 @@ class UserService {
         return response
     }
 
-    List<EUser> getDefaultAdminWithId(long id){
+    List<EUser> getDefaultAdminWithId(Long id){
         def list = EUser.createCriteria().list() {
             eq("username", "admin")
             eq("id", id)
@@ -325,10 +309,10 @@ class UserService {
         }
     }
 
-    def activate(long id, boolean activate = true){
+    def activate(Long id, Boolean activate = true){
         final EUser e = EUser.get(id)
         if(!e){
-            return false
+            throw new NotFoundException("general.not_found" ,"security.user.user", true)
         }
         else{
             e.enabled = activate

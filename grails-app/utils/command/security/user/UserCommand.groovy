@@ -15,16 +15,16 @@ class UserCommand {
     String email
     String name
     String password
-    boolean enabled = true
+    Boolean enabled = true
 
     List<EntityRoleRequestMap> roles
 
     static constraints = {
         username nullable: false, blank: false
-        email nullable: true, blank: false
+        email nullable: false, blank: false
         name nullable: false, blank: false
         password nullable: false, blank: false
-        roles nullable: false
+        roles nullable: true
         enabled nullable: true
     }
 

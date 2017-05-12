@@ -98,9 +98,12 @@ class OwnedEntityService {
 
         if(id){ //edit
             aux = EOwnedEntity.get(id)
-            aux.username = e.username
-            aux.name = e.name
-            aux.description = e.description
+            if(aux) {
+                aux.username = e.username
+                aux.name = e.name
+                aux.description = e.description
+            }
+            else { throw new NotFoundException("general.not_found" ,"security.owned_entity.entityCamel", false) }
         }
         else if (e.validate()){ aux = e }
         else { throw new ValidationsException() }
@@ -124,7 +127,7 @@ class OwnedEntityService {
                         description: i.description)
             }
         }
-        throw new NotFoundException("general.not_found" ,"security.owned_entity.entity", false)
+        throw new NotFoundException("general.not_found" ,"security.owned_entity.entityCamel", false)
     }
 
 
@@ -133,7 +136,7 @@ class OwnedEntityService {
      * @param id Identifier of the ownedEntity that is going to be deleted
      * @return <code>true</code> or <code>false</code> depending on the result of the operation
      */
-    def delete(long id) {
+    def delete(Long id) {
         def e = EOwnedEntity.get(id)
         if(e){
             def uro = BUser_Role_OwnedEntity.findByOwnedEntity(e)
@@ -145,7 +148,7 @@ class OwnedEntityService {
                     "security.owned_entity.entity", "security.user.user", false, true)
             }
         }
-        else { throw new NotFoundException("general.not_found", "security.owned_entity.entity", false) }
+        else { throw new NotFoundException("general.not_found", "security.owned_entity.entityCamel", false) }
     }
 
     //endregion
@@ -219,6 +222,6 @@ class OwnedEntityService {
     def getByUsername (String username){
         def e = EOwnedEntity.findByUsername(username)
         if(e){ return new OwnedEntityBean(id: e.id, username: e.username, name: e.name, description: e.description) }
-        else throw new NotFoundException("general.not_found", "security.owned_entity.entity", false)
+        else throw new NotFoundException("general.not_found", "security.owned_entity.entityCamel", false)
     }
 }

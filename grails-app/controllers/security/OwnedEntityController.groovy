@@ -105,12 +105,8 @@ class OwnedEntityController implements ExceptionHandler{
     @Secured("hasRole('READ__OWNED_ENTITY')")
     def show(Long id){
         def e = ownedEntityService.show(id)
-        if(e){
-            doSuccess("general.done.ok", [item: e])
-        }
-        else {
-            doFail("general.done.KO")
-        }
+        if(e){ doSuccess("general.done.ok", [item: e]) }
+        else { doFail("general.done.KO") }
     }
 
     /**
@@ -123,9 +119,8 @@ class OwnedEntityController implements ExceptionHandler{
     def delete(Long id){
         String p0 = g.message(code:"article.the_female_singular"), p1 = g.message(code:"security.owned_entity.entity")
         final e = ownedEntityService.delete(id)
-        if(e) {
-            doSuccess g.message(code: "general.action.DELETE.success", args: [p0, p1, "a"]) as String, [id: id]
-        }
+        if(e) { doSuccess g.message(code: "general.action.DELETE.success", args: [p0, p1, "a"]) as String, [id: id] }
+        else doFail "general.done.KO"
     }
     //endregion
 

@@ -3,12 +3,13 @@ package security
 import command.SearchCommand
 import command.security.user.SearchUserCommand
 import command.security.user.UserCommand
-import grails.converters.JSON
-import org.springframework.http.HttpMethod
+import exceptions.ValidationsException
 import grails.plugin.springsecurity.annotation.Secured
+import org.springframework.http.HttpMethod
+import responseHandlers.ExceptionHandler
 
 @Secured("hasRole('MANAGE__USER')")
-class UserController{
+class UserController implements ExceptionHandler{
 
     def userService
 
@@ -40,17 +41,13 @@ class UserController{
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
     @Secured("hasRole('READ__USER')")
-    def search(SearchCommand cmd, long eid) {
-        def body = ['success': false]
+    def search(SearchCommand cmd, Long eid) {
         if(cmd.validate()){
             def result = ownedEntityService.getUsersByOwnedEntity(eid, params, cmd)
-
-            body.success = true
-            body.total = result['total']
-            body.items = result['items']
+            if(result){ doSuccess("general.done.ok", result) }
+            doFail("general.done.KO")
         }
-
-        render body as JSON
+        else { throw new ValidationsException() }
     }
 
     /**
@@ -62,16 +59,12 @@ class UserController{
      */
     @Secured("hasRole('READ__USER') and hasRole('READ_ALL__USER')")
     def searchAll(SearchCommand cmd) {
-        def body = ['success': false]
         if(cmd.validate()){
             def result = userService.search(cmd, params)
-
-            body.success = true
-            body.total = result['total']
-            body.items = result['items']
+            if(result){ doSuccess("general.done.ok", result) }
+            doFail("general.done.KO")
         }
-
-        render body as JSON
+        else { throw new ValidationsException() }
     }
 
     /**
@@ -87,7 +80,11 @@ class UserController{
      */
     @Secured("hasRole('CREATE__USER')")
     def create(UserCommand cmd){
-        save(cmd)
+        final e = userService.save(cmd)
+        if(e){
+            String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
+            doSuccess(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
+        }
     }
 
     /**
@@ -103,20 +100,12 @@ class UserController{
      * just created/edited user
      */
     @Secured("hasRole('UPDATE__USER')")
-    def update(UserCommand cmd, long id){
-        save(cmd, id)
-    }
-
-    protected save(UserCommand cmd, long id = 0){
-        def body = ['success' : false]
-
+    def update(UserCommand cmd, Long id){
         final e = userService.save(cmd, id)
         if(e){
-            body.success = true
-            body.id = e.id
+            String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
+            doSuccess(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "a"]) as String, [id: e.id])
         }
-
-        render body as JSON
     }
 
     /**
@@ -126,14 +115,10 @@ class UserController{
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
     @Secured("hasRole('READ__USER')")
-    def show(long id){
-        def body = ['success' : false]
+    def show(Long id){
         def e = userService.show(id)
-        if(e){
-            body.success = true
-            body.item = e
-        }
-        render body as JSON
+        if(e){ doSuccess("general.done.ok", [item: e]) }
+        else { doFail("general.done.KO") }
     }
 
     /**
@@ -143,9 +128,8 @@ class UserController{
      * <p><code>{success: true|false, id: <identifier></code></p>
      */
     @Secured("hasRole('DELETE__USER')")
-    def delete(long id){
+    def delete(Long id){
         boolean markDefaultAdminAsUnset = false
-
         if(!configurationService.isDefaultAdminUnSetup()){
             List<EUser> list = userService.getDefaultAdminWithId(id)
             if(list.size() > 0){
@@ -155,30 +139,21 @@ class UserController{
             }
         }
 
-        def body = ['success': false]
         final e = userService.delete(id)
         if(e){
-            body.success = true
-            body.id = id
-
-            if(markDefaultAdminAsUnset){
-                configurationService.setDefaultAdminUnSetUp()
-            }
+            if(markDefaultAdminAsUnset){ configurationService.setDefaultAdminUnSetUp() }
+            String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
+            doSuccess g.message(code: "general.action.DELETE.success", args: [p0, p1, "o"]) as String, [id: id]
         }
-        render body as JSON
+        else doFail "general.done.KO"
     }
     //endregion
 
     @Secured("hasRole('UPDATE__USER')")
-    def activate (long id, boolean value){
-        def body = ['success' : false]
+    def activate (Long id, Boolean value){
         final e = userService.activate(id, value)
-        if(e){
-            body.success = true
-            body.id = e.id
-        }
-
-        render body as JSON
+        if(e) { doSuccess"general.done.ok", [id: e.id] }
+        else doFail "general.done.KO"
     }
 
 
@@ -190,24 +165,16 @@ class UserController{
      */
     @Secured("hasAnyRole('READ__USER', 'READ__PROFILE')")
     def getByUsername(String username){
-        def body = ['success' : false]
         def e = userService.getByUsername(username)
-        if(e){
-            body.item = e
-        }
-        body.success = true
-        render body as JSON
+        if(e) { doSuccess"general.done.ok", [item: e] }
+        else doFail "general.done.KO"
     }
 
     @Secured("hasAnyRole('READ__USER','READ__PROFILE')")
     def getByEmail(String email){
-        def body = ['success' : false]
         def e = userService.getByEmail(email)
-        if(e){
-            body.item = e
-        }
-        body.success = true
-        render body as JSON
+        if(e) { doSuccess"general.done.ok", [item: e] }
+        else doFail "general.done.KO"
     }
 
 
@@ -219,13 +186,11 @@ class UserController{
      */
     @Secured("hasAnyRole('READ__USER', 'READ__PROFILE')")
     def getAssociatedToEntities(SearchUserCommand cmd){
-        def body = ['success' : false]
-        def es = ownedEntityService.getUsersByOwnedEntities(cmd.e, params, cmd)
-        if(es){
-            body.items = es['items']
-            body.total = es['total']
+        if(cmd.validate()){
+            def result = ownedEntityService.getUsersByOwnedEntities(cmd.e, params, cmd)
+            if(result){ doSuccess("general.done.ok", result) }
+            doFail("general.done.KO")
         }
-        body.success = true
-        render body as JSON
+        else { throw new ValidationsException() }
     }
 }

@@ -1,6 +1,7 @@
 package responseHandlers
 
 import exceptions.CannotDeleteDueToAssociationException
+import exceptions.GenericException
 import exceptions.NotAssignedToException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
@@ -17,7 +18,7 @@ trait ExceptionHandler implements ResponseHandler{
     }
 
     def handleNotFoundException(NotFoundException ex) {
-        String err = g.message(code: ex.i18nMainMessage, args:[ex.i18nNotFoundEntity, ex.male ? "o" : "a"])
+        String err = g.message(code: ex.i18nMainMessage, args:[g.message(code:ex.i18nNotFoundEntity), ex.male ? "o" : "a"])
         response.status = HttpStatus.OK.value()
         doFail(err)
     }
@@ -51,6 +52,13 @@ trait ExceptionHandler implements ResponseHandler{
         doFail(err)
     }
 
-
+    def handleGenericException(GenericException ex) {
+        response.status = HttpStatus.OK.value()
+        String err = g.message(code:"general.done.KO")
+        if(ex.i18nMainMessage) {
+            err = g.message(code: ex.i18nMainMessage) as String
+        }
+        doFail(err)
+    }
 
 }
