@@ -22,7 +22,7 @@ trait ResponseHandler {
     }
 
     def doSuccess (String successMessage, Map args = [:]) {
-        Map r = [success: true, successMessage: successMessage]
+        Map r = [success: true, successMessage: g.message(code: successMessage)]
         if(args){
             r = r + args
         }
@@ -30,12 +30,12 @@ trait ResponseHandler {
     }
 
     def doFail(String errorMessage) {
-        Map r = [success: false, errorMessage: errorMessage]
+        Map r = [success: false, errorMessage: g.message(code: errorMessage)]
         doRender r
     }
 
     def doFail(String errorMessage, Map args) {
-        Map r = [success: false, errorMessage: errorMessage] + args
+        Map r = [success: false, errorMessage: g.message(code: errorMessage)] + args
         doRender r
     }
 }

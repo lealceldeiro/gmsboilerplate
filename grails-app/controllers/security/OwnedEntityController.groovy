@@ -2,9 +2,7 @@ package security
 
 import command.SearchCommand
 import command.security.ownedentity.OwnedEntityCommand
-import constants.LAN
-import grails.converters.JSON
-import lan.LangChecker
+import exceptions.ValidationsException
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
 import responseHandlers.ExceptionHandler
@@ -35,17 +33,13 @@ class OwnedEntityController implements ExceptionHandler{
      * @return A json containing the owned entities' info if the operation was successful with the following structure
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
-    def search(SearchCommand cmd, long uid) {
-        def body = ['success': false]
+    def search(SearchCommand cmd, Long uid) {
         if(cmd.validate()){
             def result = ownedEntityService.searchByUser(cmd, uid, params)
-
-            body.success = true
-            body.total = result['total']
-            body.items = result['items']
+            if(result){ doSuccess("general.done.ok", result) }
+            doFail("general.done.KO")
         }
-
-        render body as JSON
+        else { throw new ValidationsException() }
     }
 
     /**
@@ -57,17 +51,12 @@ class OwnedEntityController implements ExceptionHandler{
      */
     @Secured("hasRole('READ_ALL__OWNED_ENTITY')")
     def searchAll(SearchCommand cmd) {
-        def body = ['success': false]
         if(cmd.validate()){
             def result = ownedEntityService.search(cmd, params)
-
-            body.success = true
-            body.total = result['total']
-            body.items = result['items']
+            if(result){ doSuccess("general.done.ok", result) }
+            doFail("general.done.KO")
         }
-
-
-        render body as JSON
+        else { throw new ValidationsException() }
     }
 
     /**
@@ -81,7 +70,11 @@ class OwnedEntityController implements ExceptionHandler{
      */
     @Secured("hasRole('CREATE__OWNED_ENTITY')")
     def create(OwnedEntityCommand cmd){
-        save(cmd)
+        final e = ownedEntityService.save(cmd)
+        if(e){
+            String p0 = g.message(code:"article.the_female_singular"), p1 = g.message(code:"security.owned_entity.entity")
+            doSuccess(g.message(code: "general.action.CREATE.success", args: [p0, p1, "a"]) as String, [id: e.id])
+        }
     }
 
     /**
@@ -94,21 +87,14 @@ class OwnedEntityController implements ExceptionHandler{
      * just created/edited Owned Entity
      */
     @Secured("hasRole('UPDATE__OWNED_ENTITY')")
-    def update(OwnedEntityCommand cmd, long id){
-        save(cmd, id)
-    }
-
-    protected save(OwnedEntityCommand cmd, long id = 0){
-        def body = ['success' : false]
-
+    def update(OwnedEntityCommand cmd, Long id){
         final e = ownedEntityService.save(cmd, id)
         if(e){
-            body.success = true
-            body.id = e.id
+            String p0 = g.message(code:"article.the_female_singular"), p1 = g.message(code:"security.owned_entity.entity")
+            doSuccess(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "a"]) as String, [id: e.id])
         }
-
-        render body as JSON
     }
+
 
     /**
      * Return a Owned Entity's info
@@ -117,14 +103,14 @@ class OwnedEntityController implements ExceptionHandler{
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
     @Secured("hasRole('READ__OWNED_ENTITY')")
-    def show(long id){
-        def body = ['success' : false]
+    def show(Long id){
         def e = ownedEntityService.show(id)
         if(e){
-            body.success = true
-            body.item = e
+            doSuccess("general.done.ok", [item: e])
         }
-        render body as JSON
+        else {
+            doFail("general.done.KO")
+        }
     }
 
     /**
@@ -134,10 +120,9 @@ class OwnedEntityController implements ExceptionHandler{
      * <p><code>{success: true|false, id: <identifier></code></p>
      */
     @Secured("hasRole('DELETE__OWNED_ENTITY')")
-    def delete(long id){
+    def delete(Long id){
         String p0 = g.message(code:"article.the_female_singular"), p1 = g.message(code:"security.owned_entity.entity")
-
-        final e =ownedEntityService.delete(id)
+        final e = ownedEntityService.delete(id)
         if(e) {
             doSuccess g.message(code: "general.action.DELETE.success", args: [p0, p1, "a"]) as String, [id: id]
         }
@@ -150,27 +135,16 @@ class OwnedEntityController implements ExceptionHandler{
      * @return A <code>List</code> of users
      */
     @Secured("hasRole('READ__OWNED_ENTITY')")
-    def users(long id){
-        def body = ['success': false]
-        if(id){
-            final r = ownedEntityService.getUsersByOwnedEntity(id, params)
-            if(r){
-                body.success = true
-                body.items = r['items']
-                body.total = r['total']
-            }
-        }
-        render body as JSON
+    def users(Long id){
+        final r = ownedEntityService.getUsersByOwnedEntity(id, params)
+        if(r){ doSuccess "general.done.ok", r }
+        else { doFail "general.done.KO" }
     }
 
     @Secured("hasRole('READ__OWNED_ENTITY')")
     def getByUsername(String username){
-        def body = ['success' : false]
         def e = ownedEntityService.getByUsername(username)
-        if(e){
-            body.item = e
-        }
-        body.success = true
-        render body as JSON
+        if(e){ doSuccess "general.done.ok", [item: e] }
+        else { doFail "general.done.KO" }
     }
 }

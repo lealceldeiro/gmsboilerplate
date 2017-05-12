@@ -4,6 +4,7 @@ import command.SearchCommand
 import command.security.ownedentity.OwnedEntityCommand
 import exceptions.CannotDeleteDueToAssociationException
 import exceptions.NotFoundException
+import exceptions.ValidationsException
 import grails.transaction.Transactional
 import mapping.security.OwnedEntityBean
 import mapping.security.RoleBean
@@ -69,7 +70,7 @@ class OwnedEntityService {
      * @return          A json containing a list of roles with the following structure if the operation was successful
      * <p><code>{success: true|false, items:[<it1>,...,<itn>], total: <totalCount>}</code></p>
      */
-    def searchByUser(SearchCommand cmd, long id, Map params) {
+    def searchByUser(SearchCommand cmd, Long id, Map params) {
         Map response = [items: []]
 
         def l = BUser_Role_OwnedEntity.getOwnedEntitiesByUser(id, params, cmd)
@@ -91,7 +92,7 @@ class OwnedEntityService {
      * @return A json containing the id of the role if the operation was successful
      * <p><code>{success: true|false, id: <roleId>}</code></p>
      */
-    def save(OwnedEntityCommand cmd, long id) {
+    def save(OwnedEntityCommand cmd, Long id = null) {
         EOwnedEntity e = cmd()
         EOwnedEntity aux
 
@@ -101,13 +102,8 @@ class OwnedEntityService {
             aux.name = e.name
             aux.description = e.description
         }
-        else if (e.validate()){ //create
-            aux = e
-        }
-        else{
-            //todo: inform about the error
-            return false
-        }
+        else if (e.validate()){ aux = e }
+        else { throw new ValidationsException() }
 
         aux.save flush: true, failOnError: true
 
@@ -119,7 +115,7 @@ class OwnedEntityService {
      * @param id Identifier of the entity that is going to be shown
      * @return An OwnedEntityBean entity with the entity's info or false if none role is found
      */
-    def show (long id){
+    def show (Long id){
         def e = Optional.ofNullable(EOwnedEntity.get(id))
         if(e.isPresent()){
             def i = e.value
@@ -128,8 +124,7 @@ class OwnedEntityService {
                         description: i.description)
             }
         }
-        //todo: inform about the error
-        return false
+        throw new NotFoundException("general.not_found" ,"security.owned_entity.entity", false)
     }
 
 
@@ -223,10 +218,7 @@ class OwnedEntityService {
      */
     def getByUsername (String username){
         def e = EOwnedEntity.findByUsername(username)
-        if(e){
-            return new OwnedEntityBean(id: e.id, username: e.username, name: e.name, description: e.description)
-        }
-        //todo: inform about the error
-        return false
+        if(e){ return new OwnedEntityBean(id: e.id, username: e.username, name: e.name, description: e.description) }
+        else throw new NotFoundException("general.not_found", "security.owned_entity.entity", false)
     }
 }

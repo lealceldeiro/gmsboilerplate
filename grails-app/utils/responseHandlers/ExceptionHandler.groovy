@@ -3,6 +3,7 @@ package responseHandlers
 import exceptions.CannotDeleteDueToAssociationException
 import exceptions.NotAssignedToException
 import exceptions.NotFoundException
+import exceptions.ValidationsException
 import org.springframework.http.HttpStatus
 
 /**
@@ -31,7 +32,6 @@ trait ExceptionHandler implements ResponseHandler{
         doFail(err)
     }
 
-
     def handleCannotDeleteDueToAssociationException(CannotDeleteDueToAssociationException ex) {
         String who = g.message(code: ex.i18nWho)
         String with = g.message(code: ex.i18nWith)
@@ -39,6 +39,15 @@ trait ExceptionHandler implements ResponseHandler{
                                                                ex.maleWith ? "o" : "a", ex.maleWith ? "" : "a",
                                                                with])
         response.status = HttpStatus.OK.value()
+        doFail(err)
+    }
+
+    def handleValidationsException(ValidationsException ex) {
+        response.status = HttpStatus.OK.value()
+        String err = g.message(code:"general.exception.information.incorrect")
+        if(ex.i18nMainMessage) {
+            err = g.message(code: ex.i18nMainMessage) as String
+        }
         doFail(err)
     }
 
