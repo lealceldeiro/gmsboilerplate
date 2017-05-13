@@ -2,12 +2,14 @@ package security
 
 import command.SearchCommand
 import command.security.role.RoleCommand
+import exceptions.ValidationsException
 import grails.converters.JSON
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
+import responseHandlers.ExceptionHandler
 
 @Secured("hasRole('MANAGE__ROLE')")
-class RoleController {
+class RoleController implements ExceptionHandler{
 
     def roleService
 
@@ -33,18 +35,13 @@ class RoleController {
      * <p><code>{success: true|false, items:[{<param1>,...,<paramN>}}]</code></p>
      */
     @Secured("hasRole('READ__ROLE')")
-    def search(SearchCommand cmd, long uid, long eid) {
-        def body = ['success': false]
+    def search(SearchCommand cmd, Long uid, Long eid) {
         if(cmd.validate()){
             def result = ownedEntityService.getRolesByUserAndOwnedEntity(uid, eid, params, cmd)
-
-            body.success = true
-            body.total = result['total']
-            body.items = result['items']
+            if(result){ doSuccess("general.done.ok", result) }
+            doFail("general.done.KO")
         }
-
-
-        render body as JSON
+        else { throw new ValidationsException() }
     }
 
     /**
@@ -56,17 +53,12 @@ class RoleController {
      */
     @Secured("hasRole('READ__ROLE') and hasRole('READ_ALL__ROLE')")
     def searchAll(SearchCommand cmd) {
-        def body = ['success': false]
         if(cmd.validate()){
             def result = roleService.search(cmd, params)
-
-            body.success = true
-            body.total = result['total']
-            body.items = result['items']
+            if(result){ doSuccess("general.done.ok", result) }
+            doFail("general.done.KO")
         }
-
-
-        render body as JSON
+        else { throw new ValidationsException() }
     }
 
     /**
@@ -80,7 +72,11 @@ class RoleController {
      */
     @Secured("hasRole('CREATE__ROLE')")
     def create(RoleCommand cmd){
-        save(cmd)
+        final e = roleService.save(cmd)
+        if(e){
+            String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.role.role")
+            doSuccess(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
+        }
     }
 
     /**
@@ -94,20 +90,12 @@ class RoleController {
      * just created/edited role
      */
     @Secured("hasRole('UPDATE__ROLE')")
-    def update(RoleCommand cmd, long id){
-        save(cmd, id)
-    }
-
-    protected save(RoleCommand cmd, long id = 0){
-        def body = ['success' : false]
-
+    def update(RoleCommand cmd, Long id){
         final e = roleService.save(cmd, id)
         if(e){
-            body.success = true
-            body.id = e.id
+            String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.role.role")
+            doSuccess(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "o"]) as String, [id: e.id])
         }
-
-        render body as JSON
     }
 
     /**
@@ -117,14 +105,10 @@ class RoleController {
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
     @Secured("hasRole('READ__ROLE')")
-    def show(long id){
-        def body = ['success' : false]
+    def show(Long id){
         def e = roleService.show(id)
-        if(e){
-            body.success = true
-            body.item = e
-        }
-        render body as JSON
+        if(e){ doSuccess("general.done.ok", [item: e]) }
+        else { doFail("general.done.KO") }
     }
 
     /**
@@ -134,27 +118,19 @@ class RoleController {
      * <p><code>{success: true|false, id: <identifier></code></p>
      */
     @Secured("hasRole('DELETE__ROLE')")
-    def delete(long id){
-        def body = ['success': false]
+    def delete(Long id){
+        String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.role.role")
         final e = roleService.delete(id)
-        if(e){
-            body.success = true
-            body.id = id
-        }
-        render body as JSON
+        if(e) { doSuccess g.message(code: "general.action.DELETE.success", args: [p0, p1, "o"]) as String, [id: id] }
+        else doFail "general.done.KO"
     }
     //endregion
 
     @Secured("hasRole('UPDATE__ROLE')")
-    def activate (long id, boolean value){
-        def body = ['success' : false]
+    def activate (Long id, Boolean value){
         final e = roleService.activate(id, value)
-        if(e){
-            body.success = true
-            body.id = e.id
-        }
-
-        render body as JSON
+        if(e) { doSuccess"general.done.ok", [id: e.id] }
+        else doFail "general.done.KO"
     }
 
     /**
@@ -163,16 +139,11 @@ class RoleController {
      * @return A <code>List</code> of permissions
      */
     @Secured("hasRole('READ__ROLE')")
-    def permissions(long id){
-        def body = ['success': false]
-        if(id){
+    def permissions(Long id){
             final r = roleService.permissions(id, params)
             if(r){
-                body.success = true
-                body.items = r['items']
-                body.total = r['total']
+                doSuccess"general.done.ok", r
             }
-        }
-        render body as JSON
+        else doFail "general.done.KO"
     }
 }

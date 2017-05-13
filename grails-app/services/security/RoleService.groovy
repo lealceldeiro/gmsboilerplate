@@ -2,6 +2,10 @@ package security
 
 import command.SearchCommand
 import command.security.role.RoleCommand
+import exceptions.CannotDeleteDueToAssociationException
+import exceptions.GenericException
+import exceptions.NotFoundException
+import exceptions.ValidationsException
 import grails.transaction.Transactional
 import mapping.security.PermissionBean
 import mapping.security.RoleBean
@@ -51,23 +55,23 @@ class RoleService {
      * @return A json containing the id of the role if the operation was successful
      * <p><code>{success: true|false, id: <roleId>}</code></p>
      */
-    def save(RoleCommand cmd, long id) {
+    def save(RoleCommand cmd, Long id = null) {
         BRole e = cmd()
         BRole aux
 
         if(id){ //edit
             aux = BRole.get(id)
-            aux.enabled = e.enabled ? e.enabled : false
-            aux.description = e.description
-            aux.label = e.label
+            if(aux) {
+                aux.enabled = e.enabled ? e.enabled : false
+                aux.description = e.description
+                aux.label = e.label
+            }
+            else { throw new NotFoundException("general.not_found" ,"security.role.role", true) }
         }
         else if (e.validate()){ //create
             aux = e
         }
-        else{
-            //todo: inform about the error
-            return false
-        }
+        else { throw new ValidationsException() }
 
         aux.save flush: true
 
@@ -103,9 +107,7 @@ class RoleService {
                     }
                 }
 
-                if (ctrl) {
-                    //todo: inform this role isn't present
-                }
+                if (ctrl) { throw new GenericException("general.exception.error_on_resources") }
             }
         }
 
@@ -125,8 +127,7 @@ class RoleService {
                 return new RoleBean(id: i.id, label: i.label, description: i.description, enabled: i.enabled)
             }
         }
-        //todo: inform about the error
-        return false
+        else throw new NotFoundException("general.not_found" ,"security.role.roleCamel", true)
     }
 
     /**
@@ -134,7 +135,7 @@ class RoleService {
      * @param id Identifier of the role that is going to be deleted
      * @return <code>true</code> or <code>false</code> depending on the result of the operation
      */
-    def delete(long id) {
+    def delete(Long id) {
         def e = BRole.get(id)
         if(e){
             def ur = BUser_Role_OwnedEntity.findByRole(e)
@@ -144,12 +145,11 @@ class RoleService {
                 return true
             }
             else{
-                //todo: inform about error
-                return false
+                throw new CannotDeleteDueToAssociationException("general.cannot.delete.due.to.association",
+                        "security.role.role", "security.user.user", true, true)
             }
         }
-        //todo: inform about the error
-        return false
+        else throw new NotFoundException("general.not_found" ,"security.role.role", true)
     }
 
     /**
@@ -180,18 +180,14 @@ class RoleService {
         BRole r = new BRole(description: 'Role for administrators', label: 'ROLE_ADMIN', enabled: true)
         r.save(flush: true, failOnError: true)
         def brp = BPermission.findAll()
-        brp.each {it ->
-            BRole_Permission.addPermission(r, it)
-        }
+        brp.each { BRole_Permission.addPermission(r, it) }
 
     }
 
     def activate(long id, boolean activate = true){
         final BRole e = BRole.get(id)
-        if(!e){
-            return false
-        }
-        else{
+        if(!e){ throw new NotFoundException("general.not_found" ,"security.role.role", true) }
+        else {
             e.enabled = activate
             e.save(flush: true, failOnError: true)
             return e

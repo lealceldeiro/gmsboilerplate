@@ -212,12 +212,9 @@ class UserService {
         def e = Optional.ofNullable(EUser.get(id))
         if(e.isPresent()){
             def i = e.value
-            if(i){
-                return new UserBean(username: i.username, email: i.email, name: i.name, enabled: i.enabled)
-            }
+            if(i){ return new UserBean(username: i.username, email: i.email, name: i.name, enabled: i.enabled) }
         }
-        //todo: inform about the error
-        return false
+        else throw new NotFoundException("general.not_found" ,"security.user.userCamel", true)
     }
 
     /**

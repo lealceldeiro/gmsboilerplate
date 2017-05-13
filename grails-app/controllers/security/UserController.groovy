@@ -104,7 +104,7 @@ class UserController implements ExceptionHandler{
         final e = userService.save(cmd, id)
         if(e){
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
-            doSuccess(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "a"]) as String, [id: e.id])
+            doSuccess(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "o"]) as String, [id: e.id])
         }
     }
 
