@@ -14,10 +14,7 @@ class PermissionService {
 
     def createDefaultPermissions(){
         List<EnumPermission> ps = EnumPermission.values()
-
-        ps.each {it->
-            new BPermission(name: it.toString(), label: it.toString().replace("_", " ")).save(flush: true)
-        }
+        ps.each { new BPermission(name: it.toString(), label: it.toString().replace("_", " ")).save(flush: true) }
         return true
     }
 

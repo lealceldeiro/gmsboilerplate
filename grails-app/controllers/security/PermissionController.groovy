@@ -1,12 +1,13 @@
 package security
 
 import command.SearchCommand
-import grails.converters.JSON
+import exceptions.ValidationsException
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
+import responseHandlers.ExceptionHandler
 
 @Secured("hasRole('MANAGE__PERMISSION')")
-class PermissionController {
+class PermissionController implements ExceptionHandler{
 
     def permissionService
 
@@ -23,16 +24,11 @@ class PermissionController {
      */
     @Secured("hasRole('READ__PERMISSION')")
     def search(SearchCommand cmd) {
-        def body = ['success': false]
         if(cmd.validate()){
             def result = permissionService.search(cmd, params)
-
-            body.success = true
-            body.total = result['total']
-            body.items = result['items']
+            if(result){ doSuccess("general.done.ok", result) }
+            doFail("general.done.KO")
         }
-
-
-        render body as JSON
+        else { throw new ValidationsException() }
     }
 }

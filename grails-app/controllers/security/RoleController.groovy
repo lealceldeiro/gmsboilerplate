@@ -3,7 +3,6 @@ package security
 import command.SearchCommand
 import command.security.role.RoleCommand
 import exceptions.ValidationsException
-import grails.converters.JSON
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
 import responseHandlers.ExceptionHandler
