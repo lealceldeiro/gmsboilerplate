@@ -40,7 +40,7 @@ enum EnumPermission {
     MANAGE__PROFILE,
         READ__PROFILE,
 
-    MANAGE_CONFIGURATION
+    MANAGE__CONFIGURATION
 
 
 }

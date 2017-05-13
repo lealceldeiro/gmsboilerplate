@@ -2,12 +2,13 @@ package configuration
 
 import command.SearchCommand
 import command.configuration.ConfigurationCommand
-import grails.converters.JSON
+import exceptions.ValidationsException
 import org.springframework.http.HttpMethod
 import org.springframework.security.access.annotation.Secured
+import responseHandlers.ExceptionHandler
 
 @Secured("isFullyAuthenticated()")
-class ConfigurationController {
+class ConfigurationController implements ExceptionHandler{
 
     def configurationService
     def ownedEntityService
@@ -17,7 +18,7 @@ class ConfigurationController {
             getConfig               : HttpMethod.GET.name(),
             saveConfig              : HttpMethod.POST.name(),
             setLanguage              : HttpMethod.POST.name(),
-            setLanguage              : HttpMethod.GET.name()
+            getLanguage              : HttpMethod.GET.name()
     ]
 
     /**
@@ -26,20 +27,12 @@ class ConfigurationController {
      * @return A json containing the Owned Entity's info if the operation was successful with the following structure
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
-    def lastAccessedOwnedEntity(long userId){
-        def body = ['success': false]
+    def lastAccessedOwnedEntity(Long userId){
         def id = configurationService.getLastAccessedOwnedEntity(userId)
         def r
-        if(id == null){
-            r = getDefaultOwnedEntityForUser(userId)
-        }
-        else {
-            r = ownedEntityService.show(id as Long)
-        }
-        body.success = true
-        body.item = r
+        r = id == null ? getDefaultOwnedEntityForUser(userId) : ownedEntityService.show(id as Long)
 
-        render body as JSON
+        doSuccess "general.done.ok", [item: r]
     }
 
     private def getDefaultOwnedEntityForUser(Long userId){
@@ -53,48 +46,38 @@ class ConfigurationController {
 
     @Secured("permitAll")
     def getConfig(Long uid) {
-        def body = ['success': false, 'items': ['multiEntity': false]]
+        def args = ['multiEntity': false, language: ""]
         def me = configurationService.isMultiEntityApplication()
-        if(me){
-            body.items.multiEntity = true
-        }
+        if(me) args.multiEntity = true
+
         if(uid){
             def lan = configurationService.getLanguage(uid)
-            body.items.language = lan
+            args.language = lan
         }
-        body.success = true
 
-        render body as JSON
+        doSuccess "general.done.ok", [items: args]
     }
 
-    @Secured("hasRole('MANAGE_CONFIGURATION')")
+    @Secured("hasRole('MANAGE__CONFIGURATION')")
     def saveConfig(ConfigurationCommand cmd) {
-        def body = ['success': false]
-        if(cmd.validate()){
-            configurationService.setIsMultiEntityApp(cmd.multiEntity)
-            body.success = true
-        }
-        render body as JSON
+        if(cmd.validate()) configurationService.setIsMultiEntityApp(cmd.multiEntity)
+        else throw new ValidationsException()
+        doSuccess "general.done.ok"
     }
 
     @Secured("isFullyAuthenticated()")
     def setLanguage(ConfigurationCommand cmd) {
-        def body = ['success': false]
         configurationService.setLanguage(cmd.userId, cmd.lan)
-        body.success = true
-
-        render body as JSON
+        doSuccess "general.done.ok"
     }
 
     @Secured("isFullyAuthenticated()")
     def getLanguage(ConfigurationCommand cmd) {
-        def body = ['success': false]
+        Map args = [:]
         def lan = configurationService.getLanguage(cmd.userId)
         if(lan){
-            body.item = lan
+            args.item = lan
         }
-        body.success = true
-
-        render body as JSON
+        doSuccess "general.done.ok", args
     }
 }

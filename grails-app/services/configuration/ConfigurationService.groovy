@@ -51,11 +51,8 @@ class ConfigurationService {
     }
 
     String getLanguage(Long userId) {
-        def lan =  BConfiguration.findByParamAndUserid(String.valueOf(EnumConfigFields.LANGUAGE), String.valueOf(userId)).value
-        if(lan) {
-            return String.valueOf(lan)
-        }
-        return null
+        def lan =  BConfiguration.findByParamAndUserid(String.valueOf(EnumConfigFields.LANGUAGE), String.valueOf(userId))
+            return lan != null ? String.valueOf(lan.value): null
     }
 
 
@@ -72,7 +69,6 @@ class ConfigurationService {
 
     boolean setDefaultUserCreated(){
         setField(EnumConfigFields.DEFAULT_USER_CREATED, true)
-
         return true
     }
 
@@ -97,7 +93,7 @@ class ConfigurationService {
         if(!t){
             t = new BConfiguration(param: String.valueOf(field), value: String.valueOf(value), userid: userid)
         }
-        else{
+        else {
             t.value = value
         }
         t.save(flush: true, failOnError: true)
