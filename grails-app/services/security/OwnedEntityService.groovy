@@ -216,11 +216,13 @@ class OwnedEntityService {
 
     /**
      * Shows some OwnedEntity's info
-     * @param username Identifier of the OE that is going to be shown
-     * @return A OwnedEntity entity with the OE's info or false if none user is found
+     * @param params Params with the fields of the user entity that are going to be used for filtering the result
+     * @return A OwnedEntity entity with the OE's info
      */
-    def getByUsername (String username){
-        def e = EOwnedEntity.findByUsername(username)
+    def getBy (Map params = [:]){
+        def e = EOwnedEntity.createCriteria().get {
+            if(params.username) eq("username", params.username)
+        }
         if(e){ return new OwnedEntityBean(id: e.id, username: e.username, name: e.name, description: e.description) }
         else throw new NotFoundException("general.not_found", "security.owned_entity.entityCamel", false)
     }

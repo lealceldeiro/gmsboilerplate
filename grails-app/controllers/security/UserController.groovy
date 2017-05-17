@@ -26,7 +26,7 @@ class UserController implements ExceptionHandler{
             show                    : HttpMethod.GET.name(),
             delete                  : HttpMethod.DELETE.name(),
             roles                   : HttpMethod.GET.name(),
-            getByUsername           : HttpMethod.GET.name(),
+            getBy                   : HttpMethod.GET.name(),
             entities                : HttpMethod.GET.name(),
             getAssociatedToEntities : HttpMethod.GET.name()
     ]
@@ -114,7 +114,7 @@ class UserController implements ExceptionHandler{
      * @return A json containing the user's info if the operation was successful with the following structure
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
-    @Secured("hasRole('READ__USER')")
+    @Secured("hasAnyRole('READ__USER', 'READ__PROFILE')")
     def show(Long id){
         def e = userService.show(id)
         if(e){ doSuccess("general.done.ok", [item: e]) }
@@ -164,15 +164,8 @@ class UserController implements ExceptionHandler{
      * <p><code>{success: true|false, item:{<param1>,...,<paramN>}}</code></p>
      */
     @Secured("hasAnyRole('READ__USER', 'READ__PROFILE')")
-    def getByUsername(String username){
-        def e = userService.getByUsername(username)
-        if(e) { doSuccess"general.done.ok", [item: e] }
-        else doFail "general.done.KO"
-    }
-
-    @Secured("hasAnyRole('READ__USER','READ__PROFILE')")
-    def getByEmail(String email){
-        def e = userService.getByEmail(email)
+    def getBy(){
+        def e = userService.getBy(params)
         if(e) { doSuccess"general.done.ok", [item: e] }
         else doFail "general.done.KO"
     }

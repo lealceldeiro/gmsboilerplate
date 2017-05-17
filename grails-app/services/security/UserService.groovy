@@ -219,23 +219,16 @@ class UserService {
 
     /**
      * Shows some User's info
-     * @param username Identifier of the user that is going to be shown
-     * @return A UserBean entity with the user's info or false if none user is found
+     * @param params Params with the fields of the user entity that are going to be used for filtering the result
+     * @return A UserBean entity with the user's info
      */
-    def getByUsername (String username){
-        def e = EUser.findByUsername(username)
+    def getBy (Map params = [:]){
+        def e = EUser.createCriteria().get {
+            if(params.username) eq("username", params.username)
+            if(params.email) eq("email", params.email)
+        }
         if(e) { return new UserBean(id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled) }
         else throw new NotFoundException("general.not_found" ,"security.user.user", true)
-    }
-    /**
-     * Shows some User's info
-     * @param email Email of the user that is going to be shown
-     * @return A UserBean entity with the user's info or false if none user is found
-     */
-    def getByEmail (String email){
-        def e = EUser.findByEmail(email)
-        if(e){ return new UserBean(id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled) }
-        else throw new NotFoundException("general.not_found" ,"security.user.userCamel", true)
     }
 
     /**

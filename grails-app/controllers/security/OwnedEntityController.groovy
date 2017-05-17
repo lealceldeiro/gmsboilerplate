@@ -20,7 +20,7 @@ class OwnedEntityController implements ExceptionHandler{
             show            : HttpMethod.GET.name(),
             delete          : HttpMethod.DELETE.name(),
             permissions     : HttpMethod.GET.name(),
-            getByUsername     : HttpMethod.GET.name()
+            getBy           : HttpMethod.GET.name()
     ]
 
     //region CRUD
@@ -137,8 +137,8 @@ class OwnedEntityController implements ExceptionHandler{
     }
 
     @Secured("hasRole('READ__OWNED_ENTITY')")
-    def getByUsername(String username){
-        def e = ownedEntityService.getByUsername(username)
+    def getBy (){
+        def e = ownedEntityService.getBy(params)
         if(e){ doSuccess "general.done.ok", [item: e] }
         else { doFail "general.done.KO" }
     }
