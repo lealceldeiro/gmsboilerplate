@@ -160,7 +160,7 @@ class OwnedEntityService {
      * @return A json containing a list of users with the following structure if the operation was successful
      * <p><code>{success: true|false, items:[<it1>,...,<itn>], total: <totalCount>}</code></p>
      */
-    def getUsersByOwnedEntity(long eid, Map params, SearchCommand cmd = null){
+    def getUsersByOwnedEntity(Long eid, Map params, SearchCommand cmd = null){
         Map response = [:]
         def mapped = []
         def list = BUser_Role_OwnedEntity.getUsersByOwnedEntity(eid, params, cmd)
@@ -201,7 +201,7 @@ class OwnedEntityService {
      * @return A json containing a list of users with the following structure if the operation was successful
      * <p><code>{success: true|false, items:[<it1>,...,<itn>], total: <totalCount>}</code></p>
      */
-    def getRolesByUserAndOwnedEntity(long uid, long eid, Map params, SearchCommand cmd = null){
+    def getRolesByUserAndOwnedEntity(Long uid, Long eid, Map params, SearchCommand cmd = null){
         Map response = [:]
         def mapped = []
         def list = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(uid, eid, params, cmd)

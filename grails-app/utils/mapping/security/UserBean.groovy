@@ -8,7 +8,5 @@ class UserBean {
     String username
     String email
     String name
-    String password
     boolean enabled
-    List<RoleBean> roles
 }

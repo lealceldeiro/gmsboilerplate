@@ -153,7 +153,7 @@ class UserService {
         }
         else { //create new user
             for(int i = 0; i < s; i++) {
-                oEntity = EOwnedEntity.get(cmd.roles.entity)
+                oEntity = EOwnedEntity.get(cmd.roles[i].entity)
                 if(!oEntity){
                     error = true
                 } else {
