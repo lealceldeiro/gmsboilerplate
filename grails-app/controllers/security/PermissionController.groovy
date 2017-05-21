@@ -26,7 +26,7 @@ class PermissionController implements ExceptionHandler{
     def search(SearchCommand cmd) {
         if(cmd.validate()){
             def result = permissionService.search(cmd, params)
-            if(result){ doSuccess("general.done.ok", result) }
+            if(result){ doSuccessWithArgs("general.done.ok", result) }
             doFail("general.done.KO")
         }
         else { throw new ValidationsException() }

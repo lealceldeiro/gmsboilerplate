@@ -6,9 +6,6 @@ import exceptions.CannotDeleteDueToAssociationException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
 import grails.transaction.Transactional
-import mapping.security.OwnedEntityBean
-import mapping.security.RoleBean
-import mapping.security.UserBean
 
 @Transactional
 class OwnedEntityService {
@@ -32,7 +29,7 @@ class OwnedEntityService {
      * @param cmd       [optional] Grails command containing the parameters for searching the role(s)
      *                  q: Criteria for searching
      * @param params    [optional] Parameters for paging the result
-     * @return          A json containing a list of roles with the following structure if the operation was successful
+     * @return          A json containing a list of owned entities with the following structure if the operation was successful
      * <p><code>{success: true|false, items:[<it1>,...,<itn>], total: <totalCount>}</code></p>
      */
     def search(SearchCommand cmd, Map params) {
@@ -52,8 +49,8 @@ class OwnedEntityService {
 
         def mapped = []
         list.each {
-            mapped << new OwnedEntityBean(id: it.id, name: it.name, username: it.username,
-                    description: it.description)
+            mapped << [id: it.id, name: it.name, username: it.username,
+                    description: it.description]
         }
 
         response.items = mapped
@@ -67,7 +64,7 @@ class OwnedEntityService {
      *                  q: Criteria for searching
      * @param id        User id
      * @param params    [optional] Parameters for paging the result
-     * @return          A json containing a list of roles with the following structure if the operation was successful
+     * @return          A json containing a list of owned entities with the following structure if the operation was successful
      * <p><code>{success: true|false, items:[<it1>,...,<itn>], total: <totalCount>}</code></p>
      */
     def searchByUser(SearchCommand cmd, Long id, Map params) {
@@ -76,8 +73,8 @@ class OwnedEntityService {
         def l = BUser_Role_OwnedEntity.getOwnedEntitiesByUser(id, params, cmd)
 
         l.each {
-            response.items << new OwnedEntityBean(id: it.id, name: it.name, username: it.username,
-                    description: it.description)
+            response.items << [id: it.id, name: it.name, username: it.username,
+                    description: it.description]
         }
         response.total = l.size()
         return response
@@ -89,8 +86,8 @@ class OwnedEntityService {
      * @param cmd Role data such: label(string), description(string) and enabled(boolean)
      * @param id [optional] if an update is going to be performed, the id of the role which is going to be updated
      * must be supplied
-     * @return A json containing the id of the role if the operation was successful
-     * <p><code>{success: true|false, id: <roleId>}</code></p>
+     * @return A json containing the id of the owned entity if the operation was successful
+     * <p><code>{success: true|false, id: <ownedEntityId>}</code></p>
      */
     def save(OwnedEntityCommand cmd, Long id = null) {
         EOwnedEntity e = cmd()
@@ -116,15 +113,15 @@ class OwnedEntityService {
     /**
      * Shows some entity's info
      * @param id Identifier of the entity that is going to be shown
-     * @return An OwnedEntityBean entity with the entity's info or false if none role is found
+     * @return An json with the entity's info or false if no owned entity is found
      */
     def show (Long id){
         def e = Optional.ofNullable(EOwnedEntity.get(id))
         if(e.isPresent()){
             def i = e.value
             if(i){
-                return new OwnedEntityBean(name: i.name, username: i.username, id: i.id,
-                        description: i.description)
+                return [name: i.name, username: i.username, id: i.id,
+                        description: i.description]
             }
         }
         throw new NotFoundException("general.not_found" ,"security.owned_entity.entityCamel", false)
@@ -165,7 +162,7 @@ class OwnedEntityService {
         def mapped = []
         def list = BUser_Role_OwnedEntity.getUsersByOwnedEntity(eid, params, cmd)
         list.each{
-            mapped << new UserBean(id: it.id, name: it.name, username: it.username, email: it.email, enabled: it.enabled)
+            mapped << [id: it.id, name: it.name, username: it.username, email: it.email, enabled: it.enabled]
         }
 
         response.items = mapped
@@ -185,7 +182,7 @@ class OwnedEntityService {
         def mapped = []
         def list = BUser_Role_OwnedEntity.getUsersByOwnedEntities(eids, params, cmd)
         list.each{
-            mapped << new UserBean(id: it.id, name: it.name, username: it.username, email: it.email, enabled: it.enabled)
+            mapped << [id: it.id, name: it.name, username: it.username, email: it.email, enabled: it.enabled]
         }
 
         response.items = mapped
@@ -194,7 +191,7 @@ class OwnedEntityService {
     }
 
     /**
-     * Returns all roles associated to a user over an entity
+     * Returns all owned entities associated to a user through a role
      * @param uid User's id
      * @param eid Entity's id
      * @param params [optional] Parameters for paging the result
@@ -206,7 +203,7 @@ class OwnedEntityService {
         def mapped = []
         def list = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(uid, eid, params, cmd)
         list.each{
-            mapped << new RoleBean(id: it.id, label: it.label, description: it.description, enabled: it.enabled)
+            mapped << [id: it.id, label: it.label, description: it.description, enabled: it.enabled]
         }
 
         response.items = mapped
@@ -223,7 +220,7 @@ class OwnedEntityService {
         def e = EOwnedEntity.createCriteria().get {
             if(params.username) eq("username", params.username)
         }
-        if(e){ return new OwnedEntityBean(id: e.id, username: e.username, name: e.name, description: e.description) }
+        if(e){ return [id: e.id, username: e.username, name: e.name, description: e.description] }
         else throw new NotFoundException("general.not_found", "security.owned_entity.entityCamel", false)
     }
 }

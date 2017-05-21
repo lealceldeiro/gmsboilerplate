@@ -1,0 +1,37 @@
+{
+  "name": "bower.json",
+  "homepage": "https://github.com/lealceldeiro/gmsboilerplate",
+  "authors": [
+    "Asiel <lealceldeiro@gmail.com>"
+  ],
+  "description": "Frontend dependencies",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "3.1.1",
+    "angular": "1.5.8",
+    "angular-aria": "1.5.8",
+    "angular-route": "1.5.8",
+    "angular-sanitize": "1.5.8",
+    "angular-local-storage": "^0.5.2",
+    "angular-material": "^1.1.1",
+    "angular-animate": "1.5.8",
+    "angular-messages": "1.5.8",
+    "material-angular-paging": "*",
+    "angular-translate": "^2.15.1",
+    "angular-translate-interpolation-messageformat": "^2.15.1",
+    "ng-password-strength": "^0.2.1",
+    "bootstrap": "3"
+  },
+  "resolutions": {
+    "angular": "1.5.8"
+  }
+}

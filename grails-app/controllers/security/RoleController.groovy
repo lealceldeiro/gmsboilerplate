@@ -37,7 +37,7 @@ class RoleController implements ExceptionHandler{
     def search(SearchCommand cmd, Long uid, Long eid) {
         if(cmd.validate()){
             def result = ownedEntityService.getRolesByUserAndOwnedEntity(uid, eid, params, cmd)
-            if(result){ doSuccess("general.done.ok", result) }
+            if(result){ doSuccessWithArgs("general.done.ok", result) }
             doFail("general.done.KO")
         }
         else { throw new ValidationsException() }
@@ -54,7 +54,7 @@ class RoleController implements ExceptionHandler{
     def searchAll(SearchCommand cmd) {
         if(cmd.validate()){
             def result = roleService.search(cmd, params)
-            if(result){ doSuccess("general.done.ok", result) }
+            if(result){ doSuccessWithArgs("general.done.ok", result) }
             doFail("general.done.KO")
         }
         else { throw new ValidationsException() }
@@ -74,7 +74,7 @@ class RoleController implements ExceptionHandler{
         final e = roleService.save(cmd)
         if(e){
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.role.role")
-            doSuccess(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
+            doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
         }
     }
 
@@ -93,7 +93,7 @@ class RoleController implements ExceptionHandler{
         final e = roleService.save(cmd, id)
         if(e){
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.role.role")
-            doSuccess(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "o"]) as String, [id: e.id])
+            doSuccessWithArgs(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "o"]) as String, [id: e.id])
         }
     }
 
@@ -106,7 +106,7 @@ class RoleController implements ExceptionHandler{
     @Secured("hasRole('READ__ROLE')")
     def show(Long id){
         def e = roleService.show(id)
-        if(e){ doSuccess("general.done.ok", [item: e]) }
+        if(e){ doSuccessWithArgs("general.done.ok", [item: e]) }
         else { doFail("general.done.KO") }
     }
 
@@ -120,7 +120,7 @@ class RoleController implements ExceptionHandler{
     def delete(Long id){
         String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.role.role")
         final e = roleService.delete(id)
-        if(e) { doSuccess g.message(code: "general.action.DELETE.success", args: [p0, p1, "o"]) as String, [id: id] }
+        if(e) { doSuccessWithArgs(g.message(code: "general.action.DELETE.success", args: [p0, p1, "o"]) as String, [id: id]) }
         else doFail "general.done.KO"
     }
     //endregion
@@ -128,7 +128,7 @@ class RoleController implements ExceptionHandler{
     @Secured("hasRole('UPDATE__ROLE')")
     def activate (Long id, Boolean value){
         final e = roleService.activate(id, value)
-        if(e) { doSuccess"general.done.ok", [id: e.id] }
+        if(e) { doSuccessWithArgs("general.done.ok", [id: e.id]) }
         else doFail "general.done.KO"
     }
 
@@ -141,7 +141,7 @@ class RoleController implements ExceptionHandler{
     def permissions(Long id){
             final r = roleService.permissions(id, params)
             if(r){
-                doSuccess"general.done.ok", r
+                doSuccessWithArgs("general.done.ok", r)
             }
         else doFail "general.done.KO"
     }

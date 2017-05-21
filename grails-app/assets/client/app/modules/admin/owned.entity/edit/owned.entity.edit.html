@@ -1,0 +1,81 @@
+<div data-ng-cloak>
+    <form data-ng-show="vm.entity" role="form" name="editEntityForm" novalidate>
+        <div layout="column" layout-padding>
+            <md-content class="md-no-momentum">
+
+                <!--name-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.name' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_home_24px.svg"></md-icon>
+                    <input ng-model="vm.entity.name" type="text" name="name" required/>
+
+                    <div ng-messages="editEntityForm.name.$error" md-auto-hide="false">
+                        <div ng-message="required">
+                            {{'string.name_required' | translate}}
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <!--username-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.user' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg"></md-icon>
+                    <input data-ng-model="vm.entity.username" name="username" required
+                           data-ng-model-options="{debounce: 500}"
+                           data-ng-change="vm.checkUsername()"
+                           data-ng-pattern="/(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[._-]?[a-zA-Z0-9]+$/"
+                    />
+
+                    <div ng-messages="editEntityForm.username.$error" md-auto-hide="false">
+                        <div ng-message="required">
+                            {{'string.user_required' | translate}}
+                        </div>
+                        <div ng-message="pattern">
+                            {{'string.it_is_not' | translate}}
+                            <strong class="hand-pointer" data-ng-click="vm.seeValidUser()">
+                                {{'string.valid_user' | translate:'{"GENDER": "male"}'}}
+                            </strong>
+                        </div>
+                    </div>
+                    <input type="hidden" name="userTaken" data-ng-if="vm.userTaken" ng-model="vm.ctrlUserTaken" required>
+                    <div ng-messages="editEntityForm.userTaken.$error" md-auto-hide="false">
+                        <div ng-message="required">
+                            {{'string.user_taken' | translate}}
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <!--description-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.description' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_description_24px.svg"></md-icon>
+                    <textarea ng-model="vm.entity.description" name="description" required></textarea>
+
+                    <div ng-messages="editEntityForm.description.$error" md-auto-hide="false">
+                        <div ng-message="required">
+                            {{'string.description_required' | translate}}
+                        </div>
+                    </div>
+                </md-input-container>
+
+            </md-content>
+        </div>
+    </form>
+
+
+    <div data-ng-hide="!vm.entityData.loading" layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <md-divider></md-divider>
+    <br/>
+
+    <md-button class="md-primary md-raised"
+               ng-click="vm.save(editEntityForm)">
+        {{'button.save' | translate}}
+    </md-button>
+    <md-button class="md-active md-raised"
+               ng-click="vm.cancel()">
+        {{'button.cancel' | translate}}
+    </md-button>
+</div>

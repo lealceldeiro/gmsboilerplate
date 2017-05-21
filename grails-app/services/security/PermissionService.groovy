@@ -2,7 +2,6 @@ package security
 
 import command.SearchCommand
 import grails.transaction.Transactional
-import mapping.security.PermissionBean
 import nomenclator.EnumPermission
 
 @Transactional
@@ -43,7 +42,7 @@ class PermissionService {
 
         def mapped = []
         list.each {
-            mapped << new PermissionBean(id: it.id, label: it.label, name: it.name)
+            mapped << [id: it.id, label: it.label, name: it.name]
         }
 
         response.items = mapped

@@ -6,8 +6,6 @@ import exceptions.GenericException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
 import grails.transaction.Transactional
-import mapping.security.RoleBean
-import mapping.security.UserBean
 
 @Transactional
 class UserService {
@@ -43,7 +41,7 @@ class UserService {
 
         def mapped = []
         list.each {
-            mapped << new UserBean(id: it.id, username: it.username, email: it.email, name: it.name, enabled: it.enabled)
+            mapped << [id: it.id, username: it.username, email: it.email, name: it.name, enabled: it.enabled]
         }
 
         response.items = mapped
@@ -206,29 +204,36 @@ class UserService {
     /**
      * Shows some User's info
      * @param id Identifier of the user that is going to be shown
-     * @return A UserBean entity with the user's info or false if none user is found
+     * @return The user's info or false if none user is found
      */
     def show (long id){
         def e = Optional.ofNullable(EUser.get(id))
         if(e.isPresent()){
             def i = e.value
-            if(i){ return new UserBean(username: i.username, email: i.email, name: i.name, enabled: i.enabled) }
+            if(i){ return [username: i.username, email: i.email, name: i.name, enabled: i.enabled] }
         }
         else throw new NotFoundException("general.not_found" ,"security.user.userCamel", true)
     }
 
     /**
      * Shows some User's info
-     * @param params Params with the fields of the user entity that are going to be used for filtering the result
-     * @return A UserBean entity with the user's info
+     * @param params Params with the fields of the user entity that are going to be used for filtering the result: 'username' or 'emails'
+     * @return The user's info
      */
-    def getBy (Map params = [:]){
+    def getBy (Map params = [:], Boolean silenceNotFoundException = false){
         def e = EUser.createCriteria().get {
-            if(params.username) eq("username", params.username)
-            if(params.email) eq("email", params.email)
+            or {
+                if(params.username != null) {
+                    eq("username", params.username)
+                }
+                if(params.email != null) {
+                    eq("email", params.email)
+                }
+            }
         }
-        if(e) { return new UserBean(id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled) }
-        else throw new NotFoundException("general.not_found" ,"security.user.user", true)
+        if(e) { return [id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled] }
+        else if(!silenceNotFoundException) throw new NotFoundException("general.not_found" ,"security.user.user", true)
+        else return false
     }
 
     /**
@@ -263,7 +268,7 @@ class UserService {
         def mapped = []
         def list = BUser_Role_OwnedEntity.getRolesByUserByOwnedEntity(uid, eid, params)
         list.each{
-            mapped << new RoleBean(id: it.id, label: it.label, description: it.description, enabled: it.enabled)
+            mapped << [id: it.id, label: it.label, description: it.description, enabled: it.enabled]
         }
 
         response.items = mapped
@@ -279,7 +284,7 @@ class UserService {
 
         def mapped = []
         list.each {
-            mapped << new UserBean(id: it.id, username: it.username, email: it.email, name: it.name, enabled: it.enabled)
+            mapped << [id: it.id, username: it.username, email: it.email, name: it.name, enabled: it.enabled]
         }
 
         return mapped as List<EUser>

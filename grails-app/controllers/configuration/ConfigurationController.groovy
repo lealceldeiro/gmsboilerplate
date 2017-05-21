@@ -32,7 +32,7 @@ class ConfigurationController implements ExceptionHandler{
         def r
         r = id == null ? getDefaultOwnedEntityForUser(userId) : ownedEntityService.show(id as Long)
 
-        doSuccess "general.done.ok", [item: r]
+        doSuccessWithArgs("general.done.ok", [item: r])
     }
 
     private def getDefaultOwnedEntityForUser(Long userId){
@@ -55,7 +55,7 @@ class ConfigurationController implements ExceptionHandler{
             args.language = lan
         }
 
-        doSuccess "general.done.ok", [items: args]
+        doSuccessWithArgs("general.done.ok", [items: args])
     }
 
     @Secured("hasRole('MANAGE__CONFIGURATION')")
@@ -78,6 +78,6 @@ class ConfigurationController implements ExceptionHandler{
         if(lan){
             args.item = lan
         }
-        doSuccess "general.done.ok", args
+        doSuccessWithArgs("general.done.ok", args)
     }
 }

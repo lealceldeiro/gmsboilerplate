@@ -1,0 +1,84 @@
+<div data-ng-cloak>
+
+    <form data-ng-show="vm.role" role="form" name="editRoleForm" novalidate>
+        <div layout="column" layout-padding>
+            <md-content class="md-no-momentum">
+
+                <!--name-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.name' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                    <input ng-model="vm.role.label" type="text" required name="label" />
+                    <div ng-messages="editRoleForm.label.$error" md-auto-hide="false">
+                        <div ng-message="required">
+                            {{'string.name_required' | translate}}
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <!--description-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.description' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_description_24px.svg"></md-icon>
+                    <textarea ng-model="vm.role.description" required name="description"></textarea>
+                    <div ng-messages="editRoleForm.description.$error" md-auto-hide="false">
+                        <div ng-message="required">
+                            {{'string.description_required' | translate}}
+                        </div>
+                    </div>
+                </md-input-container>
+
+
+                <!--permissions-->
+                <div layout="column" data-ng-if="vm.permissions.all.length">
+                    <md-input-container class="md-icon-float md-block">
+                        <label>{{'PERMISSIONS.permissions' | translate}}</label>
+                        <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_verified_user_24px.svg"></md-icon>
+                        <md-select ng-model="vm.permissions.selected" multiple name="permissions" required>
+                            <md-optgroup ng-repeat="cat in vm.permissionsCaterories" label="{{cat}}">
+                                <md-option ng-value="item" ng-repeat="item in vm.permissions.all | filter: {category: cat}">{{item.label}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                        <div ng-messages="editRoleForm.permissions.$error" md-auto-hide="false">
+                            <div ng-message="required">
+                                {{'PERMISSIONS.select_permissions_required' | translate}}
+                            </div>
+                        </div>
+                    </md-input-container>
+                </div>
+
+                <br/>
+                <div data-ng-show="vm.permissions.all.length" ng-show="sCtrl.can.readPermission()">
+                    <md-button md-no-ink class="md-accent" ng-click="vm.loadPermissionsList(true)" >
+                        {{'PERMISSIONS.view_all_available' | translate}}&nbsp;({{vm.permissions.all.length}})
+                    </md-button>
+                </div>
+
+                <!--enabled-->
+                <md-input-container class="md-block">
+                    <md-switch class="md-primary" ng-model="vm.role.enabled">
+                        {{'string.active' | translate}}
+                    </md-switch>
+                </md-input-container>
+
+            </md-content>
+        </div>
+    </form>
+
+
+    <div data-ng-hide="!vm.roleData.loading" layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <md-divider></md-divider>
+    <br/>
+
+    <md-button class="md-primary md-raised"
+               ng-click="vm.save(editRoleForm)">
+        {{'button.save' | translate}}
+    </md-button>
+    <md-button class="md-active md-raised"
+               ng-click="vm.cancel()">
+        {{'button.cancel' | translate}}
+    </md-button>
+</div>

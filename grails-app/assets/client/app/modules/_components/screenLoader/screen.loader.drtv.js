@@ -1,0 +1,18 @@
+/**
+ * Created by Asiel on 1/10/2017.
+ */
+
+'use strict';
+
+angular
+    .module('gmsBoilerplate')
+    .directive('gmsScreenLoader', gmsScreenLoader);
+
+function gmsScreenLoader() {
+    return {
+        templateUrl: 'assets/app/modules/_components/screenLoader/screen.loader.tpl.html',
+        transclude: true,
+        restrict: 'EAC',
+        scope: {screenType: '@'}
+    }
+}

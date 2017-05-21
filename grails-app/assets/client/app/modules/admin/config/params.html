@@ -1,0 +1,31 @@
+<div data-ng-cloak>
+
+    <form data-ng-show="vm.entity" role="form" name="configForm">
+        <div layout="row" layout-padding layout-wrap>
+            <div flex="99">
+                <md-content class="md-no-momentum">
+                    <md-checkbox ng-model="vm.entity.multiEntity" aria-label="Multi-entidad">
+                        {{'CONFIGURATION.is_multi_entity_app' | translate}}
+                    </md-checkbox>
+                </md-content>
+            </div>
+        </div>
+    </form>
+
+    <div data-ng-hide="!vm.entityData.loading" layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <md-divider></md-divider>
+    <br/>
+
+    <md-button class="md-primary md-raised"
+               ng-click="vm.save(configForm)">
+        {{'button.save' | translate}}
+    </md-button>
+    <md-button class="md-active md-raised"
+               ng-click="vm.cancel()">
+        {{'button.cancel' | translate}}
+    </md-button>
+
+</div>

@@ -36,7 +36,7 @@ class OwnedEntityController implements ExceptionHandler{
     def search(SearchCommand cmd, Long uid) {
         if(cmd.validate()){
             def result = ownedEntityService.searchByUser(cmd, uid, params)
-            if(result){ doSuccess("general.done.ok", result) }
+            if(result){ doSuccessWithArgs("general.done.ok", result) }
             doFail("general.done.KO")
         }
         else { throw new ValidationsException() }
@@ -53,7 +53,7 @@ class OwnedEntityController implements ExceptionHandler{
     def searchAll(SearchCommand cmd) {
         if(cmd.validate()){
             def result = ownedEntityService.search(cmd, params)
-            if(result){ doSuccess("general.done.ok", result) }
+            if(result){ doSuccessWithArgs("general.done.ok", result) }
             doFail("general.done.KO")
         }
         else { throw new ValidationsException() }
@@ -73,7 +73,7 @@ class OwnedEntityController implements ExceptionHandler{
         final e = ownedEntityService.save(cmd)
         if(e){
             String p0 = g.message(code:"article.the_female_singular"), p1 = g.message(code:"security.owned_entity.entity")
-            doSuccess(g.message(code: "general.action.CREATE.success", args: [p0, p1, "a"]) as String, [id: e.id])
+            doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "a"]) as String, [id: e.id])
         }
     }
 
@@ -91,7 +91,7 @@ class OwnedEntityController implements ExceptionHandler{
         final e = ownedEntityService.save(cmd, id)
         if(e){
             String p0 = g.message(code:"article.the_female_singular"), p1 = g.message(code:"security.owned_entity.entity")
-            doSuccess(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "a"]) as String, [id: e.id])
+            doSuccessWithArgs(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "a"]) as String, [id: e.id])
         }
     }
 
@@ -105,7 +105,7 @@ class OwnedEntityController implements ExceptionHandler{
     @Secured("hasRole('READ__OWNED_ENTITY')")
     def show(Long id){
         def e = ownedEntityService.show(id)
-        if(e){ doSuccess("general.done.ok", [item: e]) }
+        if(e){ doSuccessWithArgs("general.done.ok", [item: e]) }
         else { doFail("general.done.KO") }
     }
 
@@ -119,7 +119,7 @@ class OwnedEntityController implements ExceptionHandler{
     def delete(Long id){
         String p0 = g.message(code:"article.the_female_singular"), p1 = g.message(code:"security.owned_entity.entity")
         final e = ownedEntityService.delete(id)
-        if(e) { doSuccess g.message(code: "general.action.DELETE.success", args: [p0, p1, "a"]) as String, [id: id] }
+        if(e) { doSuccessWithArgs(g.message(code: "general.action.DELETE.success", args: [p0, p1, "a"]) as String, [id: id]) }
         else doFail "general.done.KO"
     }
     //endregion
@@ -132,14 +132,14 @@ class OwnedEntityController implements ExceptionHandler{
     @Secured("hasRole('READ__OWNED_ENTITY')")
     def users(Long id){
         final r = ownedEntityService.getUsersByOwnedEntity(id, params)
-        if(r){ doSuccess "general.done.ok", r }
+        if(r){ doSuccessWithArgs("general.done.ok", r) }
         else { doFail "general.done.KO" }
     }
 
     @Secured("hasRole('READ__OWNED_ENTITY')")
     def getBy (){
         def e = ownedEntityService.getBy(params)
-        if(e){ doSuccess "general.done.ok", [item: e] }
+        if(e){ doSuccessWithArgs("general.done.ok", [item: e]) }
         else { doFail "general.done.KO" }
     }
 }

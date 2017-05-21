@@ -1,0 +1,48 @@
+<div data-ng-cloak>
+    <form data-ng-show="vm.entity" role="form" name="editEntityForm">
+        <div layout="column" layout-padding>
+            <md-content class="md-no-momentum">
+
+                <!--name-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.name' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_home_24px.svg"></md-icon>
+                    <input ng-model="vm.entity.name" type="text" readonly/>
+                </md-input-container>
+
+                <!--username-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.user' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg"></md-icon>
+                    <textarea ng-model="vm.entity.username" readonly></textarea>
+                </md-input-container>
+
+                <!--description-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.description' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_description_24px.svg"></md-icon>
+                    <textarea ng-model="vm.entity.description" readonly></textarea>
+                </md-input-container>
+
+            </md-content>
+        </div>
+    </form>
+
+
+    <div data-ng-hide="!vm.entityData.loading" layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <md-divider></md-divider>
+    <br/>
+
+    <md-button class="md-primary md-raised" ng-click="vm.cancel()">
+        {{'button.back' | translate}}
+    </md-button>
+    <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateOwnedEntity()">
+        {{'button.edit' | translate}}
+    </md-button>
+    <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteOwnedEntity()">
+        {{'button.delete' | translate}}
+    </md-button>
+</div>

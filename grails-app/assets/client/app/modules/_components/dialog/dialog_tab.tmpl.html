@@ -1,0 +1,33 @@
+<md-dialog aria-label="{{title}}" style="min-width: 340px;">
+    <form name="mdDialogTab">
+        <md-toolbar ng-class="typeClass">
+            <div class="md-toolbar-tools">
+                <h2>{{title}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="assets/app/modules/_common/img/navigation/ic_close_24px.svg" aria-label="{{'button.close' | translate}}"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="max-width:800px;max-height:810px; ">
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="{{tabsTitles[$index]}}" ng-repeat="t in tabsContent track by $index">
+                    <md-content class="md-padding">
+                        <h1 class="md-display-2">{{tabsHeaders[$index] | caser}}</h1>
+                        <p data-ng-bind-html="t"></p>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-class='{"{{typeClass}}": b["primary"]}' ng-repeat="b in buttons track by $index" ng-click="b['function'](); cancel();" >
+                {{b.text}}
+            </md-button>
+            <md-button ng-click="cancel();" >
+                {{'button.close' | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

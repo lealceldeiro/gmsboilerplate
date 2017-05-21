@@ -1,0 +1,17 @@
+.even-class {
+    background: #e4e2e2;
+}
+
+.selected-item {
+    background: #a6a6a6;
+    color: black;
+    border: 1px #696666 solid !important;
+}
+
+.opacity-05 {
+    opacity: 0.5;
+}
+
+.blue {
+    color: dodgerblue;
+}

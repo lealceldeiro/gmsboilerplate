@@ -1,0 +1,131 @@
+<div data-ng-cloak>
+
+
+    <form data-ng-show="vm.entity" role="form" name="viewUserForm">
+        <div layout="row" layout-padding layout-wrap>
+            <div flex="50" data-ng-hide="vm.entityData.loading">
+                <md-content class="md-no-momentum">
+                    <!--name-->
+                    <md-input-container class="md-icon-float md-block">
+                        <label>{{'string.name' | translate}}</label>
+                        <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_outline_24px.svg"></md-icon>
+                        <input ng-model="vm.entity.name" type="text" readonly/>
+                    </md-input-container>
+
+                    <!--username-->
+                    <md-input-container class="md-icon-float md-block">
+                        <label>{{'string.user' | translate}}</label>
+                        <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg"></md-icon>
+                        <input ng-model="vm.entity.username" type="text" readonly/>
+                    </md-input-container>
+
+                    <!--email-->
+                    <md-input-container class="md-icon-float md-block">
+                        <label>{{'string.email' | translate}}</label>
+                        <md-icon md-svg-src="assets/app/modules/_common/img/communication/ic_email_24px.svg"></md-icon>
+                        <input ng-model="vm.entity.email" type="text" readonly/>
+                    </md-input-container>
+                </md-content>
+            </div>
+
+            <div flex="50" data-ng-hide="vm.entityData.loading">
+                <md-content class="md-no-momentum">
+                    <div layout="row" layout-padding>
+                        <div flex="50">
+                            <md-checkbox class="m-left-m-10px" ng-model="vm.entity.enabled" aria-label="{{'string.active' | translate}}" disabled>
+                                {{'string.active' | translate}}
+                            </md-checkbox>
+                        </div>
+                        <div flex="50">
+                            <span>Photo will go here</span>
+                        </div>
+                    </div>
+
+                </md-content>
+            </div>
+
+            <!--Roles when single Entity-->
+            <div class="m-left-m-10px" flex="100" layout="row" data-ng-controller="chipCtrl as chipCtrl"
+                 data-ng-if="!vm.isProfile && vm.roles.all.length && vm.entities.length === 1">
+                <div flex="5" layout="center start">
+                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                </div>
+                <div flex="95">
+                    <md-chips ng-model="vm.roles.all" readonly="true">
+                        <md-chip-template>
+                                <span>
+                                  <strong>{{$chip.label}}</strong>
+                                </span>
+                        </md-chip-template>
+                    </md-chips>
+                </div>
+            </div>
+
+            <div data-ng-hide="!vm.entityData.loading" layout="row" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+            </div>
+
+        </div>
+
+        <!--vm.entities.length > 1: select roles for many entities at the time-->
+        <div data-ng-if="!vm.isProfile && vm.entities.length > 1" layout="row" layout-padding layout-wrap
+             class="p-t-0">
+            <!--OwnedEntity-->
+            <div flex="50">
+                <md-virtual-repeat-container>
+                    <div md-virtual-repeat="item in vm.entities"
+                         class="repeated-item background-warn hand-pointer"
+                         data-ng-class-even="'even-class'"
+                         data-ng-class="{'selected-item': item.id === vm.selectedEntity.id}"
+                         data-ng-click="vm.selectEntity(item)"
+                         layout="row"
+                    >
+                        <span data-ng-bind="item.name + ' (' + item.username + ')'"></span>
+                        <span flex></span>
+                        <small class="m-right-6px">
+                            <span data-ng-if="item.id === vm.selectedEntity.id" class="text-italic">(seleccionada)
+                            </span>
+                        </small>
+                    </div>
+                </md-virtual-repeat-container>
+            </div>
+            <!--Roles-->
+            <div flex="50">
+                <div class="m-left-m-10px" flex="100" layout="row" data-ng-controller="chipCtrl as chipCtrl"
+                     data-ng-if="vm.roles.all.length && vm.entities.length > 1"
+                     data-ng-hide="vm.roles.loading">
+                    <div flex="5" layout="center start">
+                        <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                    </div>
+                    <div flex="95">
+                        <md-chips ng-model="vm.roles.all" readonly="true">
+                            <md-chip-template>
+                                <span>
+                                  <strong>{{$chip.label}}</strong>
+                                </span>
+                            </md-chip-template>
+                        </md-chips>
+                    </div>
+                </div>
+                <div data-ng-hide="!vm.roles.loading" layout="row" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <md-divider></md-divider>
+    <br/>
+
+    <md-button class="md-primary md-raised" ng-click="vm.cancel()">
+        {{'button.back' | translate}}
+    </md-button>
+    <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateUser()">
+        {{'button.edit' | translate}}
+    </md-button>
+    <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteUser()">
+        {{'button.delete' | translate}}
+    </md-button>
+
+</div>

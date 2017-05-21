@@ -44,7 +44,7 @@ class UserController implements ExceptionHandler{
     def search(SearchCommand cmd, Long eid) {
         if(cmd.validate()){
             def result = ownedEntityService.getUsersByOwnedEntity(eid, params, cmd)
-            if(result){ doSuccess("general.done.ok", result) }
+            if(result){ doSuccessWithArgs("general.done.ok", result) }
             doFail("general.done.KO")
         }
         else { throw new ValidationsException() }
@@ -61,7 +61,7 @@ class UserController implements ExceptionHandler{
     def searchAll(SearchCommand cmd) {
         if(cmd.validate()){
             def result = userService.search(cmd, params)
-            if(result){ doSuccess("general.done.ok", result) }
+            if(result){ doSuccessWithArgs("general.done.ok", result) }
             doFail("general.done.KO")
         }
         else { throw new ValidationsException() }
@@ -83,7 +83,7 @@ class UserController implements ExceptionHandler{
         final e = userService.save(cmd)
         if(e){
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
-            doSuccess(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
+            doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
         }
     }
 
@@ -104,7 +104,7 @@ class UserController implements ExceptionHandler{
         final e = userService.save(cmd, id)
         if(e){
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
-            doSuccess(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "o"]) as String, [id: e.id])
+            doSuccessWithArgs(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "o"]) as String, [id: e.id])
         }
     }
 
@@ -117,7 +117,7 @@ class UserController implements ExceptionHandler{
     @Secured("hasAnyRole('READ__USER', 'READ__PROFILE')")
     def show(Long id){
         def e = userService.show(id)
-        if(e){ doSuccess("general.done.ok", [item: e]) }
+        if(e){ doSuccessWithArgs("general.done.ok", [item: e]) }
         else { doFail("general.done.KO") }
     }
 
@@ -143,7 +143,7 @@ class UserController implements ExceptionHandler{
         if(e){
             if(markDefaultAdminAsUnset){ configurationService.setDefaultAdminUnSetUp() }
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
-            doSuccess g.message(code: "general.action.DELETE.success", args: [p0, p1, "o"]) as String, [id: id]
+            doSuccessWithArgs(g.message(code: "general.action.DELETE.success", args: [p0, p1, "o"]) as String, [id: id])
         }
         else doFail "general.done.KO"
     }
@@ -152,7 +152,7 @@ class UserController implements ExceptionHandler{
     @Secured("hasRole('UPDATE__USER')")
     def activate (Long id, Boolean value){
         final e = userService.activate(id, value)
-        if(e) { doSuccess"general.done.ok", [id: e.id] }
+        if(e) { doSuccessWithArgs("general.done.ok", [id: e.id]) }
         else doFail "general.done.KO"
     }
 
@@ -166,7 +166,7 @@ class UserController implements ExceptionHandler{
     @Secured("hasAnyRole('READ__USER', 'READ__PROFILE')")
     def getBy(){
         def e = userService.getBy(params)
-        if(e) { doSuccess"general.done.ok", [item: e] }
+        if(e) { doSuccessWithArgs("general.done.ok", [item: e]) }
         else doFail "general.done.KO"
     }
 
@@ -181,7 +181,7 @@ class UserController implements ExceptionHandler{
     def getAssociatedToEntities(SearchUserCommand cmd){
         if(cmd.validate()){
             def result = ownedEntityService.getUsersByOwnedEntities(cmd.e, params, cmd)
-            if(result){ doSuccess("general.done.ok", result) }
+            if(result){ doSuccessWithArgs("general.done.ok", result) }
             doFail("general.done.KO")
         }
         else { throw new ValidationsException() }

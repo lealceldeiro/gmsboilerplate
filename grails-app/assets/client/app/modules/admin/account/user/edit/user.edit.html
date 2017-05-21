@@ -1,0 +1,211 @@
+<div data-ng-cloak>
+
+    <form data-ng-show="vm.entity" role="form" name="editUserForm" novalidate>
+        <div layout="row" layout-padding layout-wrap class="p-b-0">
+            <div flex="50">
+                <md-content class="md-no-momentum">
+                    <!--name-->
+                    <md-input-container class="md-icon-float md-block">
+                        <label>{{'string.name' | translate}}</label>
+                        <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_outline_24px.svg"></md-icon>
+                        <input ng-model="vm.entity.name" type="text" name="name" required/>
+
+                        <div ng-messages="editUserForm.name.$error" md-auto-hide="false">
+                            <div ng-message="required">
+                                {{'string.name_required' | translate}}
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <!--username-->
+                    <md-input-container class="md-icon-float md-block">
+                        <label>{{'string.user' | translate}}</label>
+                        <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg"></md-icon>
+                        <input ng-model="vm.entity.username" type="text" name="username" required
+                               data-ng-model-options="{debounce: 500}"
+                               data-ng-change="vm.checkUsername()"
+                               data-ng-pattern="/(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[._-]?[a-zA-Z0-9]+$/"/>
+
+                        <div ng-messages="editUserForm.username.$error" md-auto-hide="false">
+                            <div ng-message="required">
+                                {{'string.user_required' | translate}}
+                            </div>
+                            <div ng-message="pattern">
+                                {{'string.it_is_not' | translate}}
+                                <strong class="hand-pointer" data-ng-click="vm.seeValidUser()">
+                                    {{'string.valid_user' | translate:"{'GENDER': 'male'}"}}
+                                </strong>
+                            </div>
+                        </div>
+                        <input type="hidden" name="userTaken" data-ng-if="vm.userTaken" ng-model="vm.ctrlUserTaken" required>
+                        <div ng-messages="editUserForm.userTaken.$error" md-auto-hide="false">
+                            <div ng-message="required">
+                                {{'string.user_taken' | translate}}
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <!--email-->
+                    <md-input-container class="md-icon-float md-block">
+                        <label>{{'string.email' | translate}}</label>
+                        <md-icon md-svg-src="assets/app/modules/_common/img/communication/ic_email_24px.svg"></md-icon>
+                        <input ng-model="vm.entity.email" type="email" name="email" required
+                               data-ng-model-options="{debounce: 500}"
+                               data-ng-change="vm.checkEmail()"/>
+
+                        <div ng-messages="editUserForm.email.$error" md-auto-hide="false">
+                            <div ng-message="required">
+                                {{'string.email_required' | translate}}
+                            </div>
+                            <div ng-message="email">
+                                {{'string.email_invalid' | translate}}
+                            </div>
+                        </div>
+                        <input type="hidden" name="emailTaken" data-ng-if="vm.emailTaken" ng-model="vm.ctrlEmailTaken" required>
+                        <div ng-messages="editUserForm.emailTaken.$error" md-auto-hide="false">
+                            <div ng-message="required">
+                                {{'string.email_taken' | translate}}
+                            </div>
+                        </div>
+                    </md-input-container>
+                </md-content>
+            </div>
+
+            <div flex="50">
+                <md-content class="md-no-momentum">
+                    <!--password-->
+                    <md-input-container class="md-icon-float md-block">
+                        <label>{{'string.password' | translate}}</label>
+                        <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_lock_24px.svg"></md-icon>
+                        <input ng-model="vm.entity.password" type="password" name="password"
+                               data-ng-required="vm.isPasswordRequired()"
+                               data-ng-change="vm.checkPasswordMatch()"
+                        />
+
+                        <div ng-messages="editUserForm.password.$error" md-auto-hide="false">
+                            <div ng-message="required">
+                                {{'string.password_required' | translate}}
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <div data-ng-if="vm.entity.password && editUserForm.password.$valid"
+                            ng-password-strength="vm.entity.password" strength="vm.passStrength"
+                         inner-class="progress-bar" inner-class-prefix="progress-bar-"
+                        class="password-strength-ch"
+                    ></div>
+
+                    <!--repeat password-->
+                    <md-input-container class="md-icon-float md-block">
+                        <label>{{'string.password_repeat' | translate}}</label>
+                        <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_lock_outline_24px.svg"></md-icon>
+                        <input ng-model="vm.entity.password2" type="password" name="password2"
+                               data-ng-required="vm.isPasswordRequired() || vm.entity.password"
+                               data-ng-change="vm.checkPasswordMatch()"/>
+                        <div ng-messages="editUserForm.password2.$error" md-auto-hide="false">
+                            <div ng-message="required">
+                                {{'string.password_repeat_required' | translate}}
+                            </div>
+                        </div>
+                        <div ng-messages="vm.passwordMatch" md-auto-hide="false">
+                            <div ng-message="notMatch">
+                                {{'string.password_repeat_not_match' | translate}}
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <div layout="row" layout-padding>
+                        <div flex="50">
+                            <md-checkbox class="m-left-m-10px" ng-model="vm.entity.enabled" aria-label="Activo">
+                                {{'string.active' | translate}}
+                            </md-checkbox>
+                        </div>
+                        <div flex="50">
+                            <span>Photo will go here</span>
+                        </div>
+                    </div>
+
+                </md-content>
+            </div>
+
+            <div layout="row" flex="100" class="m-left-12px">
+                <md-checkbox aria-label="Solo en esta entidad"
+                             ng-change="vm.toggleEMode()"
+                             ng-disabled="!vm.canToogleSingleEntityMode"
+                             ng-model="vm.singleEntityMode" >
+                    <span data-ng-class="{'opacity-05 ': !vm.singleEntityMode}">
+                        {{'USER.permissions_only_in_this_entity' | translate}}&nbsp;({{sCtrl.oEntity.name || sCtrl.oEntity.username}})
+                    </span>
+                </md-checkbox>
+            </div>
+
+            <!--Roles when single Entity-->
+            <div layout="row" flex="100" data-ng-if="vm.roles.all.length && vm.entities.length === 1 || vm.singleEntityMode">
+                <md-input-container class="md-icon-float md-block" flex="100" >
+                    <label>{{'ROLE.roles' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                    <md-select ng-model="vm.roles.selected" multiple>
+                        <md-optgroup>
+                            <md-option ng-value="item" ng-repeat="item in vm.roles.all">{{item.label}}</md-option>
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+
+        <!--vm.entities.length > 1: select roles for many entities at the time-->
+        <div data-ng-if="vm.entities.length > 1 && !vm.singleEntityMode" layout="row" layout-padding layout-wrap
+             class="p-t-0">
+            <!--OwnedEntity-->
+            <div flex="50">
+                <md-virtual-repeat-container>
+                    <div md-virtual-repeat="item in vm.entities"
+                         class="repeated-item background-warn hand-pointer"
+                         data-ng-class-even="'even-class'"
+                         data-ng-class="{'selected-item': item.id === vm.selectedEntity.id}"
+                         data-ng-click="vm.saveRolesAndSelectEntity(item)"
+                         layout="row"
+                    >
+                        <span data-ng-bind="item.name + ' (' + item.username + ')'"></span>
+                        <span flex></span>
+                        <small class="m-right-6px">
+                            <span data-ng-if="item.id === vm.selectedEntity.id" class="text-italic">({{'string.selected' | translate}})
+                            </span>
+                        </small>
+                    </div>
+                </md-virtual-repeat-container>
+            </div>
+            <!--Roles-->
+            <div flex="50" layout="row" data-ng-if="vm.roles.all.length && vm.entities.length > 1">
+
+                <md-input-container class="md-icon-float md-block" flex="100" >
+                    <label>{{'ROLE.roles' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                    <md-select ng-model="vm.roles.selected" multiple>
+                        <md-optgroup>
+                            <md-option ng-value="item" ng-repeat="item in vm.roles.all">{{item.label}}</md-option>
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+
+    </form>
+
+    <div data-ng-hide="!vm.entityData.loading" layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <md-divider></md-divider>
+    <br/>
+
+    <md-button class="md-primary md-raised"
+               ng-click="vm.save(editUserForm)">
+        {{'button.save' | translate}}
+    </md-button>
+    <md-button class="md-active md-raised"
+               ng-click="vm.cancel()">
+        {{'button.cancel' | translate}}
+    </md-button>
+
+</div>

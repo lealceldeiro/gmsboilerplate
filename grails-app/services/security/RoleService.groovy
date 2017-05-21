@@ -7,8 +7,6 @@ import exceptions.GenericException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
 import grails.transaction.Transactional
-import mapping.security.PermissionBean
-import mapping.security.RoleBean
 
 @Transactional
 class RoleService {
@@ -39,7 +37,7 @@ class RoleService {
 
         def mapped = []
         list.each {
-            mapped << new RoleBean(id: it.id, label: it.label, description: it.description, enabled: it.enabled)
+            mapped << [id: it.id, label: it.label, description: it.description, enabled: it.enabled]
         }
 
         response.items = mapped
@@ -117,14 +115,14 @@ class RoleService {
     /**
      * Shows some role's info
      * @param id Identifier of the role that is going to be shown
-     * @return A RoleBean entity with the role's info or false if none role is found
+     * @return The role's info or false if none role is found
      */
     def show (long id){
         def e = Optional.ofNullable(BRole.get(id))
         if(e.isPresent()){
             def i = e.value
             if(i){
-                return new RoleBean(id: i.id, label: i.label, description: i.description, enabled: i.enabled)
+                return [id: i.id, label: i.label, description: i.description, enabled: i.enabled]
             }
         }
         else throw new NotFoundException("general.not_found" ,"security.role.roleCamel", true)
@@ -164,7 +162,7 @@ class RoleService {
         def mapped = []
         def list = BRole_Permission.getPermissionsByRole(id, params)
         list.each{
-            mapped << new PermissionBean(id: it.id, label: it.label, name: it.name)
+            mapped << [id: it.id, label: it.label, name: it.name]
         }
 
         response.items = mapped

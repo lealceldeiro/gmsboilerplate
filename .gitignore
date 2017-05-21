@@ -44,3 +44,5 @@ web-app/images
 web-app/js
 
 wrapper/
+
+grails-app/assets/client/bower_components

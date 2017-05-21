@@ -2,14 +2,6 @@ class UrlMappings {
 
     static mappings = {
 
-        //generic
-        "/$controller/$action?/$id?(.$format)?"{
-            constraints {
-                // apply constraints here
-            }
-        }
-
-
         //region USER
         "/api/user"                             (controller: "user")                            {action = [GET: "searchAll", PUT: "create"]}
         "/api/user/associated"                  (controller: "user", action: "getAssociatedToEntities")
@@ -48,5 +40,6 @@ class UrlMappings {
         //default
         "/"(view:"/index")
         "500"(view:'/error')
+        "404"(view:"/index")
     }
 }

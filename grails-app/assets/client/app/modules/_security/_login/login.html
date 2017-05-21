@@ -1,0 +1,59 @@
+<div class="min-width-500px">
+    <form role="form" name="loginForm" novalidate>
+
+        <md-toolbar>
+            <div class="md-toolbar-tools" layout-align="center center">
+                <div layout-align="center center">
+                    <div layout="row" layout-align="center center" flex="100">
+                        <md-icon md-svg-src="assets/app/modules/_common/img/hardware/ic_security_24px.svg"></md-icon>
+                        &nbsp;{{ 'LOGIN.authentication' | translate}}
+                        <h2></h2>
+                    </div>
+                </div>
+            </div>
+        </md-toolbar>
+
+        <br/>
+
+        <md-content class="md-no-momentum">
+
+            <!--username or email-->
+            <md-input-container class="md-icon-float md-block">
+                <label>{{ 'LOGIN.user_email' | translate}}</label>
+                <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg"></md-icon>
+                <input ng-model="vm.emailOrUsername" type="text" required name="emailOrUsername"
+                       ng-keypress="vm.checkKeyDown($event, loginForm)"/>
+
+                <div ng-messages="loginForm.emailOrUsername.$error" md-auto-hide="false">
+                    <div ng-message="required">
+                        {{ 'LOGIN.user_email_required' | translate}}
+                    </div>
+                </div>
+            </md-input-container>
+
+            <!--password-->
+            <md-input-container class="md-icon-float md-block">
+                <label>{{ 'LOGIN.password' | translate}}</label>
+                <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_lock_24px.svg"></md-icon>
+                <input ng-model="vm.password" type="password" required name="password"
+                       ng-keypress="vm.checkKeyDown($event, loginForm)"/>
+                <div ng-messages="loginForm.password.$error" md-auto-hide="false">
+                    <div ng-message="required">
+                        {{ 'LOGIN.password_required' | translate}}
+                    </div>
+                </div>
+            </md-input-container>
+
+            <div layout-align="center center">
+                <md-button class="md-primary md-raised bl" aria-label="{{'button.accept' | translate}}" layout-fill
+                           ng-click="vm.login(loginForm)">
+                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_done_24px.svg"></md-icon>
+                    &nbsp;
+                    {{'button.login' | translate}}
+                </md-button>
+            </div>
+
+        </md-content>
+
+    </form>
+</div>

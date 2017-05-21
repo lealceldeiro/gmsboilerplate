@@ -1,0 +1,62 @@
+<div class="demo-md-panel-content"  data-ng-cloak data-ng-show="vm.role">
+
+    <div layout="column" layout-padding>
+        <form data-ng-show="vm.role" role="form" name="viewRoleForm">
+            <md-content class="md-no-momentum">
+
+                <!--name-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.name' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                    <input ng-model="vm.role.label" type="text" readonly/>
+                </md-input-container>
+
+                <!--description-->
+                <md-input-container class="md-icon-float md-block">
+                    <label>{{'string.description' | translate}}</label>
+                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_description_24px.svg"></md-icon>
+                    <textarea ng-model="vm.role.description" readonly></textarea>
+                </md-input-container>
+
+
+                <!--permissions-->
+                <div layout="row" data-ng-controller="chipCtrl as chipCtrl" data-ng-if="vm.permissions.all.length">
+                    <div flex="3" layout="center center">
+                        <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_verified_user_24px.svg"></md-icon>
+                    </div>
+                    <span flex></span>
+                    <div flex="95">
+                        <md-chips ng-model="vm.permissions.all" readonly="true">
+                        </md-chips>
+                    </div>
+                </div>
+
+                <!--enabled-->
+                <md-input-container class="md-block">
+                    <md-switch class="md-primary" ng-model="vm.role.enabled" disabled>
+                        {{'string.active' | translate}}
+                    </md-switch>
+                </md-input-container>
+
+            </md-content>
+        </form>
+    </div>
+
+
+    <div data-ng-hide="vm.role" layout="row" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <md-divider></md-divider>
+    <br/>
+
+    <md-button class="md-primary md-raised" ng-click="vm.cancel()">
+        {{'button.back' | translate}}
+    </md-button>
+    <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateRole()">
+        {{'button.edit' | translate}}
+    </md-button>
+    <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteRole()">
+        {{'button.delete' | translate}}
+    </md-button>
+</div>

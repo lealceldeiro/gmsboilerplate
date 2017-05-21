@@ -1,0 +1,73 @@
+<div ng-cloak layout-gt-sm="row" layout="column" >
+
+    <div flex-gt-sm="99" flex>
+        <!--change oe view-->
+        <md-button aria-label="{{'ENTITY.view_mine' | translate}}" class="md-icon-button"
+                   ng-show="sCtrl.can.readOwnedEntity() && vm.entities.allLoaded"
+                   ng-click="vm.search(true)">
+            <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_flip_to_back_24px.svg"></md-icon>
+            <md-tooltip>{{'ENTITY.view_mine' | translate}}</md-tooltip>
+        </md-button>
+        <md-button aria-label="{{'ENTITY.view_all' | translate}}" class="md-icon-button"
+                   ng-hide="!sCtrl.can.readAllOwnedEntity() || vm.entities.allLoaded"
+                   ng-click="vm.searchAll(true)">
+            <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_flip_to_front_24px.svg"></md-icon>
+            <md-tooltip>{{'ENTITY.view_all' | translate}}</md-tooltip>
+        </md-button>
+
+        <!--add new oe-->
+        <md-button aria-label="{{'ENTITY.new' | translate}}" class="md-icon-button"
+                   ng-click="vm.new()"
+                   ng-show="sCtrl.can.createOwnedEntity()">
+            <md-icon md-svg-src="assets/app/modules/_common/img/content/ic_add_24px.svg"></md-icon>
+            <md-tooltip>{{'ENTITY.new' | translate}}</md-tooltip>
+        </md-button>
+
+        <md-content>
+            <md-list flex>
+                <md-list-item class="md-2-line" ng-repeat="item in vm.entities.all" ng-click="vm.view(item.id)" aria-label="Entidad: {{item.name}}">
+                    <div class="md-list-item-text" layout="column">
+                        <h3 data-ng-bind="item.name + ' (' + item.username + ')'"></h3>
+
+                        <p>
+                            <small>
+                                <span style="font-style: italic;" data-ng-bind="item.description"></span>
+                            </small>
+                        </p>
+
+                        <md-button class="md-secondary md-icon-button" aria-label="{{'button.edit' | translate}}"
+                                   ng-click="vm.edit(item.id)" ng-show="sCtrl.can.updateOwnedEntity()">
+                            <md-icon md-svg-src="assets/app/modules/_common/img/content/ic_create_24px.svg"></md-icon>
+                            <md-tooltip>{{'button.edit' | translate}}</md-tooltip>
+                        </md-button>
+
+                        <md-button class="md-secondary md-icon-button" aria-label="{{'button.delete' | translate}}"
+                                   ng-click="vm.remove(item.id)" ng-show="sCtrl.can.deleteOwnedEntity()">
+                            <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_delete_24px.svg"></md-icon>
+                            <md-tooltip>{{'button.delete' | translate}}</md-tooltip>
+                        </md-button>
+
+                    </div>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+</div>
+
+<div data-ng-show="!vm.entities.loading && vm.entities.all.length && pc.showPagination()">
+    <md-content>
+        <br>
+        <cl-paging flex cl-pages="pc.getTotalPages()"
+                   cl-steps="pc.getMaxLinks()"
+                   cl-page-changed="vm.changePage(pc.currentPage)"
+                   cl-align="center center"
+                   cl-current-page="pc.currentPage"></cl-paging>
+
+        <br>
+    </md-content>
+</div>
+
+<div data-ng-hide="!vm.entities.loading" layout="row" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>
