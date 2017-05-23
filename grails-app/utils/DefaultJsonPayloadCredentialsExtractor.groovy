@@ -1,5 +1,4 @@
 import grails.plugin.springsecurity.rest.credentials.AbstractJsonPayloadCredentialsExtractor
-import groovy.util.logging.Slf4j
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 
 import javax.servlet.http.HttpServletRequest
@@ -7,8 +6,6 @@ import javax.servlet.http.HttpServletRequest
 /**
  * Created by asiel on 21/05/17.
  */
-
-@Slf4j
 class DefaultJsonPayloadCredentialsExtractor extends AbstractJsonPayloadCredentialsExtractor {
     String usernamePropertyName = 'usrnm' //check this later: these properties should be configured by the security plugin
     String passwordPropertyName = 'pswrd'
