@@ -9,8 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    %{--todo: set href="/" for production env--}%
-    <base href="/gmsboilerplate/" id="appBaseUrl">
+    <base href="${g.createLink(absolute: true)}" id="appBaseUrl">
 
     <title data-ng-bind="idxCtrl.siteTitle() ? 'GMS - Boilerplate | ' + idxCtrl.siteTitle()
      : 'GMS - Boilerplate'"></title>
