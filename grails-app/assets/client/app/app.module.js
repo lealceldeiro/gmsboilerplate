@@ -44,7 +44,7 @@
 
     var lan = {};
 
-//region language-loading...
+    //region language-loading...
     env.baseUrl = document.getElementById('appBaseUrl').href;
     var languages = ['en', 'es'];
     for (var lp = 0; lp < languages.length; lp++) {
@@ -56,6 +56,7 @@
     }
 //endregion
 
+    /*@ngInject*/
     function config($logProvider) {
         $logProvider.debugEnabled(true);
     }
@@ -76,6 +77,6 @@
         )
         .constant('__env', env)         // Register environment in AngularJS as constant
         .constant('lan', lan)           // Register languages strings as constant object
-        .config(['$logProvider', config]);
+        .config(config);
 
 }());

@@ -7,9 +7,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('paginationCtrl', ['paginationSrv', '$scope', paginationCtrl]);
+    .controller('paginationCtrl', paginationCtrl);
 
+/*@ngInject*/
 function paginationCtrl(paginationSrv, $scope) {
+
     var vm = this;
 
     vm.wizard = {

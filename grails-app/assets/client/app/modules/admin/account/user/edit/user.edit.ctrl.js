@@ -6,12 +6,12 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('userEditCtrl', ['indexSrv', 'userSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv', 'roleSrv',
-        'blockSrv', 'sessionSrv', '$timeout', 'ownedEntitySrv', 'dialogSrv', 'searchSrv', 'configSrv', 'translatorSrv',
-        userEditCtrl]);
+    .controller('userEditCtrl', userEditCtrl);
 
+/*@ngInject*/
 function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, roleSrv, blockSrv, sessionSrv,
                       $timeout, ownedEntitySrv, dialogSrv, searchSrv, configSrv, translatorSrv) {
+
     var vm = this;
     var keyP = 'ADMIN_USER_EDIT';
 

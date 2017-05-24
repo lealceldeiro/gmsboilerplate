@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('configSrv', ['baseSrv', '$http', 'systemSrv', 'sessionSrv', configSrv]);
+    .service('configSrv', configSrv);
 
+/*@ngInject*/
 function configSrv(baseSrv, $http, systemSrv, sessionSrv) {
+
     var self = this;
 
     var url = systemSrv.APIAbsoluteUrl + "config/";

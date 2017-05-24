@@ -7,10 +7,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('indexCtrl', ['$scope', 'indexSrv', 'sessionSrv', '$timeout', 'systemSrv', 'configSrv', 'translatorSrv',
-        'navigationSrv', indexCtrl]);
+    .controller('indexCtrl', indexCtrl);
 
+/*@ngInject*/
 function indexCtrl($scope, indexSrv, sessionSrv, $timeout, systemSrv, configSrv, translatorSrv, navigationSrv) {
+
     var vm = this;
     var keyP = "__index__";
     var MAX_RETRY = 3, retries = 0;

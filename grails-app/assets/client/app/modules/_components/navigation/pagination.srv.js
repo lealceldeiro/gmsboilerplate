@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('paginationSrv', ['$rootScope', 'BROADCAST', paginationSrv]);
+    .service('paginationSrv', paginationSrv);
 
+/*@ngInject*/
 function paginationSrv($rootScope, BROADCAST) {
+
     var self = this;
 
     var FIRST_STEP = 8;

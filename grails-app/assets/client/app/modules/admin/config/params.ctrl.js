@@ -6,10 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('configParamsCtrl', ['configSrv', '$timeout', 'systemSrv', 'blockSrv', 'ROUTE',
-        'navigationSrv', 'sessionSrv', '$window', configParamsCtrl]);
+    .controller('configParamsCtrl', configParamsCtrl);
 
+/*@ngInject*/
 function configParamsCtrl(configSrv, $timeout, systemSrv, blockSrv, ROUTE, navigationSrv, sessionSrv, $window) {
+
     var vm = this;
     var keyP = "ADMIN_CONFIG_PARAMS";
     var retries = 0, MAX_RETRY = 3;

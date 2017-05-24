@@ -6,11 +6,12 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('roleEditCtrl', ['indexSrv', 'roleSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv', 'blockSrv',
-        'permissionSrv', 'dialogSrv', '$filter', 'translatorSrv', '$timeout', 'searchSrv', '$scope', roleEditCtrl]);
+    .controller('roleEditCtrl', roleEditCtrl);
 
+/*@ngInject*/
 function roleEditCtrl(indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, blockSrv,
                       permissionSrv, dialogSrv, $filter, translatorSrv, $timeout, searchSrv, $scope) {
+
     var vm = this;
     var keyP = 'ADMIN_ROLE_EDIT';
     var permissionsTabContents = null;

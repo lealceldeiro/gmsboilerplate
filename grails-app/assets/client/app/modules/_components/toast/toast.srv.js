@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('toastSrv', ['$rootScope', 'BROADCAST', toastSrv]);
+    .service('toastSrv', toastSrv);
 
+/*@ngInject*/
 function toastSrv($rootScope, BROADCAST) {
+
     var self = this;
 
     self.service = {

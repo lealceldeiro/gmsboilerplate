@@ -6,10 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('mainCtrl', ['indexSrv', mainCtrl]);
+    .controller('mainCtrl', mainCtrl);
 
-
+/*@ngInject*/
 function mainCtrl(indexSrv) {
+
     var vm = this;
 
     vm.wizard = {

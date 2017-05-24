@@ -6,8 +6,9 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('dialogCtrl', ['$mdDialog', 'dialogSrv', '$scope', 'BROADCAST', dialogCtrl]);
+    .controller('dialogCtrl', dialogCtrl);
 
+/*@ngInject*/
 function dialogCtrl($mdDialog, dialogSrv, $scope, BROADCAST) {
 
     var type;

@@ -6,7 +6,9 @@ angular
     .module('gmsBoilerplate')
     .service('roleSrv', roleSrv);
 
+/*@ngInject*/
 function roleSrv(systemSrv, $http, valueSrv, baseSrv) {
+
     var self = this;
     var rolesUrl = systemSrv.APIAbsoluteUrl + 'role/';
 
@@ -94,5 +96,3 @@ function roleSrv(systemSrv, $http, valueSrv, baseSrv) {
         return baseSrv.resolveDeferred(def);
     }
 }
-
-roleSrv.$inject = ['systemSrv', '$http', 'valueSrv', 'baseSrv'];

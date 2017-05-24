@@ -8,6 +8,7 @@ angular
     .module('gmsBoilerplate')
     .service('searchSrv', searchSrv);
 
+/*@ngInject*/
 function searchSrv() {
 
     var self = this;

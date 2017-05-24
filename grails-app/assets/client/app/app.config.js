@@ -6,11 +6,13 @@
 
 angular
     .module('gmsBoilerplate')
-    .config(['$mdThemingProvider', conf])
-    .run(['$rootScope', 'sessionSrv', 'navigationSrv', '__env', 'errorSrv', 'translatorSrv', runConfig]);
+    .config(conf)
+    .run(runConfig);
 
 
+/*@ngInject*/
 function runConfig($rootScope, sessionSrv, navigationSrv, __env, errorSrv, translatorSrv) {
+
     var prevRoute, currentRoute, params;
 
     $rootScope.$on('$routeChangeStart', function (event, next, data) {
@@ -136,7 +138,9 @@ function runConfig($rootScope, sessionSrv, navigationSrv, __env, errorSrv, trans
 
 }
 
+/*@ngInject*/
 function conf($mdThemingProvider) {
+
     $mdThemingProvider.theme('default')
         .primaryPalette('green')
         .accentPalette('blue');

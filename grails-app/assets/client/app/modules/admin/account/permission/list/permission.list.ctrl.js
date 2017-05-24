@@ -6,8 +6,7 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('permissionCtrl', ['indexSrv', 'systemSrv', 'permissionSrv', 'paginationSrv',
-        'blockSrv', 'translatorSrv', permissionCtrl]);
+    .controller('permissionCtrl', permissionCtrl);
 
 function permissionCtrl(indexSrv, systemSrv, permissionSrv, paginationSrv, blockSrv, translatorSrv) {
     var vm = this;

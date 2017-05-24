@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('blockSrv', ['$timeout', blockSrv]);
+    .service('blockSrv', blockSrv);
 
+/*@ngInject*/
 function blockSrv($timeout) {
+
     var self = this;
 
     var timer, miniTimer;

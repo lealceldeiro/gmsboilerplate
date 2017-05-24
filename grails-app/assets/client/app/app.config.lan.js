@@ -6,8 +6,9 @@
 
 angular
     .module('gmsBoilerplate')
-    .config(['$translateProvider', 'lan', configTranslate]);
+    .config(configTranslate);
 
+/*@ngInject*/
 function configTranslate($translateProvider, lan) {
 
     for(var k in lan) {

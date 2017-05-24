@@ -6,11 +6,12 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('ownedEntityListCtrl', ['indexSrv', 'systemSrv', 'ownedEntitySrv', 'navigationSrv', 'paginationSrv',
-        'ROUTE', 'searchSrv', 'blockSrv', 'sessionSrv', 'dialogSrv', 'translatorSrv', '$timeout', ownedEntityListCtrl]);
+    .controller('ownedEntityListCtrl', ownedEntityListCtrl);
 
+/*@ngInject*/
 function ownedEntityListCtrl(indexSrv, systemSrv, ownedEntitySrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv,
                              sessionSrv, dialogSrv, translatorSrv, $timeout) {
+
     var vm = this;
     var keyP = 'OWNED_ENTITY_LIST';
 

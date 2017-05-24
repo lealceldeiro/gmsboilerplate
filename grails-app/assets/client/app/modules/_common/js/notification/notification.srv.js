@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('notificationSrv', ['toastSrv', '$translate', notificationSrv]);
+    .service('notificationSrv', notificationSrv);
 
+/*@ngInject*/
 function notificationSrv(toastSrv, $translate) {
+
     var self = this;
 
     self.service = {

@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('errorCtrl', ['errorSrv', 'indexSrv', errorCtrl]);
+    .controller('errorCtrl', errorCtrl);
 
+/*@ngInject*/
 function errorCtrl(errorSrv, indexSrv) {
+
     var vm = this;
 
     vm.wizard = {

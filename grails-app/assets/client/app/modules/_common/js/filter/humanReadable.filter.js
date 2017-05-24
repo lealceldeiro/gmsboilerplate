@@ -8,7 +8,9 @@ angular
     .module('gmsBoilerplate')
     .filter('humanReadable', humanReadable);
 
+/*@ngInject*/
 function humanReadable() {
+
     return function (data, prefix, postfix) {
         switch (data){
             case true:

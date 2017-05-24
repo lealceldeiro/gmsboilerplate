@@ -6,6 +6,7 @@
 *= require ../client/app/modules/_common/css/margins
 *= require ../client/app/modules/_common/css/sizes
 *= require ../client/app/modules/_common/css/text
+*= require ../client/app/modules/_common/css/padding
 
 *= require ../client/app/modules/_components/screenLoader/screen.loader
 

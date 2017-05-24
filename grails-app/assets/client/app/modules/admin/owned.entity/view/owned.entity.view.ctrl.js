@@ -5,11 +5,12 @@
 'use strict';
 
 angular.module('gmsBoilerplate')
-    .controller('ownedEntityViewCtrl', ['ROUTE', 'indexSrv', 'ownedEntitySrv', 'navigationSrv', 'notificationSrv', 'systemSrv',
-        'blockSrv', 'sessionSrv', 'dialogSrv', 'translatorSrv', '$timeout', ownedEntityViewCtrl]);
+    .controller('ownedEntityViewCtrl', ownedEntityViewCtrl);
 
+/*@ngInject*/
 function ownedEntityViewCtrl(ROUTE, indexSrv, ownedEntitySrv, navigationSrv, notificationSrv, systemSrv, blockSrv, sessionSrv,
                              dialogSrv, translatorSrv, $timeout) {
+
     var vm = this;
     var keyP = 'ADMIN_OWNED_ENTITY_VIEW';
 

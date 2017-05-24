@@ -8,7 +8,9 @@ angular
     .module('gmsBoilerplate')
     .directive('gmsScreenLoader', gmsScreenLoader);
 
+/*@ngInject*/
 function gmsScreenLoader() {
+
     return {
         templateUrl: 'assets/app/modules/_components/screenLoader/screen.loader.tpl.html',
         transclude: true,

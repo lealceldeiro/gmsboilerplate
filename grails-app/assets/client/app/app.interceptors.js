@@ -6,9 +6,10 @@
 
 angular
     .module('gmsBoilerplate')
-    .factory('envValidityChecker', ['sessionSrv', 'systemSrv', 'notificationSrv', '$rootScope', 'BROADCAST', interceptor])
-    .config(['$httpProvider', conf]);
+    .factory('envValidityChecker', interceptor)
+    .config(conf);
 
+/*@ngInject*/
 function interceptor(sessionSrv, systemSrv, notificationSrv, $rootScope, BROADCAST) {
 
     var FORBIDDEN = 403;
@@ -62,6 +63,7 @@ function interceptor(sessionSrv, systemSrv, notificationSrv, $rootScope, BROADCA
 
 }
 
+/*@ngInject*/
 function conf($httpProvider) {
     $httpProvider['interceptors'].push('envValidityChecker');
 }

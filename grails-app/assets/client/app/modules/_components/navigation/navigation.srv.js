@@ -9,7 +9,9 @@ angular
     .module('gmsBoilerplate')
     .service('navigationSrv', navigationSrv);
 
+/*@ngInject*/
 function navigationSrv($location, $route, ROUTE, stringSrv, $rootScope, BROADCAST, $window) {
+
     var self = this;
 
     self.service = {
@@ -65,5 +67,3 @@ function navigationSrv($location, $route, ROUTE, stringSrv, $rootScope, BROADCAS
     }
 
 }
-
-navigationSrv.$inject = ['$location', '$route', 'ROUTE', 'stringSrv', '$rootScope', 'BROADCAST', '$window'];

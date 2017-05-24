@@ -8,6 +8,7 @@ angular
     .module('gmsBoilerplate')
     .service('dataSrv', dataSrv);
 
+/*@ngInject*/
 function dataSrv() {
 
     var self = this;

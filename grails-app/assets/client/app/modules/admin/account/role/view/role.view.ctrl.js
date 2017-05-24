@@ -6,11 +6,12 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('roleViewCtrl', ['ROUTE', 'indexSrv', 'roleSrv', 'navigationSrv', 'notificationSrv', 'systemSrv', 'blockSrv',
-        'dialogSrv', 'translatorSrv', '$timeout', roleViewCtrl]);
+    .controller('roleViewCtrl', roleViewCtrl);
 
+/*@ngInject*/
 function roleViewCtrl(ROUTE, indexSrv, roleSrv, navigationSrv, notificationSrv, systemSrv, blockSrv, dialogSrv,
                       translatorSrv, $timeout) {
+
     var vm = this;
     var keyP = 'ADMIN_ROLE_VIEW';
 

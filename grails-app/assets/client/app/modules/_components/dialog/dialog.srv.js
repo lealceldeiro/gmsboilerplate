@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('dialogSrv', ['$rootScope', 'BROADCAST', '$timeout', 'translatorSrv', dialogSrv]);
+    .service('dialogSrv', dialogSrv);
 
+/*@ngInject*/
 function dialogSrv($rootScope, BROADCAST, $timeout, translatorSrv) {
+
     var self = this;
 
     self.service = {

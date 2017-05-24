@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('permissionSrv', ['baseSrv', 'systemSrv', '$http', permissionSrv]);
+    .service('permissionSrv',permissionSrv);
 
+/*@ngInject*/
 function permissionSrv(baseSrv, systemSrv, $http) {
+
     var self = this;
     var url = systemSrv.APIAbsoluteUrl + 'permission/';
 

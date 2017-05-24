@@ -6,12 +6,12 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('roleListCtrl', ['indexSrv', 'systemSrv', 'roleSrv', 'navigationSrv', 'paginationSrv', 'ROUTE', 'searchSrv',
-        'blockSrv', 'sessionSrv', 'dialogSrv', 'translatorSrv', '$timeout', roleListCtrl]);
+    .controller('roleListCtrl', roleListCtrl);
 
-
+/*@ngInject*/
 function roleListCtrl(indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv,
                       sessionSrv, dialogSrv, translatorSrv, $timeout) {
+
     var vm = this;
     var keyP = 'ROLE_LIST';
 

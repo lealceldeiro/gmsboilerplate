@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('fabSpeedDial', [fabSpeedDial]);
+    .controller('fabSpeedDial', fabSpeedDial);
 
+/*@ngInject*/
 function fabSpeedDial() {
+
     this.isOpen = false;
     this.selectedMode = 'md-fling';
     this.selectedDirection = 'left';

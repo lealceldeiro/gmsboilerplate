@@ -6,10 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('sessionCtrl', ['sessionSrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'configSrv', '$timeout',
-        '$translate', sessionCtrl]);
+    .controller('sessionCtrl', sessionCtrl);
 
+/*@ngInject*/
 function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $timeout, $translate) {
+
     var vm = this;
     var keyP = "__SESSIONCTRL__";
     var MAX_RETRY = 3, retries = 0;

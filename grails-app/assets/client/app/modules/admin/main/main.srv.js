@@ -2,18 +2,20 @@
  * Created by Asiel on 11/6/2016.
  */
 
-    'use strict';
+'use strict';
 
 angular
     .module('gmsBoilerplate')
     .service('mainSrv', mainSrv);
 
-    function mainSrv() {
-        var self = this;
+/*@ngInject*/
+function mainSrv() {
+
+    var self = this;
 
 
-        self.service = {
-        };
+    self.service = {
+    };
 
-        return self.service;
-    }
+    return self.service;
+}

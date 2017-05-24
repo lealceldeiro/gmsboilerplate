@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('sessionSrv', ['localStorageService', '$rootScope', sessionSrv]);
+    .service('sessionSrv', sessionSrv);
 
+/*@ngInject*/
 function sessionSrv(localStorageService, $rootScope) {
+
     var self = this;
     var lsPrefix = "gMS_localS_";
 

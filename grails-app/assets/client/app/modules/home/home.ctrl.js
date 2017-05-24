@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('homeCtrl', [homeCtrl]);
+    .controller('homeCtrl', homeCtrl);
 
+/*@ngInject*/
 function homeCtrl() {
+
     var vm = this;
 
     vm.wizard = {

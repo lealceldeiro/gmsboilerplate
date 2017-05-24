@@ -6,11 +6,12 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('loginCtrl', ['indexSrv', 'sessionSrv', 'navigationSrv', 'systemSrv', 'loginSrv',
-        'ROUTE', 'blockSrv', 'userSrv', '$rootScope', 'notificationSrv', 'translatorSrv', loginCtrl]);
+    .controller('loginCtrl', loginCtrl);
 
+/*@ngInject*/
 function loginCtrl(indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROUTE, blockSrv, userSrv, $rootScope,
                    notificationSrv, translatorSrv) {
+
     var vm = this;
     const keyP = 'LOGIN__';
 

@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('translatorSrv', ['$translate', translatorSrv]);
+    .service('translatorSrv', translatorSrv);
 
+/*@ngInject*/
 function translatorSrv($translate) {
+
     var self = this;
 
     self.service = {

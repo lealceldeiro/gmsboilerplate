@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('blockCtrl', ['$scope', 'blockSrv', blockCtrl]);
+    .controller('blockCtrl', blockCtrl);
 
+/*@ngInject*/
 function blockCtrl($scope, blockSrv) {
+
     var vm = this;
 
     vm.wizard = {

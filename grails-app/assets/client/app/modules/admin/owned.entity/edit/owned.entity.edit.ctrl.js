@@ -6,12 +6,12 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('ownedEntityEditCtrl', ['indexSrv', 'ownedEntitySrv', 'navigationSrv', 'ROUTE', 'systemSrv', 'notificationSrv',
-        'blockSrv', 'translatorSrv', 'dialogSrv', ownedEntityEditCtrl]);
+    .controller('ownedEntityEditCtrl', ownedEntityEditCtrl);
 
-
+/*@ngInject*/
 function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, systemSrv, notificationSrv, blockSrv, translatorSrv,
                              dialogSrv) {
+
     var vm = this;
     var keyP = 'ADMIN_OWNED_ENTITY_EDIT';
 

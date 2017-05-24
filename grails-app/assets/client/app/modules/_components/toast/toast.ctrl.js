@@ -8,10 +8,12 @@ var isDlgOpen;
 
 angular
     .module('gmsBoilerplate')
-    .controller('toastCtrl', ['$scope', '$mdToast', 'BROADCAST', toastCtrl])
-    .controller('toastManagerCtrl', ['$scope', '$mdToast', 'toastSrv', toastManagerCtrl]);
+    .controller('toastCtrl', toastCtrl)
+    .controller('toastManagerCtrl', toastManagerCtrl);
 
+/*@ngInject*/
 function toastCtrl($scope, $mdToast, BROADCAST) {
+
     $scope.$on(BROADCAST.component.toast.OPEN, function () {
         $scope.showCustomToast();
     });
@@ -26,6 +28,7 @@ function toastCtrl($scope, $mdToast, BROADCAST) {
     };
 }
 
+/*@ngInject*/
 function toastManagerCtrl($scope, $mdToast, toastSrv) {
 
     $scope.typeClass = '';

@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('systemSrv', ['notificationSrv', '__env', systemSrv]);
+    .service('systemSrv', systemSrv);
 
+/*@ngInject*/
 function systemSrv(notificationSrv, __env) {
+
     var self = this;
 
     self.service = {

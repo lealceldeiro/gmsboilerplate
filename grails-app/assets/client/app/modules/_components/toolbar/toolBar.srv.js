@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('toolBarSrv', ['$rootScope', 'BROADCAST', toolBarSrv]);
+    .service('toolBarSrv', toolBarSrv);
 
+/*@ngInject*/
 function toolBarSrv($rootScope, BROADCAST) {
+
     var self = this;
 
     self.service = {

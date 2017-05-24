@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('chipCtrl', ['$mdConstant', chipCtrl]);
+    .controller('chipCtrl', chipCtrl);
 
+/*@ngInject*/
 function chipCtrl($mdConstant) {
+
     this.separatorKeys = [$mdConstant.KEY_CODE.ENTER, $mdConstant.KEY_CODE.COMMA, $mdConstant.KEY_CODE.SPACE];
     this.createMode = false;
     this.transformChip = function (chip) {

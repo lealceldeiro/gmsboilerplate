@@ -9,7 +9,9 @@ angular
     .module('gmsBoilerplate')
     .service('valueSrv', valueSrv);
 
+/*@ngInject*/
 function valueSrv() {
+
     var self = this;
 
     self.service = {

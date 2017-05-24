@@ -8,7 +8,9 @@ angular
     .module('gmsBoilerplate')
     .service('baseSrv', baseSrv);
 
+/*@ngInject*/
 function baseSrv(valueSrv) {
+
     var self = this;
 
     self.service = {

@@ -5,9 +5,11 @@
 'use strict';
 angular
     .module('gmsBoilerplate')
-    .service('errorSrv', [errorSrv]);
+    .service('errorSrv', errorSrv);
 
+/*@ngInject*/
 function errorSrv() {
+
     var self = this;
 
     self.service = {

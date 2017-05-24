@@ -7,7 +7,9 @@
 angular.module('gmsBoilerplate')
     .filter('caser', caser);
 
+/*@ngInject*/
 function caser() {
+
     return function (data) {
         if (data) {
             data = data.toString();

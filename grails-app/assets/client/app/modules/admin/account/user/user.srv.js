@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('userSrv', ['systemSrv', '$http', 'baseSrv', 'ownedEntitySrv', userSrv]);
+    .service('userSrv', userSrv);
 
+/*@ngInject*/
 function userSrv(systemSrv, $http, baseSrv, ownedEntitySrv) {
+
     var self = this;
     var url = systemSrv.APIAbsoluteUrl + 'user/';
 

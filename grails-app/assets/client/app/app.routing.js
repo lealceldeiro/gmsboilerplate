@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .config(['$routeProvider', 'ROUTE', '$locationProvider', '__env', routing]);
+    .config(routing);
 
+/*@ngInject*/
 function routing($routeProvider, ROUTE, $locationProvider, __env) {
+
 
     if (window.history && history.pushState) { $locationProvider.html5Mode(true); }
     else { __env.supportHtml5 = false; }

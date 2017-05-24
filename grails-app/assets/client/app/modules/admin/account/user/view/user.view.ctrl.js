@@ -6,11 +6,12 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('userViewCtrl', ['ROUTE', 'indexSrv', 'userSrv', 'navigationSrv', 'notificationSrv', 'systemSrv',
-        'blockSrv', 'sessionSrv', 'dialogSrv', 'searchSrv', 'roleSrv', 'translatorSrv', '$timeout', userViewCtrl]);
+    .controller('userViewCtrl', userViewCtrl);
 
+/*@ngInject*/
 function userViewCtrl(ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, systemSrv, blockSrv, sessionSrv,
                       dialogSrv, searchSrv, roleSrv, translatorSrv, $timeout) {
+
     var vm = this;
     var keyP = 'ADMIN_USER_VIEW';
 

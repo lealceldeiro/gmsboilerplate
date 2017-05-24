@@ -6,11 +6,12 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('userListCtrl', ['indexSrv', 'systemSrv', 'userSrv', 'navigationSrv', 'paginationSrv', 'ROUTE',
-        'searchSrv', 'blockSrv', 'sessionSrv', 'dialogSrv', 'translatorSrv', '$timeout', userListCtrl]);
+    .controller('userListCtrl', userListCtrl);
 
+/*@ngInject*/
 function userListCtrl(indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv, sessionSrv,
                       dialogSrv, translatorSrv, $timeout) {
+
     var vm = this;
     var keyP = 'USER_LIST';
 

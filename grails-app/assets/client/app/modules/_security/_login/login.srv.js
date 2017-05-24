@@ -6,10 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .service('loginSrv', ['$http', 'systemSrv', 'baseSrv', 'sessionSrv', '$rootScope', 'BROADCAST', 'notificationSrv',
-        loginSrv]);
+    .service('loginSrv', loginSrv);
 
+/*@ngInject*/
 function loginSrv($http, systemSrv, baseSrv, sessionSrv, $rootScope, BROADCAST, notificationSrv) {
+
     var vm = this;
 
     var url = systemSrv.APIAbsoluteUrl;

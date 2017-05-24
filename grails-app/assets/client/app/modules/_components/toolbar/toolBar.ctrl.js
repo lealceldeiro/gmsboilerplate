@@ -6,9 +6,11 @@
 
 angular
     .module('gmsBoilerplate')
-    .controller('toolBarCtrl', ['$scope', 'BROADCAST', 'toolBarSrv', toolBarCtrl]);
+    .controller('toolBarCtrl', toolBarCtrl);
 
+/*@ngInject*/
 function toolBarCtrl($scope, BROADCAST, toolBarSrv) {
+
     var self  = this;
 
     self.wizard = {
