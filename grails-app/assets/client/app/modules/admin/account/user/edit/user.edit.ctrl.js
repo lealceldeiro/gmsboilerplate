@@ -63,7 +63,6 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
     function fnInit() {
 
         _loadRoles();
-        _loadEntitiesInfo();
         if (navigationSrv.currentPath() === ROUTE.ADMIN_USER_NEW) {
             translatorSrv.setText('USER.new', indexSrv, 'siteTile');
         }
@@ -80,6 +79,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
                 navigationSrv.goTo(ROUTE.ADMIN_USERS);
             }
         }
+        _loadEntitiesInfo();
     }
 
     function _loadData(id) {
