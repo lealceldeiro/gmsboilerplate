@@ -2,17 +2,9 @@
  * Created by asiel on 20/05/17.
  */
 
-// --conf--
-//= require ../client/conf/permissions
-//= require ../client/conf/vars
-//= require ../client/app/i18n/en
-//= require ../client/app/i18n/es
-
-
 // --ngApp--
 //= require ../client/app/app.module
 //= require ../client/app/app.constants
-//= require ../client/app/app.config
 //= require ../client/app/app.config.lan
 //= require ../client/app/app.routing
 //= require ../client/app/app.interceptors

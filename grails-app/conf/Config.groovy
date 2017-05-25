@@ -158,7 +158,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/api/login'        : ['permitAll']
 ]
 
-grails.assets.excludes = ["bower_components/**/*", "app/**/*.html", "app/**/*.json"]
+grails.assets.excludes = ["bower_components/**/*", "app/**/*.html", "app/**/*.json", "bower.json"]
 grails.assets.includes = [
         //js
         "bower_components/angular/angular.min.js",
