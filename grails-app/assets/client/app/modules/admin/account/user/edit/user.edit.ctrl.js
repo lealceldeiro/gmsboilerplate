@@ -21,6 +21,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
     };
 
     vm.wizard = {
+        rolesTouched: false,
         singleEntityMode: true,
         entity: {enabled: true},
 
@@ -226,13 +227,13 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
                     if (doNotDoLogout !== true) {
                         _doLogout();
                     } else {
-                        if (sessionSrv.currentUser().id == vm.id) {
+                        if (sessionSrv.currentUser().id == vm.id && vm.wizard.rolesTouched) {
                             var aux = {};
                             translatorSrv.setText('button.close_session_now', aux, 'closeButtonText');
                             translatorSrv.setText('string.headline.information', aux, 'headline');
                             translatorSrv.setText('USER.close_session_now', aux, 'messageText');
                             $timeout(function () {
-                                var buttons = [{text: aux['closeButtonText'], function: _doSave, primary: true}];
+                                var buttons = [{text: aux['closeButtonText'], function: _doLogout, primary: true}];
                                 dialogSrv.showDialog(dialogSrv.type.SUCCESS, aux['headline'], aux['messageText'], buttons);
                             });
                         }

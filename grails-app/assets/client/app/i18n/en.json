@@ -84,7 +84,7 @@
   "USER.view_user_on_entity": "View only users who are associate to the current entity",
   "USER.view_all": "View all users",
   "USER.save_deactivate": "You are about to save your data with the property '{property}' unchecked. After this, you will not longer be able to access the system again. Are your sure you want to continue?",
-  "USER.close_session_now": "You must close the current session and do login again in order to see any possible change. Would you like to close this session now?",
+  "USER.close_session_now": "You must close the current session and do login again in order to see any possible change regarding to permissions. Would you like to close this session now?",
   "USER.permissions_only_in_this_entity": "He/She will have permissions only in this entity",
   "USER.deactivate_current_user": "You are about to deactivate you own user. Are you sure you want to proceed?",
 

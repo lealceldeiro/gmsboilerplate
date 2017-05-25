@@ -84,7 +84,7 @@
   "USER.view_user_on_entity": "Ver solo usuarios asociados a la entidad actual",
   "USER.view_all": "Ver todos los usuarios",
   "USER.save_deactivate": "Vas a guardar tus datos con la propiedad '{property}' sin marcar. Esto hará que no puedsa acceder al sistema. ¿Confirmas que desea continuar?",
-  "USER.close_session_now": "Debes cerrar la sesión e iniciarla de nuevo para que los posibles cambios tengan efecto. ¿Deseas cerrar la sesión ahora?",
+  "USER.close_session_now": "Debes cerrar la sesión e iniciarla de nuevo para que los posibles cambios respecto a la seguridad tengan efecto. ¿Deseas cerrar la sesión ahora?",
   "USER.permissions_only_in_this_entity": "Tendrá permisos solo en esta entidad",
   "USER.deactivate_current_user": "Vas a desactivar tu usuario. ¿Confirmas que deseas continuar?",
 

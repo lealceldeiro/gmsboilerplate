@@ -144,7 +144,7 @@
                 <md-input-container class="md-icon-float md-block" flex="100" >
                     <label>{{'ROLE.roles' | translate}}</label>
                     <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
-                    <md-select ng-model="vm.roles.selected" multiple>
+                    <md-select ng-model="vm.roles.selected" multiple ng-change="vm.rolesTouched = true">
                         <md-optgroup>
                             <md-option ng-value="item" ng-repeat="item in vm.roles.all">{{item.label}}</md-option>
                         </md-optgroup>
@@ -181,7 +181,7 @@
                 <md-input-container class="md-icon-float md-block" flex="100" >
                     <label>{{'ROLE.roles' | translate}}</label>
                     <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
-                    <md-select ng-model="vm.roles.selected" multiple>
+                    <md-select ng-model="vm.roles.selected" multiple ng-change="vm.rolesTouched = true">
                         <md-optgroup>
                             <md-option ng-value="item" ng-repeat="item in vm.roles.all">{{item.label}}</md-option>
                         </md-optgroup>
