@@ -119,8 +119,10 @@ function systemSrv(notificationSrv, __env) {
                 return false
             }
         }
-        self.service.apiMessage[storeKey] = 'There was not data provided for request with key "' + storeKey + '"';
-        if (notifyOnUnSuccess && !notificationSrv.mutedNotifications) {
+        // self.service.apiMessage[storeKey] = 'There was not data provided for request with key "' + storeKey + '"';
+        console.log('Forbidden access attempt (' + storeKey + ')');
+        self.service.apiMessage[storeKey] = null;
+        if (notifyOnUnSuccess && !notificationSrv.mutedNotifications && self.service.apiMessage[storeKey]) {
             notificationSrv.showNotification(notificationSrv.type.ERROR, self.service.apiMessage[storeKey],
                 unSuccessCallback ? [unSuccessCallback] : [], unSuccessCallbackText ? [unSuccessCallbackText] : []);
         }
