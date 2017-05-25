@@ -54,10 +54,12 @@ class UserService {
      * @param cmd User data such: label(string), description(string) and enabled(boolean)
      * @param id [optional] if an update is going to be performed, the id of the user which is going to be updated
      * must be supplied
+     * @param doNotUpdateRoles Whether roles should not be update or they do. If false roles are updates according to
+     * roles parameters. If true, roles are not updates regardless the roles parameters. Default value: false (roles will be updated)
      * @return A json containing the id of the user if the operation was successful
      * <p><code>{success: true|false, id: <userId>}</code></p>
      */
-    def save(UserCommand cmd, Long id = null) {
+    def save(UserCommand cmd, Long id = null, Boolean doNotUpdateRoles = false) {
         EUser aux  = cmd()
         boolean update = true
         boolean error = false
@@ -90,7 +92,7 @@ class UserService {
         def role
 
         if(update) {
-            if(cmd.roles != null) {
+            if(cmd.roles != null && !doNotUpdateRoles) {
                 if (!cmd.roles.isEmpty()) {
                     //update (add/delete) roles
                     int rS = cmd.roles.size(), orS, nrS

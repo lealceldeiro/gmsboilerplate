@@ -37,6 +37,7 @@
 
             MANAGE_PROFILE: "MANAGE__PROFILE",
             READ_PROFILE: "READ__PROFILE",
+            UPDATE_PROFILE: "UPDATE__PROFILE",
 
             MANAGE_CONFIGURATION: "MANAGE__CONFIGURATION"
         }
@@ -69,7 +70,7 @@
     /*@ngInject*/
     function runConfig($rootScope, sessionSrv, navigationSrv, __env, errorSrv, translatorSrv) {
 
-        var prevRoute, currentRoute, params;
+        var currentRoute, params;
 
         $rootScope.$on('$routeChangeStart', function (event, next, data) {
             if (next && next['$$route']) {
@@ -157,7 +158,7 @@
         $rootScope.$on('$routeChangeSuccess', function (event, prev, data) {
             if (prev && prev['$$route']) {
                 if (currentRoute) {
-                    prevRoute = currentRoute;
+                    navigationSrv.prevRoute = currentRoute;
                 }
                 currentRoute = prev['$$route']['originalPath'];
             }
@@ -166,18 +167,18 @@
         //triggered when a new token was retrieved since the old one expired, so we need to refresh the last requested
         //view, since it wasn't resolved due to the forbidden backend response
         $rootScope.$on('UNAUTHORIZED_BACKWARD', function () {
-            if (prevRoute) {
+            if (navigationSrv.prevRoute) {
                 if (params && typeof params['id']  !== 'undefined' && params['id'] !== null
-                    && prevRoute.indexOf(':id') !== -1) {
-                    navigationSrv.goTo(prevRoute, ':id', params['id']);
+                    && navigationSrv.prevRoute.indexOf(':id') !== -1) {
+                    navigationSrv.goTo(navigationSrv.prevRoute, ':id', params['id']);
                 }
-                else { navigationSrv.goTo(prevRoute); }
+                else { navigationSrv.goTo(navigationSrv.prevRoute); }
             }
             else { navigationSrv.goTo(navigationSrv.DEFAULT_PATH); }
         });
 
         $rootScope.$on('NAVIGATION_GO_BACK', function (event, data) {
-            if (prevRoute) {
+            if (navigationSrv.prevRoute) {
                 var placeholder = [],
                     values = [];
                 if(data) {
@@ -188,7 +189,7 @@
                         }
                     }
                 }
-                navigationSrv.goTo(prevRoute, placeholder, values);
+                navigationSrv.back();
             }
         });
 

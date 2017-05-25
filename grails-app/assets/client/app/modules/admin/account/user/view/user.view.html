@@ -121,7 +121,7 @@
     <md-button class="md-primary md-raised" ng-click="vm.cancel()">
         {{'button.back' | translate}}
     </md-button>
-    <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateUser()">
+    <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateUser() || vm.canEdit()">
         {{'button.edit' | translate}}
     </md-button>
     <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteUser()">

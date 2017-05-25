@@ -17,11 +17,14 @@ class UserController implements ExceptionHandler{
 
     def ownedEntityService
 
+    def gmsBoilerplateSecurityService
+
     static allowedMethods = [
             search                  : HttpMethod.GET.name(),
             searchAll               : HttpMethod.GET.name(),
             create                  : HttpMethod.PUT.name(),
             update                  : HttpMethod.POST.name(),
+            updateProfile           : HttpMethod.POST.name(),
             activate                : HttpMethod.POST.name(),
             show                    : HttpMethod.GET.name(),
             delete                  : HttpMethod.DELETE.name(),
@@ -105,6 +108,33 @@ class UserController implements ExceptionHandler{
         if(e){
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
             doSuccessWithArgs(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "o"]) as String, [id: e.id])
+        }
+    }
+
+    /**
+     * Updates the user profile
+     * @param cmd User information:
+     *                              username:           User's username
+     *                              email:              [optional] user's email
+     *                              name:               User's name
+     *                              password:           User's password
+     *                              roles               List with the User's roles's identifiers
+     * @param id Identifier of User which is going to be edited
+     * @return JSON informing whether the action was successful or not. If successful, it also contains the id of the
+     * just created/edited user
+     */
+    @Secured("hasRole('UPDATE__PROFILE')")
+    def updateProfile(UserCommand cmd, Long id){
+        Long aUId = gmsBoilerplateSecurityService.authenticatedUser().id
+        if(aUId == id) {
+            final e = userService.save(cmd, id, true)
+            if(e){
+                String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
+                doSuccessWithArgs(g.message(code: "general.action.UPDATED.success", args: [p0, p1, "o"]) as String, [id: e.id])
+            }
+        }
+        else {
+            doForbidden("general.security.forbidden.update.profile")
         }
     }
 

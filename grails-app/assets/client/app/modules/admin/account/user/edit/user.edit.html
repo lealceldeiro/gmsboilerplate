@@ -128,8 +128,8 @@
                 </md-content>
             </div>
 
-            <div layout="row" flex="100" class="m-left-12px">
-                <md-checkbox aria-label="Solo en esta entidad"
+            <div layout="row" flex="100" class="m-left-12px" data-ng-if="vm.canUpdateRoles()">
+                <md-checkbox aria-label="{{'USER.permissions_only_in_this_entity' | translate}}&nbsp;({{sCtrl.oEntity.name || sCtrl.oEntity.username}})"
                              ng-change="vm.toggleEMode()"
                              ng-disabled="!vm.canToogleSingleEntityMode"
                              ng-model="vm.singleEntityMode" >
@@ -140,7 +140,7 @@
             </div>
 
             <!--Roles when single Entity-->
-            <div layout="row" flex="100" data-ng-if="vm.roles.all.length && vm.entities.length === 1 || vm.singleEntityMode">
+            <div layout="row" flex="100" data-ng-if="vm.canUpdateRoles() && (vm.roles.all.length && vm.entities.length === 1 || vm.singleEntityMode)">
                 <md-input-container class="md-icon-float md-block" flex="100" >
                     <label>{{'ROLE.roles' | translate}}</label>
                     <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
@@ -154,7 +154,7 @@
         </div>
 
         <!--vm.entities.length > 1: select roles for many entities at the time-->
-        <div data-ng-if="vm.entities.length > 1 && !vm.singleEntityMode" layout="row" layout-padding layout-wrap
+        <div data-ng-if="vm.canUpdateRoles() && vm.entities.length > 1 && !vm.singleEntityMode" layout="row" layout-padding layout-wrap
              class="p-t-0">
             <!--OwnedEntity-->
             <div flex="50">

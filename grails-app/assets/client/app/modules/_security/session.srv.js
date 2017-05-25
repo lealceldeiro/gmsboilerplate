@@ -53,7 +53,9 @@ function sessionSrv(localStorageService, $rootScope) {
         clearSession: fnClearSession,
 
         getLanguage: fnGetLanguage,
-        setLanguage: fnSetLanguage
+        setLanguage: fnSetLanguage,
+
+        has: fnHasPermissions
     };
 
     return self.service;
@@ -207,6 +209,29 @@ function sessionSrv(localStorageService, $rootScope) {
             lan = localStorageService.get(lanKey) || {};
             lan[u.id] = language;
             localStorageService.set(lanKey, lan);
+        }
+    }
+
+    function fnHasPermissions(permArgs, any) {
+        var p = fnGetPermissions();
+        if (p) {
+            if (angular.isArray(permArgs)) {
+                var x = permArgs.length - 1;
+                while (x >= 0) {
+                    if (any) {
+                        if (p.indexOf(permArgs[x--]) !== -1) {
+                            return true
+                        }
+                    }
+                    else {
+                        if (p.indexOf(permArgs[x--]) === -1) {
+                            return false
+                        }
+                    }
+                }
+                return !any
+            }
+            else return p.indexOf(permArgs) !== -1;
         }
     }
 

@@ -39,6 +39,7 @@ enum EnumPermission {
     /*PROFILE*/
     MANAGE__PROFILE,
         READ__PROFILE,
+        UPDATE__PROFILE,
 
     MANAGE__CONFIGURATION
 

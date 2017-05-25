@@ -15,6 +15,9 @@ function navigationSrv($location, $route, ROUTE, stringSrv, $rootScope, BROADCAS
     var self = this;
 
     self.service = {
+
+        prevRoute: null,
+
         DEFAULT_PATH: ROUTE.HOME,
         LOGIN_PATH: ROUTE.LOGIN,
         CONFIG_ERROR_PATH: ROUTE.ADMIN_CONFIG_ERROR,

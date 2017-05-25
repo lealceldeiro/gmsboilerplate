@@ -7,6 +7,7 @@ class UrlMappings {
         "/api/user/associated"                  (controller: "user", action: "getAssociatedToEntities")
         "/api/user/entity/$eid"                 (controller: "user", action: "search")
         "/api/user/$id"                         (controller: "user")                            {action = [GET: "show", POST: "update", DELETE: "delete"]}
+        "/api/user/profile/$id"                 (controller: "user", action: "updateProfile")
         "/api/user/$id/activate/$value"         (controller: "user", action: "activate")
         "/api/user/get"                         (controller: "user", action: "getBy")
         //endregion

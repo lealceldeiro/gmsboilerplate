@@ -25,6 +25,7 @@ function userSrv(systemSrv, $http, baseSrv, ownedEntitySrv) {
         getByEmail: fnGetByEmail,
         remove: fnRemove,
         save: fnSave,
+        saveProfile: fnSaveProfile,
         activate: fnActivate,
 
         entitiesByUser: fnEntitiesByUser
@@ -92,6 +93,10 @@ function userSrv(systemSrv, $http, baseSrv, ownedEntitySrv) {
         }
 
         return baseSrv.resolveDeferred(def);
+    }
+
+    function fnSaveProfile(params, id) {
+        return baseSrv.resolveDeferred($http.post(url + 'profile/' + id, params))
     }
 
     function fnActivate(id, activate) {

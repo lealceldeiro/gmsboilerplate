@@ -52,7 +52,9 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
         saveRolesAndSelectEntity: fnSaveRolesAndSelectEntity,
         seeValidUser: fnSeeValidUser,
         checkUsername: fnCheckUsername,
-        checkEmail: fnCheckEmail
+        checkEmail: fnCheckEmail,
+
+        canUpdateRoles: fnCanUpdateRoles
     };
 
     vm.wizard.init();
@@ -98,41 +100,42 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
     }
 
     function _loadEntitiesInfo() {
-        var fnKey2 = keyP + "fnLoadData-entitiesByUser";
-        var def;
-        var cPerm = sessionSrv.getPermissions();
-        if (cPerm.indexOf(systemSrv.grant.READ_ALL_OWNED_ENTITY) !== -1) {
-            def = ownedEntitySrv.searchAll(0, 0);
-        }
-        else {
-            def = userSrv.entitiesByUser(vm.id, 0, 0);
-        }
-        def.then(function (data) {
-            vm.wizard.entities = [];
-            var e = systemSrv.eval(data, fnKey2, false, true);
-            if (e) {
-                vm.wizard.entities = systemSrv.getItems(fnKey2);
-
-                vm.wizard.canToogleSingleEntityMode = configSrv.config.multiEntity && vm.wizard.entities.length > 1;
-                //user is associated to only one entity
-                if (vm.wizard.entities.length === 1) {
-                    if (angular.isDefined(vm.id)) {
-                        _loadAssignedRoles(vm.id, vm.wizard.entities[0]['id']);
-                    }
-                    vm.priv.tempEntity = vm.wizard.entities[0];
-                }
-                else { //save data for the login entity
-                    vm.priv.tempEntity = searchSrv.find(vm.wizard.entities, 'id', sessionSrv.loginEntity().id) || vm.wizard.entities[0];
-                    fnSaveRolesAndSelectEntity(vm.priv.tempEntity);
-                    if (vm.id != sessionSrv.currentUser().id) {
-                        _loadEditingUserEntitiesInfo()
-                    }
-                    else {
-                        vm.wizard.singleEntityMode = navigationSrv.currentPath() === ROUTE.ADMIN_USER_NEW;
-                    }
-                }
+        if (fnCanUpdateRoles()) {
+            var fnKey2 = keyP + "fnLoadData-entitiesByUser";
+            var def;
+            if (has(systemSrv.grant.READ_ALL_OWNED_ENTITY)) {
+                def = ownedEntitySrv.searchAll(0, 0);
             }
-        });
+            else {
+                def = userSrv.entitiesByUser(vm.id, 0, 0);
+            }
+            def.then(function (data) {
+                vm.wizard.entities = [];
+                var e = systemSrv.eval(data, fnKey2, false, true);
+                if (e) {
+                    vm.wizard.entities = systemSrv.getItems(fnKey2);
+
+                    vm.wizard.canToogleSingleEntityMode = configSrv.config.multiEntity && vm.wizard.entities.length > 1;
+                    //user is associated to only one entity
+                    if (vm.wizard.entities.length === 1) {
+                        if (angular.isDefined(vm.id)) {
+                            _loadAssignedRoles(vm.id, vm.wizard.entities[0]['id']);
+                        }
+                        vm.priv.tempEntity = vm.wizard.entities[0];
+                    }
+                    else { //save data for the login entity
+                        vm.priv.tempEntity = searchSrv.find(vm.wizard.entities, 'id', sessionSrv.loginEntity().id) || vm.wizard.entities[0];
+                        fnSaveRolesAndSelectEntity(vm.priv.tempEntity);
+                        if (vm.id != sessionSrv.currentUser().id) {
+                            _loadEditingUserEntitiesInfo()
+                        }
+                        else {
+                            vm.wizard.singleEntityMode = navigationSrv.currentPath() === ROUTE.ADMIN_USER_NEW;
+                        }
+                    }
+                }
+            });
+        }
     }
 
     function _loadEditingUserEntitiesInfo() {
@@ -148,7 +151,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
     }
 
     function fnSave(form) {
-        if (vm.wizard.entities.length > 1) {
+        if (vm.wizard.entities && vm.wizard.entities.length > 1) {
             fnSaveRolesAndSelectEntity(); //save data for last entity clicked
         }
 
@@ -210,7 +213,12 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
 
         var fnKey = keyP + "fnSave";
 
-        userSrv.save(params, vm.id).then(
+        if (navigationSrv.prevRoute === ROUTE.USER_PROFILE) {
+            var def = userSrv.saveProfile(params, vm.id);
+        }
+        else { def = userSrv.save(params, vm.id); }
+
+        def.then(
             function (data) {
                 blockSrv.unBlock();
                 var e = systemSrv.eval(data, fnKey, false, true);
@@ -257,21 +265,23 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
     }
 
     function _loadRoles() {
-        blockSrv.block();
-        vm.wizard.roles.all = [];
-        vm.wizard.roles.selected = [];
+        if (fnCanUpdateRoles()) {
+            blockSrv.block();
+            vm.wizard.roles.all = [];
+            vm.wizard.roles.selected = [];
 
-        var fnKey = keyP + "fnLoadRoles";
+            var fnKey = keyP + "fnLoadRoles";
 
-        roleSrv.searchAll(0, 0).then( //off: 0, max: 0
-            function (data) {
-                var e = systemSrv.eval(data, fnKey, false, true);
-                if (e) {
-                    vm.wizard.roles.all = systemSrv.getItems(fnKey);
+            roleSrv.searchAll(0, 0).then( //off: 0, max: 0
+                function (data) {
+                    var e = systemSrv.eval(data, fnKey, false, true);
+                    if (e) {
+                        vm.wizard.roles.all = systemSrv.getItems(fnKey);
+                    }
+                    blockSrv.unBlock();
                 }
-                blockSrv.unBlock();
-            }
-        )
+            )
+        }
     }
 
     function _loadAssignedRoles(uid, eid) {
@@ -392,5 +402,12 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
     }
     //endregion
 
+    function fnCanUpdateRoles() {
+        return has(systemSrv.grant.UPDATE_USER);
+    }
+
+    function has(permArgs, any) {
+        return sessionSrv.has(permArgs, any);
+    }
 }
 

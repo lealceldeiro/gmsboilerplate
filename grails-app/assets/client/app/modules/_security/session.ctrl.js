@@ -147,26 +147,8 @@ function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $ti
         }
     }
 
-    function has(permArgs, or) {
-        if (vm.wizard.permissions) {
-            if (angular.isArray(permArgs)) {
-                var x = permArgs.length - 1;
-                while (x >= 0) {
-                    if (or) {
-                        if (vm.wizard.permissions.indexOf(permArgs[x--]) !== -1) {
-                            return true
-                        }
-                    }
-                    else {
-                        if (vm.wizard.permissions.indexOf(permArgs[x--]) === -1) {
-                            return false
-                        }
-                    }
-                }
-                return !or
-            }
-            else return vm.wizard.permissions.indexOf(permArgs) !== -1;
-        }
+    function has(permArgs, any) {
+        return sessionSrv.has(permArgs, any);
     }
 
 }

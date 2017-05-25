@@ -34,6 +34,8 @@ function userViewCtrl(ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, 
         edit: fnEdit,
         remove: fnRemove,
 
+        canEdit: fnCanEdit,
+
         selectedEntity: null,
         selectEntity: fnSelectEntity
     };
@@ -177,6 +179,10 @@ function userViewCtrl(ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, 
                 if (!doNotBlockUI) { blockSrv.setIsLoading(vm.wizard.roles); }
             }
         )
+    }
+
+    function fnCanEdit() {
+        return navigationSrv.currentPath() === ROUTE.USER_PROFILE && sessionSrv.has(systemSrv.grant.UPDATE_PROFILE);
     }
 
     //region entities-handling

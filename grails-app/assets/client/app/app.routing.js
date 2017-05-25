@@ -97,7 +97,7 @@ function routing($routeProvider, ROUTE, $locationProvider, __env) {
                 controller: 'userEditCtrl',
                 controllerAs: 'vm',
                 secured: {
-                    requiresAll: [__env.grant.UPDATE_USER]
+                    requiresAny: [__env.grant.UPDATE_USER, __env.grant.UPDATE_PROFILE]
                 }
             }
         )
