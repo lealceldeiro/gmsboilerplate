@@ -97,12 +97,6 @@ environments {
 
 // LOG4J CONFIGURATION
 log4j.main = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
-
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
@@ -128,16 +122,8 @@ grails.plugin.springsecurity.authority.nameField = 'name'
 grails.plugin.springsecurity.rest.login.usernamePropertyName = 'usrnm'  //username
 grails.plugin.springsecurity.rest.login.passwordPropertyName = 'pswrd'  //password
 
-//header through which client must send the access token (need to be bearer disabled, see ANCHOR1)
-//grails.plugin.springsecurity.rest.token.validation.headerName = "X-API-Auth-Token"
 // name defined for all permissions granted to the user
 grails.plugin.springsecurity.rest.token.rendering.authoritiesPropertyName = "permissions"
-
-//name for variable in which the access token will be sent (need to be bearer disabled, see ANCHOR1)
-//grails.plugin.springsecurity.rest.token.rendering.tokenPropertyName = "token"
-
-//ANCHOR1: disable bearer
-// grails.plugin.springsecurity.rest.token.validation.useBearerToken = false
 
 //how filters are going to be applied
 grails.plugin.springsecurity.filterChain.chainMap = [
