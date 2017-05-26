@@ -23,6 +23,9 @@
 //= require ../client/app/modules/_security/_login/login.srv
 //= require ../client/app/modules/_security/_login/login.ctrl
 
+//= require ../client/app/modules/_security/register/register.srv
+//= require ../client/app/modules/_security/register/register.ctrl
+
 //= require ../client/app/modules/admin/main/main.srv
 //= require ../client/app/modules/admin/main/main.ctrl
 

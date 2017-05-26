@@ -10,6 +10,7 @@ angular
         'ROUTE', {
             ADMIN_CONFIG_ERROR: '/configuration-error',
             LOGIN: '/signin',
+            REGISTER: '/signup',
             MAIN: '/main',
 
             ADMIN_ROLES: '/admin/roles',

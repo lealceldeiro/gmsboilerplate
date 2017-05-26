@@ -30,6 +30,7 @@ class UserController implements ExceptionHandler{
             delete                  : HttpMethod.DELETE.name(),
             roles                   : HttpMethod.GET.name(),
             getBy                   : HttpMethod.GET.name(),
+            isTaken                 : HttpMethod.GET.name(),
             entities                : HttpMethod.GET.name(),
             getAssociatedToEntities : HttpMethod.GET.name()
     ]
@@ -200,6 +201,12 @@ class UserController implements ExceptionHandler{
         else doFail "general.done.KO"
     }
 
+    @Secured("permitAll")
+    def isTaken() {
+        def e = userService.getBy(params)
+        if(e) { doSuccessWithArgs("general.done.ok", [item: true]) }
+        else doFail "general.done.KO"
+    }
 
     /**
      * Return a user's info

@@ -116,6 +116,7 @@
   "LANGUAGE.spanish": "Spanish",
 
   "LOGIN.authentication": "Authentication",
+  "LOGIN.new_account": "New account",
   "LOGIN.user_email": "User or email address",
   "LOGIN.user_email_required": "Either the user or email address is required",
   "LOGIN.password": "@:string.password",

@@ -1,0 +1,146 @@
+<div class="min-width-500px">
+    <form role="form" name="registerForm" novalidate>
+
+        <md-toolbar>
+            <div class="md-toolbar-tools" layout-align="center center">
+                <div layout-align="center center">
+                    <div layout="row" layout-align="center center" flex="100">
+                        &nbsp;{{ 'LOGIN.new_account' | translate}}
+                        <h2></h2>
+                    </div>
+                </div>
+            </div>
+        </md-toolbar>
+
+        <br/>
+
+        <md-content class="md-no-momentum">
+
+            <!--name-->
+            <md-input-container class="md-icon-float md-block">
+                <label>{{'string.name' | translate}}</label>
+                <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_outline_24px.svg"></md-icon>
+                <input ng-model="vm.name" type="text" name="name" required/>
+
+                <div ng-messages="registerForm.name.$error" md-auto-hide="false">
+                    <div ng-message="required">
+                        {{'string.name_required' | translate}}
+                    </div>
+                </div>
+            </md-input-container>
+
+            <!--username-->
+            <md-input-container class="md-icon-float md-block">
+                <label>{{'string.user' | translate}}</label>
+                <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg"></md-icon>
+                <input ng-model="vm.username" type="text" name="username" required
+                       data-ng-model-options="{debounce: 500}"
+                       data-ng-change="vm.checkUsername()"
+                       data-ng-pattern="/(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[._-]?[a-zA-Z0-9]+$/"/>
+
+                <div ng-messages="registerForm.username.$error" md-auto-hide="false">
+                    <div ng-message="required">
+                        {{'string.user_required' | translate}}
+                    </div>
+                    <div ng-message="pattern">
+                        {{'string.it_is_not' | translate}}
+                        <strong class="hand-pointer" data-ng-click="vm.seeValidUser()">
+                            {{'string.valid_user' | translate:"{'GENDER': 'male'}"}}
+                        </strong>
+                    </div>
+                </div>
+                <input type="hidden" name="userTaken" data-ng-if="vm.userTaken" ng-model="vm.ctrlUserTaken" required>
+                <div ng-messages="registerForm.userTaken.$error" md-auto-hide="false">
+                    <div ng-message="required">
+                        {{'string.user_taken' | translate}}
+                    </div>
+                </div>
+            </md-input-container>
+
+
+            <!--email-->
+            <md-input-container class="md-icon-float md-block">
+                <label>{{'string.email' | translate}}</label>
+                <md-icon md-svg-src="assets/app/modules/_common/img/communication/ic_email_24px.svg"></md-icon>
+                <input ng-model="vm.email" type="email" name="email" required
+                       data-ng-model-options="{debounce: 500}"
+                       data-ng-change="vm.checkEmail()"/>
+
+                <div ng-messages="registerForm.email.$error" md-auto-hide="false">
+                    <div ng-message="required">
+                        {{'string.email_required' | translate}}
+                    </div>
+                    <div ng-message="email">
+                        {{'string.email_invalid' | translate}}
+                    </div>
+                </div>
+                <input type="hidden" name="emailTaken" data-ng-if="vm.emailTaken" ng-model="vm.ctrlEmailTaken" required>
+                <div ng-messages="registerForm.emailTaken.$error" md-auto-hide="false">
+                    <div ng-message="required">
+                        {{'string.email_taken' | translate}}
+                    </div>
+                </div>
+            </md-input-container>
+
+            <!--password-->
+            <md-input-container class="md-icon-float md-block">
+                <label>{{'string.password' | translate}}</label>
+                <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_lock_24px.svg"></md-icon>
+                <input ng-model="vm.password" type="password" name="password" required
+                       data-ng-change="vm.checkPasswordMatch()"
+                />
+
+                <div ng-messages="registerForm.password.$error" md-auto-hide="false">
+                    <div ng-message="required">
+                        {{'string.password_required' | translate}}
+                    </div>
+                </div>
+            </md-input-container>
+
+            <div data-ng-if="vm.password && registerForm.password.$valid"
+                 ng-password-strength="vm.password" strength="vm.passStrength"
+                 inner-class="progress-bar" inner-class-prefix="progress-bar-"
+                 class="password-strength-ch"
+            ></div>
+
+            <!--repeat password-->
+            <md-input-container class="md-icon-float md-block">
+                <label>{{'string.password_repeat' | translate}}</label>
+                <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_lock_outline_24px.svg"></md-icon>
+                <input ng-model="vm.password2" type="password" name="password2" required
+                       data-ng-change="vm.checkPasswordMatch()"/>
+                <div ng-messages="registerForm.password2.$error" md-auto-hide="false">
+                    <div ng-message="required">
+                        {{'string.password_repeat_required' | translate}}
+                    </div>
+                </div>
+                <div ng-messages="vm.passwordMatch" md-auto-hide="false">
+                    <div ng-message="notMatch">
+                        {{'string.password_repeat_not_match' | translate}}
+                    </div>
+                </div>
+            </md-input-container>
+
+
+            <div layout-align="center center">
+                <md-button class="md-primary md-raised" aria-label="{{'button.accept' | translate}}" layout-fill
+                           ng-click="vm.register(registerForm)">
+                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_done_24px.svg"></md-icon>
+                    &nbsp;
+                    {{'button.accept' | translate}}
+                </md-button>
+            </div>
+
+            <div layout-align="center center">
+                <md-button class="md-primary md-accent f-s-12 t-t-none" aria-label="{{'button.register' | translate}}" layout-fill
+                           ng-click="idxCtrl.go('/signin')">
+                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_highlight_off_24px.svg" class="s12"></md-icon>
+                    &nbsp;
+                    {{'button.cancel' | translate}}
+                </md-button>
+            </div>
+
+        </md-content>
+
+    </form>
+</div>

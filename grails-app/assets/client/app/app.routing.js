@@ -33,6 +33,12 @@ function routing($routeProvider, ROUTE, $locationProvider, __env) {
                 controllerAs: 'vm'
             }
         )
+        .when(ROUTE.REGISTER,{
+                templateUrl: 'assets/app/modules/_security/register/register.html',
+                controller: 'registerCtrl',
+                controllerAs: 'vm'
+            }
+        )
         .when(ROUTE.MAIN,{
                 templateUrl: 'assets/app/modules/admin/main/main.html',
                 controller: 'mainCtrl',
