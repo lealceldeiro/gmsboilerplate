@@ -3,23 +3,27 @@ package security
 import command.SearchCommand
 import command.security.ownedentity.OwnedEntityCommand
 import exceptions.CannotDeleteDueToAssociationException
+import exceptions.CannotDeleteSystemElementException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
 import grails.transaction.Transactional
+import nomenclator.EnumDefaultOwnedEntity
 
 @Transactional
 class OwnedEntityService {
 
 
     def createDefaultOwnedEntity(){
-        EOwnedEntity e = new EOwnedEntity(name: 'HOME', username: 'home', description: 'Default Owned Entity created by System on First Startup. This should not be deleted for keeping consistency.')
+        EOwnedEntity e = new EOwnedEntity(name: String.valueOf(EnumDefaultOwnedEntity.HOME),
+                username: String.valueOf(EnumDefaultOwnedEntity.HOME),
+                description: 'Default Owned Entity created by System on First Startup. This should not be deleted for keeping consistency.')
         e.save(flush: true, failOnError: true)
 
         return e
     }
 
     def getDefaultOwnedEntity(){
-        return EOwnedEntity.findByNameAndUsername('HOME', 'home')
+        return EOwnedEntity.findByNameAndUsername(String.valueOf(EnumDefaultOwnedEntity.HOME), String.valueOf(EnumDefaultOwnedEntity.HOME))
     }
 
     //region CRUD
@@ -50,7 +54,7 @@ class OwnedEntityService {
         def mapped = []
         list.each {
             mapped << [id: it.id, name: it.name, username: it.username,
-                    description: it.description]
+                       description: it.description]
         }
 
         response.items = mapped
@@ -74,7 +78,7 @@ class OwnedEntityService {
 
         l.each {
             response.items << [id: it.id, name: it.name, username: it.username,
-                    description: it.description]
+                               description: it.description]
         }
         response.total = l.size()
         return response
@@ -96,8 +100,10 @@ class OwnedEntityService {
         if(id){ //edit
             aux = EOwnedEntity.get(id)
             if(aux) {
-                aux.username = e.username
-                aux.name = e.name
+                if(aux.username != String.valueOf(EnumDefaultOwnedEntity.HOME)) {
+                    aux.username = e.username
+                    aux.name = e.name
+                }
                 aux.description = e.description
             }
             else { throw new NotFoundException("general.not_found" ,"security.owned_entity.entityCamel", false) }
@@ -136,13 +142,19 @@ class OwnedEntityService {
     def delete(Long id) {
         def e = EOwnedEntity.get(id)
         if(e){
-            def uro = BUser_Role_OwnedEntity.findByOwnedEntity(e)
-            if(!uro){
-                e.delete()
-                return true
+            def defaultOE = getDefaultOwnedEntity()
+            if(e.id == defaultOE.id) {
+                throw new CannotDeleteSystemElementException("security.owned_entity.cannot_delete_default")
             }
-            else { throw new CannotDeleteDueToAssociationException("general.cannot.delete.due.to.association",
-                    "security.owned_entity.entity", "security.user.user", false, true)
+            else {
+                def uro = BUser_Role_OwnedEntity.findByOwnedEntity(e)
+                if(!uro){
+                    e.delete()
+                    return true
+                }
+                else { throw new CannotDeleteDueToAssociationException("general.cannot.delete.due.to.association",
+                        "security.owned_entity.entity", "security.user.user", false, true)
+                }
             }
         }
         else { throw new NotFoundException("general.not_found", "security.owned_entity.entityCamel", false) }

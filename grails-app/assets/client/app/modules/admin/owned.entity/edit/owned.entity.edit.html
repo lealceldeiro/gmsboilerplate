@@ -7,7 +7,7 @@
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.name' | translate}}</label>
                     <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_home_24px.svg"></md-icon>
-                    <input ng-model="vm.entity.name" type="text" name="name" required/>
+                    <input ng-model="vm.entity.name" type="text" name="name" required data-ng-readonly="vm.entity.id && vm.entity.name == 'HOME'"/>
 
                     <div ng-messages="editEntityForm.name.$error" md-auto-hide="false">
                         <div ng-message="required">
@@ -24,6 +24,7 @@
                            data-ng-model-options="{debounce: 500}"
                            data-ng-change="vm.checkUsername()"
                            data-ng-pattern="/(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[._-]?[a-zA-Z0-9]+$/"
+                           data-ng-readonly="vm.entity.id && vm.entity.username == 'HOME'"
                     />
 
                     <div ng-messages="editEntityForm.username.$error" md-auto-hide="false">

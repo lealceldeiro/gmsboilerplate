@@ -5,11 +5,11 @@
 'use strict';
 
 angular
-.module('gmsBoilerplate')
-.controller('registerCtrl', registerCtrl);
+    .module('gmsBoilerplate')
+    .controller('registerCtrl', registerCtrl);
 
 /*@ngInject*/
-function registerCtrl(registerSrv, systemSrv, dialogSrv) {
+function registerCtrl(indexSrv, registerSrv, systemSrv, dialogSrv, blockSrv, translatorSrv, $timeout, navigationSrv, ROUTE) {
     var vm = this;
 
     var keyP = "registerCtrl";
@@ -29,7 +29,9 @@ function registerCtrl(registerSrv, systemSrv, dialogSrv) {
     return vm.wizard;
 
     //fn
-    function fnInit() {}
+    function fnInit() {
+        translatorSrv.setText("LOGIN.new_account", indexSrv, 'siteTitle');
+    }
 
     function fnCheckUsername() {
         vm.wizard.userTaken = false;
@@ -54,9 +56,37 @@ function registerCtrl(registerSrv, systemSrv, dialogSrv) {
             )
         }
     }
-    
-    function fnRegister() {
-        console.log('to do');
+
+    function fnRegister(form) {
+        if (form) {
+            form.$setSubmitted();
+            if (form.$valid && !vm.wizard.passwordMatch.notMatch && !vm.wizard.userTaken && !vm.wizard.emailTaken) {
+                var params = {
+                    username: vm.wizard.username,
+                    name: vm.wizard.name,
+                    email: vm.wizard.email,
+                    password: vm.wizard.password,
+                    enabled: false
+                };
+                blockSrv.block();
+
+                var fnKey = keyP + "fnSave";
+                registerSrv.registerSubscriber(params).then(function (data) {
+                    var e = systemSrv.eval(data, fnKey, false, true);
+                    if (e) {
+                        vm.msg = {};
+                        translatorSrv.setText("REGISTER.almost_finished", vm.msg, 'headline');
+                        translatorSrv.setText("REGISTER.email_sent", vm.msg, 'text', {email: vm.wizard.email});
+                        $timeout(function () {
+                            dialogSrv.showDialog(dialogSrv.type.SUCCESS, vm.msg['headline'], vm.msg['text']);
+                            vm.msg = {};
+                        });
+                        navigationSrv.goTo(ROUTE.HOME);
+                    }
+                    blockSrv.unBlock();
+                })
+            }
+        }
     }
 
     function fnSeeValidUser() {

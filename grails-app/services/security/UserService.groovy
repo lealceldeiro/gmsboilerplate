@@ -12,6 +12,10 @@ class UserService {
 
     def configurationService
 
+    def roleService
+
+    def ownedEntityService
+
     //region CRUD
     /**
      * Search a user(s) according to optional parameters
@@ -87,7 +91,7 @@ class UserService {
         aux.save flush: true
 
         //set the corresponding roles to the user
-        int s2, s = cmd.roles.size()
+        int s2, s = cmd.roles != null ? cmd.roles.size() : 0
         def oEntity
         def role
 
@@ -316,5 +320,17 @@ class UserService {
             e.save(flush: true, failOnError: true)
             return e
         }
+    }
+
+    def registerSubscriber(UserCommand cmd){
+        def u = save(cmd)
+        BRole subscriberRole = roleService.getDefaultSubscriberRole()
+        if(subscriberRole == null) {
+            roleService.createDefaultSubscriberRole()
+        }
+        EOwnedEntity oe = ownedEntityService.getDefaultOwnedEntity()
+        def o = BUser_Role_OwnedEntity.addRole(u, subscriberRole, oe)
+        //todo: send email for confirming he/she is a verified user
+        return u
     }
 }

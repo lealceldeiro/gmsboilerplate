@@ -1,6 +1,7 @@
 package responseHandlers
 
 import exceptions.CannotDeleteDueToAssociationException
+import exceptions.CannotDeleteSystemElementException
 import exceptions.GenericException
 import exceptions.NotAssignedToException
 import exceptions.NotFoundException
@@ -53,6 +54,15 @@ trait ExceptionHandler implements ResponseHandler{
     }
 
     def handleGenericException(GenericException ex) {
+        response.status = HttpStatus.OK.value()
+        String err = g.message(code:"general.done.KO")
+        if(ex.i18nMainMessage) {
+            err = g.message(code: ex.i18nMainMessage) as String
+        }
+        doFail(err)
+    }
+
+    def handleCannotDeleteSystemElementException(CannotDeleteSystemElementException ex) {
         response.status = HttpStatus.OK.value()
         String err = g.message(code:"general.done.KO")
         if(ex.i18nMainMessage) {

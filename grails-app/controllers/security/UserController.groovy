@@ -22,6 +22,7 @@ class UserController implements ExceptionHandler{
     static allowedMethods = [
             search                  : HttpMethod.GET.name(),
             searchAll               : HttpMethod.GET.name(),
+            registerSubscriber      : HttpMethod.PUT.name(),
             create                  : HttpMethod.PUT.name(),
             update                  : HttpMethod.POST.name(),
             updateProfile           : HttpMethod.POST.name(),
@@ -222,5 +223,14 @@ class UserController implements ExceptionHandler{
             doFail("general.done.KO")
         }
         else { throw new ValidationsException() }
+    }
+
+    @Secured("permitAll")
+    def registerSubscriber(UserCommand cmd) {
+        final e = userService.registerSubscriber(cmd)
+        if(e){
+            String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
+            doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
+        }
     }
 }

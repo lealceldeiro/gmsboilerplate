@@ -21,12 +21,10 @@ class BRole_Permission implements Serializable{
     }
 
     static BRole_Permission addPermission(BRole role, BPermission permission) {
-        if(findByRoleAndPermission(role, permission)){
-            return null
-            //todo: inform error
+        if(!findByRoleAndPermission(role, permission)){
+            def e = new BRole_Permission(role: role, permission: permission)
+            e.save(flush: true, insert: true)
         }
-        def e = new BRole_Permission(role: role, permission: permission)
-        e.save(flush: true, insert: true)
     }
 
     static def removePermission(BRole role, BPermission permission){

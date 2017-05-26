@@ -10,8 +10,8 @@ class BootStrap {
     def init = { servletContext ->
 
         //PERMISSIONS
-        //todo: check out this initial config later in time when authentication is working properly
-        if(!configurationService.isThereAnyConfiguration()){
+        boolean isThereConfig = configurationService.isThereAnyConfiguration()
+        if(!isThereConfig){
             configurationService.createDefaultConfig()
         }
 
@@ -23,6 +23,10 @@ class BootStrap {
                     roleService.createDefaultAdminRole()
                 }
             }
+        }
+
+        if(!isThereConfig) { //create role for subscriber users
+            roleService.createDefaultSubscriberRole()
         }
 
         //USER & OWNED ENTITY

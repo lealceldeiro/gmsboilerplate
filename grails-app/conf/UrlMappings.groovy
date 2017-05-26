@@ -11,6 +11,7 @@ class UrlMappings {
         "/api/user/$id/activate/$value"         (controller: "user", action: "activate")
         "/api/user/get"                         (controller: "user", action: "getBy")
         "/api/user/taken"                       (controller: "user", action: "isTaken")
+        "/api/user/register"                    (controller: "user", action: "registerSubscriber")
         //endregion
 
         //region ROLE

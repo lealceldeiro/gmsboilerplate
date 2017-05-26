@@ -120,5 +120,8 @@
   "LOGIN.user_email": "User or email address",
   "LOGIN.user_email_required": "Either the user or email address is required",
   "LOGIN.password": "@:string.password",
-  "LOGIN.password_required": "@:string.password_required"
+  "LOGIN.password_required": "@:string.password_required",
+
+  "REGISTER.email_sent": "Success! An email have been sent to '{email}' with the required information in order to finish the registration",
+  "REGISTER.almost_finished": "We're almost done"
 }

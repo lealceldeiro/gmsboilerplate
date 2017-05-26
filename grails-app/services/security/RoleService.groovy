@@ -7,6 +7,8 @@ import exceptions.GenericException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
 import grails.transaction.Transactional
+import nomenclator.EnumDefaultRole
+import nomenclator.EnumPermission
 
 @Transactional
 class RoleService {
@@ -180,6 +182,25 @@ class RoleService {
         def brp = BPermission.findAll()
         brp.each { BRole_Permission.addPermission(r, it) }
 
+    }
+
+    boolean createDefaultSubscriberRole(){
+        BRole r = new BRole(description: 'Role for subscribers', label: String.valueOf(EnumDefaultRole.SUBSCRIBER), enabled: true)
+        r.save(flush: true, failOnError: true)
+        List<BPermission> susPermissions = BPermission.createCriteria().list {
+            or {
+                eq("name", String.valueOf(EnumPermission.MANAGE__PROFILE))
+                eq("name", String.valueOf(EnumPermission.READ__PROFILE))
+                eq("name", String.valueOf(EnumPermission.UPDATE__PROFILE))
+            }
+        }
+        susPermissions.each { BRole_Permission.addPermission(r, it) }
+
+        return true
+    }
+
+    BRole getDefaultSubscriberRole() {
+        return BRole.findByLabel(String.valueOf(EnumDefaultRole.SUBSCRIBER))
     }
 
     def activate(long id, boolean activate = true){
