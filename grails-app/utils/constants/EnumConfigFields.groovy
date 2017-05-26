@@ -13,5 +13,7 @@ enum EnumConfigFields {
 
     IS_MULTI_ENTITY_APP,
 
+    IS_USER_REGISTRATION_ALLOWED,
+
     LANGUAGE
 }

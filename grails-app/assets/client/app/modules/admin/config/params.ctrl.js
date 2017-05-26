@@ -45,24 +45,10 @@ function configParamsCtrl(configSrv, $timeout, systemSrv, blockSrv, ROUTE, navig
         blockSrv.setIsLoading(vm.wizard.entityData, true);
         var fnKey = keyP + "_isMultiEntityApp";
         configSrv.loadConfig().then(
-            function (data) {
-                var e = systemSrv.eval(data, fnKey, false, false);
-                if (e) {
-                    configSrv.config = systemSrv.getItems(fnKey);
-                    vm.wizard.entity= {multiEntity: configSrv.config.multiEntity};
-                    Object.assign(vm.cached, configSrv.config);
-                    blockSrv.setIsLoading(vm.wizard.entityData, false);
-                }
-                else {
-                    if (retries++ < MAX_RETRY) {
-                        $timeout(function () {
-                            _isMultiEntityApp();
-                        }, 500)
-                    }
-                    else {
-                        blockSrv.setIsLoading(vm.wizard.entityData, false);
-                    }
-                }
+            function (config) {
+                vm.wizard.entity= {multiEntity: configSrv.config.multiEntity};
+                Object.assign(vm.cached, configSrv.config);
+                blockSrv.setIsLoading(vm.wizard.entityData, false);
             }
         );
     }

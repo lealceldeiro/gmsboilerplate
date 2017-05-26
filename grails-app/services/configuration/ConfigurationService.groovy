@@ -2,7 +2,6 @@ package configuration
 
 import constants.EnumConfigFields
 import grails.transaction.Transactional
-import security.EOwnedEntity
 
 @Transactional
 class ConfigurationService {
@@ -15,6 +14,7 @@ class ConfigurationService {
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SET_UP_CONFIGURED, false)
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SETUP, false)
         setField(EnumConfigFields.IS_MULTI_ENTITY_APP, false)
+        setField(EnumConfigFields.IS_USER_REGISTRATION_ALLOWED, false)
 
         return true
     }
@@ -37,6 +37,10 @@ class ConfigurationService {
 
     boolean isMultiEntityApplication(){
         isThere(EnumConfigFields.IS_MULTI_ENTITY_APP, true)
+    }
+
+    boolean isUserRegistrationAllowed(){
+        isThere(EnumConfigFields.IS_USER_REGISTRATION_ALLOWED, true)
     }
 
 

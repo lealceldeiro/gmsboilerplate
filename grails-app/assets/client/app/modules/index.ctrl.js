@@ -35,7 +35,6 @@ function indexCtrl($scope, indexSrv, sessionSrv, $timeout, systemSrv, configSrv,
 
     //fn
     function fnInit() {
-        _loadConfig();
         translatorSrv.setText("string.index", indexSrv, 'siteTile');
         vm.wizard.logged = sessionSrv.isLogged();
     }
@@ -46,24 +45,5 @@ function indexCtrl($scope, indexSrv, sessionSrv, $timeout, systemSrv, configSrv,
 
     function fnGo(link) {
         navigationSrv.goTo(link);
-    }
-
-    function _loadConfig() {
-        var fnKey = keyP + "_isSingleEntityApp";
-        configSrv.loadConfig().then(
-            function (data) {
-                var e = systemSrv.eval(data, fnKey, false, false);
-                if (e) {
-                    configSrv.config = systemSrv.getItems(fnKey);
-                }
-                else {
-                    if (retries++ < MAX_RETRY) {
-                        $timeout(function () {
-                            _loadConfig();
-                        }, 3000)
-                    }
-                }
-            }
-        );
     }
 }

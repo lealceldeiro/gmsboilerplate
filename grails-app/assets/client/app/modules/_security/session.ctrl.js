@@ -121,21 +121,9 @@ function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $ti
     }
 
     function _loadConfig() {
-        var fnKey = keyP + "_isSingleEntityApp";
         configSrv.loadConfig().then(
-            function (data) {
-                var e = systemSrv.eval(data, fnKey, false, false);
-                if (e) {
-                    configSrv.config = systemSrv.getItems(fnKey);
-                    vm.wizard.isMultiEntityApp = configSrv.config.multiEntity;
-                }
-                else {
-                    if (retries++ < MAX_RETRY) {
-                        $timeout(function () {
-                            _loadConfig();
-                        }, 3000)
-                    }
-                }
+            function (config) {
+                vm.wizard.isMultiEntityApp = configSrv.config.multiEntity
             }
         );
     }

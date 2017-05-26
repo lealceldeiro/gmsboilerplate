@@ -9,9 +9,10 @@ angular
     .service('configSrv', configSrv);
 
 /*@ngInject*/
-function configSrv(baseSrv, $http, systemSrv, sessionSrv) {
+function configSrv(baseSrv, $http, systemSrv, sessionSrv, $timeout) {
 
     var self = this;
+    var MAX_RETRY = 3, retries = 0;
 
     var url = systemSrv.APIAbsoluteUrl + "config/";
 
@@ -29,7 +30,26 @@ function configSrv(baseSrv, $http, systemSrv, sessionSrv) {
 
     //
     function fnLoadConfig(uid) {
-        return baseSrv.resolveDeferred($http.get(url + (uid ? "?uid=" + uid : "")));
+        var fnKey = "configSrvFnLoadConfig";
+        var def =  $http.get(url + (uid ? "?uid=" + uid : ""));
+        def.then(
+            function (response) {
+                var data = response.data;
+                var e = systemSrv.eval(data, fnKey, false, false);
+                if (e) {
+                    self.service.config = systemSrv.getItems(fnKey);
+                }
+                return self.service.config;
+            },
+            function (err) {
+                if (retries++ < MAX_RETRY) {
+                    $timeout(function () {
+                        return fnLoadConfig();
+                    }, 3000)
+                }
+            }
+        );
+        return def;
     }
 
     function fnSave(params, uid) {

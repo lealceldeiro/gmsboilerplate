@@ -46,9 +46,11 @@ class ConfigurationController implements ExceptionHandler{
 
     @Secured("permitAll")
     def getConfig(Long uid) {
-        def args = ['multiEntity': false, language: ""]
+        def args = ['multiEntity': false, 'isUserRegistrationAllowed': false, language: ""]
         def me = configurationService.isMultiEntityApplication()
+        def ar = configurationService.isUserRegistrationAllowed()
         if(me) args.multiEntity = true
+        if(ar) args.isUserRegistrationAllowed = true
 
         if(uid){
             def lan = configurationService.getLanguage(uid)
