@@ -76,8 +76,13 @@ class ConfigurationService {
         return true
     }
 
-    boolean setIsMultiEntityApp(boolean multi = false) {
+    boolean setIsMultiEntityApp(Boolean multi = false) {
         setField(EnumConfigFields.IS_MULTI_ENTITY_APP, multi)
+        return true
+    }
+
+    boolean setIsUserRegistrationsAllowed(Boolean allowed = false) {
+        setField(EnumConfigFields.IS_USER_REGISTRATION_ALLOWED, allowed)
         return true
     }
 

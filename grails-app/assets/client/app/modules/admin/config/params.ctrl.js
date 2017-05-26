@@ -9,11 +9,10 @@ angular
     .controller('configParamsCtrl', configParamsCtrl);
 
 /*@ngInject*/
-function configParamsCtrl(configSrv, $timeout, systemSrv, blockSrv, ROUTE, navigationSrv, sessionSrv, $window) {
+function configParamsCtrl(configSrv, systemSrv, blockSrv, ROUTE, navigationSrv, sessionSrv, $window) {
 
     var vm = this;
     var keyP = "ADMIN_CONFIG_PARAMS";
-    var retries = 0, MAX_RETRY = 3;
 
     vm.cached = {};
 
@@ -33,7 +32,10 @@ function configParamsCtrl(configSrv, $timeout, systemSrv, blockSrv, ROUTE, navig
     //fn
     function fnInit() {
         if (typeof configSrv.config.multiEntity !== 'undefined' && configSrv.config.multiEntity !== null) {
-            vm.wizard.entity = {multiEntity: configSrv.config.multiEntity};
+            vm.wizard.entity = {
+                multiEntity: configSrv.config.multiEntity,
+                isUserRegistrationAllowed: configSrv.config.isUserRegistrationAllowed
+            };
             Object.assign(vm.cached, configSrv.config);
         }
         else {
@@ -43,7 +45,6 @@ function configParamsCtrl(configSrv, $timeout, systemSrv, blockSrv, ROUTE, navig
 
     function _isMultiEntityApp() {
         blockSrv.setIsLoading(vm.wizard.entityData, true);
-        var fnKey = keyP + "_isMultiEntityApp";
         configSrv.loadConfig().then(
             function (config) {
                 vm.wizard.entity= {multiEntity: configSrv.config.multiEntity};
@@ -60,13 +61,15 @@ function configParamsCtrl(configSrv, $timeout, systemSrv, blockSrv, ROUTE, navig
     function fnSave(form) {
         if (form && form.$valid) {
             var params = {
-                multiEntity: vm.wizard.entity.multiEntity
+                multiEntity: vm.wizard.entity.multiEntity,
+                isUserRegistrationAllowed: vm.wizard.entity.isUserRegistrationAllowed
             };
             var fnKey = keyP + "fnSave";
             configSrv.save(params, sessionSrv.currentUser().id).then(
                 function (data) {
                     if (systemSrv.eval(data, fnKey, true, true)) {
-                        if (vm.cached.multiEntity !== vm.wizard.entity.multiEntity) {
+                        if (vm.cached.multiEntity !== vm.wizard.entity.multiEntity ||
+                            vm.cached.isUserRegistrationAllowed !== vm.wizard.entity.isUserRegistrationAllowed) {
                             $window.location.reload();
                         }
                         else { fnCancel(); }

@@ -62,7 +62,10 @@ class ConfigurationController implements ExceptionHandler{
 
     @Secured("hasRole('MANAGE__CONFIGURATION')")
     def saveConfig(ConfigurationCommand cmd) {
-        if(cmd.validate()) configurationService.setIsMultiEntityApp(cmd.multiEntity)
+        if(cmd.validate()) {
+            configurationService.setIsMultiEntityApp(cmd.multiEntity)
+            configurationService.setIsUserRegistrationsAllowed(cmd.isUserRegistrationAllowed)
+        }
         else throw new ValidationsException()
         doSuccess "general.done.ok"
     }

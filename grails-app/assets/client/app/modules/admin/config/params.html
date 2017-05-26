@@ -4,8 +4,13 @@
         <div layout="row" layout-padding layout-wrap>
             <div flex="99">
                 <md-content class="md-no-momentum">
-                    <md-checkbox ng-model="vm.entity.multiEntity" aria-label="Multi-entidad">
+                    <md-checkbox ng-model="vm.entity.multiEntity" aria-label="{{'CONFIGURATION.is_multi_entity_app' | translate}}">
                         {{'CONFIGURATION.is_multi_entity_app' | translate}}
+                    </md-checkbox>
+                </md-content>
+                <md-content class="md-no-momentum">
+                    <md-checkbox ng-model="vm.entity.isUserRegistrationAllowed" aria-label="{{'CONFIGURATION.is_user_registration_allowed' | translate}}">
+                        {{'CONFIGURATION.is_user_registration_allowed' | translate}}
                     </md-checkbox>
                 </md-content>
             </div>

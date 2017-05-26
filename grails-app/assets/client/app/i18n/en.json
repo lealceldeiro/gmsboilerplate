@@ -109,6 +109,7 @@
   "CONFIGURATION.configuration": "Configuration",
   "CONFIGURATION.parameters": "Parameters",
   "CONFIGURATION.is_multi_entity_app": "It is a multi-entity app",
+  "CONFIGURATION.is_user_registration_allowed": "Allow registration of new users by request",
 
   "LANGUAGE.language": "Language",
   "LANGUAGE.english": "English",
