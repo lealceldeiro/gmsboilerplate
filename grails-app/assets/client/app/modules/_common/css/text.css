@@ -1,3 +1,7 @@
 .text-italic {
     font-style: italic;
 }
+
+.t-t-none {
+    text-transform: none;
+}

@@ -53,3 +53,10 @@ button.md-question {
     margin-top: -40px;
     margin-bottom: 39px;
 }
+
+md-icon.s12 {
+    height: 12px;
+    width: 12px;
+    min-height: 12px;
+    min-width: 12px;
+}

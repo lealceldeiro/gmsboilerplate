@@ -45,11 +45,19 @@
             </md-input-container>
 
             <div layout-align="center center">
-                <md-button class="md-primary md-raised bl" aria-label="{{'button.accept' | translate}}" layout-fill
+                <md-button class="md-primary md-raised" aria-label="{{'button.accept' | translate}}" layout-fill
                            ng-click="vm.login(loginForm)">
                     <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_done_24px.svg"></md-icon>
                     &nbsp;
                     {{'button.login' | translate}}
+                </md-button>
+            </div>
+
+            <div layout-align="center center" data-ng-if="vm.isUserRegistrationAllowed">
+                <md-button class="md-primary md-accent f-s-12 t-t-none" aria-label="{{'button.register' | translate}}" layout-fill
+                           ng-click="idxCtrl.go('/signup')">
+                    <md-icon md-svg-src="assets/app/modules/_common/img/content/ic_add_24px.svg" class="s12"></md-icon>
+                    {{'button.register' | translate}}
                 </md-button>
             </div>
 
