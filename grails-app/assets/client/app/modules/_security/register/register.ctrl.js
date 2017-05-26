@@ -21,7 +21,7 @@ function registerCtrl(registerSrv, systemSrv, dialogSrv) {
         checkEmail: fnCheckEmail,
         register: fnRegister,
         seeValidUser: fnSeeValidUser,
-        c2heckPasswordMatch: fnCheckPasswordMatch
+        checkPasswordMatch: fnCheckPasswordMatch
     };
 
     fnInit();
