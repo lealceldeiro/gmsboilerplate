@@ -9,7 +9,7 @@ angular
     .service('configSrv', configSrv);
 
 /*@ngInject*/
-function configSrv(baseSrv, $http, systemSrv, sessionSrv, $timeout) {
+function configSrv(baseSrv, $http, systemSrv, sessionSrv, $timeout, $translate) {
 
     var self = this;
     var MAX_RETRY = 3, retries = 0;
@@ -59,10 +59,18 @@ function configSrv(baseSrv, $http, systemSrv, sessionSrv, $timeout) {
         return baseSrv.resolveDeferred($http.post(url, params));
     }
 
-    function fnChangeLanguage(uid, lan) {
-        var d = baseSrv.resolveDeferred($http.post(url + 'lan',  {'userId': uid, 'lan': lan}));
-        sessionSrv.setLanguage(lan);
-        return d
+    function fnChangeLanguage(lan, doNotPersist) {
+        if (lan) {
+            $translate.use(lan);
+            sessionSrv.setLanguage(lan);
+            if (!doNotPersist) {
+                var u = sessionSrv.currentUser();
+                if (u) {
+                    var d = baseSrv.resolveDeferred($http.post(url + 'lan',  {'userId': u['id'], 'lan': lan}));
+                }
+            }
+            return d
+        }
     }
 
     function fnGetConfigLanguage(uid) {

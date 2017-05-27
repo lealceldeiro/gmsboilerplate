@@ -13,13 +13,8 @@ function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $ti
 
     var vm = this;
     var keyP = "__SESSIONCTRL__";
-    var MAX_RETRY = 3, retries = 0;
 
     vm.wizard = {
-        lan: {
-            'spanish': 'es',
-            'english': 'en'
-        },
         isMultiEntityApp: false,
 
         init: fnInit,
@@ -27,9 +22,7 @@ function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $ti
         logout: fnLogout,
         go: goTo,
 
-        viewProfile: fnViewProfile,
-
-        changeLanguage: fnChangeLanguage
+        viewProfile: fnViewProfile
     };
 
     vm.wizard.init();
@@ -83,7 +76,7 @@ function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $ti
 
             var lan = sessionSrv.getLanguage();
             if(lan){
-                fnChangeLanguage(lan, true);
+                configSrv.changeLanguage(lan, true);
             } else {
                 var fnKey = keyP + "fnInit-getConfigLanguage";
                 configSrv.getConfigLanguage(vm.wizard.user.id).then(
@@ -96,7 +89,7 @@ function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $ti
                             }
                         }
                         else { it = $translate.preferredLanguage(); }
-                        fnChangeLanguage(it);
+                        configSrv.changeLanguage(it);
                     }
                 )
             }
@@ -126,13 +119,6 @@ function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $ti
                 vm.wizard.isMultiEntityApp = configSrv.config.multiEntity
             }
         );
-    }
-
-    function fnChangeLanguage(lan, doNotPersist) {
-        $translate.use(lan);
-        if (!doNotPersist) {
-            configSrv.changeLanguage(vm.wizard.user.id, lan);
-        }
     }
 
     function has(permArgs, any) {

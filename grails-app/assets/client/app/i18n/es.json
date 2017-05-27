@@ -32,6 +32,7 @@
   "button.continue": "Continuar",
   "button.close_session_now": "Cerrar sesión ahora",
 
+  "string.or": "o",
   "string.role_lc": "rol",
   "string.user_lc": "usuario",
   "string.entity_lc": "entidad",

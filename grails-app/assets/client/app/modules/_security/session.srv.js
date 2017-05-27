@@ -201,15 +201,39 @@ function sessionSrv(localStorageService, $rootScope) {
             }
             return lan ? lan[u.id] : null;
         }
+        else {
+            if (!lan) {
+                lan = localStorageService.get(lanKey);
+            }
+            else {
+                var has = false;
+                for(var k in lan){
+                    if (lan.hasOwnProperty(k)) {
+                        has = true;
+                        break;
+                    }
+                }
+                if (!has) {
+                    lan = localStorageService.get(lanKey);
+                }
+                else if(!localStorageService.get(lanKey)) {
+                    localStorageService.set(lanKey, lan);
+                }
+            }
+            return lan['_b_session'];
+        }
     }
 
     function fnSetLanguage(language) {
+        lan = localStorageService.get(lanKey) || {};
         var u = fnGetCurrentUser();
         if (u) {
-            lan = localStorageService.get(lanKey) || {};
             lan[u.id] = language;
-            localStorageService.set(lanKey, lan);
         }
+        else {
+            lan['_b_session'] = language;
+        }
+        localStorageService.set(lanKey, lan);
     }
 
     function fnHasPermissions(permArgs, any) {

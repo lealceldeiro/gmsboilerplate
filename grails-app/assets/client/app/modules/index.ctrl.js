@@ -10,16 +10,21 @@ angular
     .controller('indexCtrl', indexCtrl);
 
 /*@ngInject*/
-function indexCtrl($scope, indexSrv, sessionSrv, $timeout, systemSrv, configSrv, translatorSrv, navigationSrv) {
+function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navigationSrv) {
 
     var vm = this;
-    var keyP = "__index__";
-    var MAX_RETRY = 3, retries = 0;
 
     vm.wizard = {
+
+        lan: {
+            'spanish': 'es',
+            'english': 'en'
+        },
         init: fnInit,
         go: fnGo,
-        siteTitle: fnSiteTitle
+        siteTitle: fnSiteTitle,
+
+        changeLanguage: fnChangeLanguage
     };
 
     $scope.$watch(function () {return vm.wizard.siteTitle();},function (nVal, oVal) {});
@@ -37,6 +42,8 @@ function indexCtrl($scope, indexSrv, sessionSrv, $timeout, systemSrv, configSrv,
     function fnInit() {
         translatorSrv.setText("string.index", indexSrv, 'siteTile');
         vm.wizard.logged = sessionSrv.isLogged();
+
+        configSrv.changeLanguage(sessionSrv.getLanguage(), true);
     }
 
     function fnSiteTitle() {
@@ -45,5 +52,9 @@ function indexCtrl($scope, indexSrv, sessionSrv, $timeout, systemSrv, configSrv,
 
     function fnGo(link) {
         navigationSrv.goTo(link);
+    }
+
+    function fnChangeLanguage(lan, doNotPersist) {
+        configSrv.changeLanguage(lan, doNotPersist);
     }
 }
