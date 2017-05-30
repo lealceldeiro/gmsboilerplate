@@ -16,6 +16,7 @@ class UserCommand {
     String name
     String password
     Boolean enabled = true
+    Boolean emailVerified = true
 
     List<EntityRoleRequestMap> roles
 
@@ -26,11 +27,12 @@ class UserCommand {
         password nullable: false, blank: false
         roles nullable: true
         enabled nullable: true
+        emailVerified nullable: true
     }
 
     def call(){
         //roles are not added here, but in the controller, using the BUser_Role_OwnedEntity domain class
-        EUser u = new EUser(username: username, email: email, name: name, password: password, enabled: enabled)
+        EUser u = new EUser(username: username, email: email, name: name, password: password, enabled: enabled, emailVerified: emailVerified)
         u.id = id
         return u
     }

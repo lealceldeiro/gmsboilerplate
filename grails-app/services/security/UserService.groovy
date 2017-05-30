@@ -16,6 +16,8 @@ class UserService {
 
     def ownedEntityService
 
+    def emailSenderService
+
     //region CRUD
     /**
      * Search a user(s) according to optional parameters
@@ -76,6 +78,7 @@ class UserService {
                 if (cmd.username != null) { aux.username = cmd.username }
                 if (cmd.name != null) { aux.name = cmd.name }
                 if (cmd.password != null) { aux.password = cmd.password }
+                if (cmd.emailVerified != null) { aux.emailVerified = cmd.emailVerified }
                 aux.email = cmd.email
                 aux.enabled = cmd.enabled
             }
@@ -322,15 +325,19 @@ class UserService {
         }
     }
 
-    def registerSubscriber(UserCommand cmd){
+    def registerSubscriber(UserCommand cmd, String emailVerificationSubject, String emailVerificationText, String emailVerificationBtnText){
+        cmd.emailVerified = false
         def u = save(cmd)
         BRole subscriberRole = roleService.getDefaultSubscriberRole()
         if(subscriberRole == null) {
             roleService.createDefaultSubscriberRole()
         }
         EOwnedEntity oe = ownedEntityService.getDefaultOwnedEntity()
-        def o = BUser_Role_OwnedEntity.addRole(u, subscriberRole, oe)
-        //todo: send email for confirming he/she is a verified user
+        BUser_Role_OwnedEntity.addRole(u, subscriberRole, oe)
+
+        String confirmationUrl = "#"
+        emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, confirmationUrl)
+
         return u
     }
 }

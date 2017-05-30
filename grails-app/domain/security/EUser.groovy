@@ -16,6 +16,7 @@ class EUser implements Serializable {
     String name
     String password
     Boolean enabled = true
+    Boolean emailVerified = true
 
     Boolean accountExpired = false
     Boolean accountLocked = false
@@ -32,6 +33,7 @@ class EUser implements Serializable {
         name nullable: false, blank: false
         password nullable: false, blank: false
         enabled nullable: true
+        emailVerified nullable: true
     }
 
     static mapping = {password column: '`password`'}
