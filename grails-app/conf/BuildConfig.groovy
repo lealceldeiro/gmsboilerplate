@@ -72,6 +72,8 @@ grails.project.dependency.resolution = {
         //use ng-inject for injecting dependencies to minified files
         compile "org.grails.plugins:angular-annotate-asset-pipeline:1.1.3"
 
+        compile "org.grails.plugins:mail:1.0.7"
+
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.6.1" // or ":hibernate:3.6.10.18"
         runtime ":database-migration:1.4.0"

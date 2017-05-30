@@ -78,19 +78,22 @@ environments {
     test {
         grails.config.locations = [
                 "file:grails-app/conf/hibernate/datasource-config.properties",
-                "file:grails-app/conf/hibernate/datasource-config-test.properties"
+                "file:grails-app/conf/hibernate/datasource-config-test.properties",
+                "file:grails-app/conf/custom/mail.properties"
         ]
     }
     development {
         grails.config.locations = [
                 "file:grails-app/conf/hibernate/datasource-config.properties",
-                "file:grails-app/conf/hibernate/datasource-config-development.properties"
+                "file:grails-app/conf/hibernate/datasource-config-development.properties",
+                "file:grails-app/conf/custom/mail.properties"
         ]
     }
     production {
         grails.config.locations = [
                 "classpath:datasource-config-production.properties",
-                "classpath:datasource-config.properties"
+                "classpath:datasource-config.properties",
+                "classpath:mail.properties"
         ]
     }
 }
