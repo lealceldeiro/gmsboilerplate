@@ -6,6 +6,7 @@ import exceptions.GenericException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
 import grails.transaction.Transactional
+import util.BEmailVerificationToken
 
 @Transactional
 class UserService {
@@ -17,6 +18,8 @@ class UserService {
     def ownedEntityService
 
     def emailSenderService
+
+    def tokenGeneratorService
 
     //region CRUD
     /**
@@ -335,8 +338,12 @@ class UserService {
         EOwnedEntity oe = ownedEntityService.getDefaultOwnedEntity()
         BUser_Role_OwnedEntity.addRole(u, subscriberRole, oe)
 
-        String confirmationUrl = "#"
-        emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, confirmationUrl)
+        String token = tokenGeneratorService.getTokenFor(u.username)
+
+        BEmailVerificationToken evt = new BEmailVerificationToken(user: u, token: token)
+        evt.save(flush: true, failOnError: true)
+
+        emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, token)
 
         return u
     }

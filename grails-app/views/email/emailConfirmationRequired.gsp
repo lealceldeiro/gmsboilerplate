@@ -10,7 +10,8 @@
         ${bodyText}
     </span>
     <br />
-    <a style="
+    <a
+        style="
     position: relative;
     display: inline-block;
     color: rgb(255, 255, 255);
@@ -45,7 +46,11 @@
     overflow: hidden;
     transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1);
     letter-spacing: .06em;"
-       href="${g.createLink(absolute: true)}">${buttonText}</a>
+        target="_blank"
+        href="${createLink(params:[tkn: token], controller:'emailConfirm', action:'verifySubscriber', absolute:true)}"
+    >
+        ${buttonText}
+    </a>
 </div>
 </body>
 </html>

@@ -9,8 +9,8 @@ class EmailSenderService {
 
     def mailService
 
-    def sendSubscriptionVerification(def to, String subject, String bodyText, String buttonText, String buttonUrl) {
-        send to, subject, "/email/emailConfirmationRequired", [bodyText: bodyText, buttonUrl: buttonUrl, buttonText: buttonText]
+    def sendSubscriptionVerification(def to, String subject, String bodyText, String buttonText, String token) {
+        send to, subject, "/email/emailConfirmationRequired", [bodyText: bodyText, token: token, buttonText: buttonText]
     }
 
     private send(def toWho, String mSubject, String viewToBeRendered, Map args) {

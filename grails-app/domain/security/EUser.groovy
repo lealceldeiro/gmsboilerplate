@@ -3,6 +3,7 @@ package security
 import configuration.ConfigurationService
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
+import util.BEmailVerificationToken
 
 @EqualsAndHashCode(includes = 'username')
 @ToString(includes = 'username', includeNames = true, includePackage = false)
@@ -27,6 +28,8 @@ class EUser implements Serializable {
 
     static hasMany = [roles: BUser_Role_OwnedEntity]
 
+    static hasOne = [emailVerificationToken: BEmailVerificationToken]
+
     static constraints = {
         username nullable: false, unique: true, blank: false
         email nullable: true, unique: true, blank: false
@@ -34,6 +37,8 @@ class EUser implements Serializable {
         password nullable: false, blank: false
         enabled nullable: true
         emailVerified nullable: true
+        emailVerificationToken nullable: true
+        emailVerificationToken unique: true
     }
 
     static mapping = {password column: '`password`'}
