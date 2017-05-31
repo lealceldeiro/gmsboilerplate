@@ -47,7 +47,7 @@
     transition: box-shadow .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1);
     letter-spacing: .06em;"
         target="_blank"
-        href="${createLink(params:[tkn: token], controller:'emailConfirm', action:'verifySubscriber', absolute:true)}"
+        href="${confirmUrl}"
     >
         ${buttonText}
     </a>

@@ -328,7 +328,8 @@ class UserService {
         }
     }
 
-    def registerSubscriber(UserCommand cmd, String emailVerificationSubject, String emailVerificationText, String emailVerificationBtnText){
+    def registerSubscriber(UserCommand cmd, String emailVerificationSubject, String emailVerificationText,
+                           String emailVerificationBtnText, String confirmBaseUrl){
         cmd.emailVerified = false
         def u = save(cmd)
         BRole subscriberRole = roleService.getDefaultSubscriberRole()
@@ -343,7 +344,8 @@ class UserService {
         BEmailVerificationToken evt = new BEmailVerificationToken(user: u, token: token)
         evt.save(flush: true, failOnError: true)
 
-        emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, token)
+        emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText,
+                emailVerificationBtnText, confirmBaseUrl + "?tkn=" + token)
 
         return u
     }
