@@ -331,6 +331,7 @@ class UserService {
     def registerSubscriber(UserCommand cmd, String emailVerificationSubject, String emailVerificationText,
                            String emailVerificationBtnText, String confirmBaseUrl){
         cmd.emailVerified = false
+        cmd.enabled = false
         def u = save(cmd)
         BRole subscriberRole = roleService.getDefaultSubscriberRole()
         if(subscriberRole == null) {

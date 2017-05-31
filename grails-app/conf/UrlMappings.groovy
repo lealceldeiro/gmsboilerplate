@@ -43,6 +43,12 @@ class UrlMappings {
         //default
         "/"(view:"/index")
         "500"(view:'/error')
+
+        "/$controller/$action" {
+            constraints {
+                // apply constraints here
+            }
+        }
         "404"(view:"/index")
     }
 }
