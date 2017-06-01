@@ -29,7 +29,9 @@
     "angular-translate": "^2.15.1",
     "angular-translate-interpolation-messageformat": "^2.15.1",
     "ng-password-strength": "^0.2.1",
-    "bootstrap": "3"
+    "bootstrap": "^4",
+    "angular-moment-picker": "moment-picker#^0.10.1",
+    "MDBootstrap": "^4.3.2"
   },
   "resolutions": {
     "angular": "1.5.8"

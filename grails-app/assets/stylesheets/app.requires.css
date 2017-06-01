@@ -4,8 +4,8 @@ ngMaterial
 *= require ../client/bower_components/angular-material/angular-material.min
 
 common
-*= require ../client/bower_components/bootstrap/dist/css/bootstrap.min
-*= require ../client/bower_components/dist/css/bootstrap-theme.min
+*= require ../client/bower_components/MDBootstrap/css/bootstrap.min
+*= require ../client/bower_components/MDBootstrap/css/mdb.min
 
 
 *= require ../client/app/ng.app.requires
