@@ -1,11 +1,11 @@
 /*
 
-ngMaterial
-*= require ../client/bower_components/angular-material/angular-material.min
-
-common
+MDBootstrap
 *= require ../client/bower_components/MDBootstrap/css/bootstrap.min
 *= require ../client/bower_components/MDBootstrap/css/mdb.min
+
+ngMaterial
+*= require ../client/bower_components/angular-material/angular-material.min
 
 
 *= require ../client/app/ng.app.requires

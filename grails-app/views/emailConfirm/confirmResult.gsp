@@ -6,8 +6,15 @@
 </head>
 
 <body>
-<h2 class="header-s1">${header}</h2>
+<h2 class="mt-3 mb-3">${header}</h2>
 <hr>
-${body}
+<div class="mb-1">
+    ${body}
+</div>
+
+<br />
+<g:each in="${actions}" var="btn" >
+    <a type="button" class="btn btn-success" href="${btn.link}">${btn.text}</a>
+</g:each>
 </body>
 </html>

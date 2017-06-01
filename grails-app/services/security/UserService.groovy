@@ -350,4 +350,22 @@ class UserService {
 
         return u
     }
+
+    def requestNewVerificationEmail(String email, String emailVerificationSubject, String emailVerificationText,
+                                    String emailVerificationBtnText, String confirmBaseUrl) {
+        EUser u = getBy([email: email]) as EUser
+        if(u) {
+            String token = tokenGeneratorService.getTokenFor(u.username)
+            BEmailVerificationToken evt = new BEmailVerificationToken(user: u, token: token)
+            evt.save(flush: true, failOnError: true)
+
+            emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText,
+                    emailVerificationBtnText, confirmBaseUrl + "?tkn=" + token)
+
+            return true
+        }
+        else {
+            //todo
+        }
+    }
 }
