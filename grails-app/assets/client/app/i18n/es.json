@@ -31,6 +31,9 @@
   "button.back": "Volver",
   "button.continue": "Continuar",
   "button.close_session_now": "Cerrar sesión ahora",
+  "button.go_login": "Ir a la página de acceso",
+  "button.requestNewVerificationEmail": "Solicitar un nuevo email de verificación",
+  "button.createAccount": "Crear una cuenta nueva",
 
   "string.or": "o",
   "string.role_lc": "rol",
@@ -124,5 +127,7 @@
   "LOGIN.password_required": "@:string.password_required",
 
   "REGISTER.email_sent": "¡Éxito! Se ha enviado un email a '{email}' con la información necesaria para terminar el registro",
-  "REGISTER.almost_finished": "Casi hemos terminado"
+  "REGISTER.almost_finished": "Casi hemos terminado",
+
+  "REGISTER.verify_email": "Verficación de email"
 }

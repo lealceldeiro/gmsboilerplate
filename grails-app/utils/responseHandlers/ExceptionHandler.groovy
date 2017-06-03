@@ -7,6 +7,7 @@ import exceptions.NotAssignedToException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
 import org.springframework.http.HttpStatus
+import org.springframework.mail.MailSendException
 
 /**
  * Created by asiel on 11/05/17.
@@ -16,6 +17,12 @@ trait ExceptionHandler implements ResponseHandler{
     def handleException (Exception ex) {
         response.status = HttpStatus.INTERNAL_SERVER_ERROR.value()
         doFail(ex.message)
+    }
+
+    def handleMailSendException(MailSendException ex) {
+        String err = g.message(code: "subscription.confirmation.failed.conn.error")
+        response.status = HttpStatus.OK.value()
+        doFail(err)
     }
 
     def handleNotFoundException(NotFoundException ex) {

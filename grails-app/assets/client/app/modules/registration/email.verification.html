@@ -1,0 +1,23 @@
+<div class="min-width-500px">
+    <md-content class="md-no-momentum">
+        <md-card>
+            <md-card-title>
+                <md-card-title-text>
+                    <div class="md-headline" data-ng-bind="vm.response.header"></div>
+                    <div class="md-subhead" data-ng-bind="vm.response.message">Large</div>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button class="md-primary md-raised" ng-hide="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND">
+                    {{'button.go_login' | translate}}
+                </md-button>
+                <md-button class="md-primary md-raised" ng-show="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND">
+                    {{'button.requestNewVerificationEmail' | translate}}
+                </md-button>
+                <md-button class="md-primary md-raised" ng-show="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_PROVIDED">
+                    {{'button.createAccount' | translate}}
+                </md-button>
+            </md-card-actions>
+        </md-card>
+    </md-content>
+</div>

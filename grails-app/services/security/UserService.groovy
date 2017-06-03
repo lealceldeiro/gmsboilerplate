@@ -346,9 +346,9 @@ class UserService {
         evt.save(flush: true, failOnError: true)
 
         emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText,
-                emailVerificationBtnText, confirmBaseUrl + "?tkn=" + token)
+                emailVerificationBtnText, confirmBaseUrl + token)
 
-        return u
+        return (confirmBaseUrl + token)
     }
 
     def requestNewVerificationEmail(String email, String emailVerificationSubject, String emailVerificationText,
@@ -360,7 +360,7 @@ class UserService {
             evt.save(flush: true, failOnError: true)
 
             emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText,
-                    emailVerificationBtnText, confirmBaseUrl + "?tkn=" + token)
+                    emailVerificationBtnText, confirmBaseUrl + token)
 
             return true
         }

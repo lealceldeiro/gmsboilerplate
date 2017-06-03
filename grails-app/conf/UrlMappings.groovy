@@ -40,15 +40,13 @@ class UrlMappings {
         "/api/config/lan"                       (controller: "configuration")                   {action = [GET: "getLanguage", POST: "setLanguage"]}
         //endregion
 
+        //region email
+        "/api/email/verify/subscription"        (controller: "emailConfirm", action: "verifySubscriber")
+        //endregion
+
         //default
         "/"(view:"/index")
-        "500"(view:'/error')
-
-        "/$controller/$action" {
-            constraints {
-                // apply constraints here
-            }
-        }
         "404"(view:"/index")
+        "500"(view:'/error')
     }
 }

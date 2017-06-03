@@ -52,6 +52,9 @@
 
 //= require ../client/app/modules/home/home.ctrl
 
+//= require ../client/app/modules/registration/email.verification.srv
+//= require ../client/app/modules/registration/email.verification.ctrl
+
 
 // --components--
 //= require ../client/app/modules/_components/screenBlocker/blockS.srv

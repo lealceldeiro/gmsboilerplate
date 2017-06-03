@@ -28,10 +28,7 @@ trait ResponseHandler {
     }
 
     def doSuccessWithArgs (String successMessage, Map args) {
-        Map r = [success: true, successMessage: g.message(code: successMessage)]
-        if(args){
-            r = r + args
-        }
+        Map r = [success: true, successMessage: g.message(code: successMessage)]+ args
         doRender r
     }
 

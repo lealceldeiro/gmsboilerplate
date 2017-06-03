@@ -232,7 +232,7 @@ class UserController implements ExceptionHandler{
         final String emailText = g.message(code: "subscription.confirmation.required.text", args: [grailsLinkGenerator.serverBaseURL]),
                      subButtonText = g.message(code: "subscription.confirmation.required.button"),
                      subject = g.message(code: "subscription.confirmation.required.subject"),
-                     confirmBaseUrl = g.createLink(controller: "emailConfirm", action: "verifySubscriber", absolute:true)
+                     confirmBaseUrl = g.createLink(uri: "/email/verification/", absolute:true)
         final e = userService.registerSubscriber(cmd, subject, emailText, subButtonText, confirmBaseUrl)
         if(e){
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")

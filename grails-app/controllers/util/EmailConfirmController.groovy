@@ -1,9 +1,11 @@
 package util
 
 import grails.plugin.springsecurity.annotation.Secured
+import org.springframework.http.HttpMethod
+import responseHandlers.ExceptionHandler
 
 @Secured('permitAll')
-class EmailConfirmController {
+class EmailConfirmController implements ExceptionHandler{
 
     def emailConfirmService
 
@@ -11,40 +13,37 @@ class EmailConfirmController {
 
     def grailsLinkGenerator
 
+    static allowedMethods = [
+            verifySubscriber    : HttpMethod.GET.name(),
+    ]
+
+    @Secured('permitAll')
     def verifySubscriber() {
-        Map args = [header:"", body: "", actions:[[text:"", link:""]]]
         Integer result = emailConfirmService.verifySubscriber(params.tkn as String)
+        Map args = [message: "", code: result]
+        boolean success = false
+        String messageCode = ""
+
         switch (result) {
             case emailConfirmService.EMAIL_CONFIRMATION_OK:
-                args.header = g.message(code: "subscription.confirmation.success")
-                args.body = g.message(code: "subscription.confirmation.success.body")
-                args.actions[0].text = g.message(code: "subscription.confirmation.success.goLoginPage")
-                args.actions[0].link = g.createLink(uri: 'signin', absolute:true)
+                messageCode = "subscription.confirmation.success"
+                args.message = g.message(code: "subscription.confirmation.success.body")
                 break
             case emailConfirmService.EMAIL_CONFIRMATION_TOKEN_NOT_ASSOCIATED_TO_USER:
-                args.header = g.message(code: "subscription.confirmation.failed.email.used")
-                args.body = g.message(code: "subscription.confirmation.failed.email.used.body")
-                args.actions[0].text = g.message(code: "subscription.confirmation.success.goLoginPage")
-                args.actions[0].link = g.createLink(uri: '/signin', absolute:true)
+                messageCode = "subscription.confirmation.failed.email.used"
+                args.message = g.message(code: "subscription.confirmation.failed.email.used.body")
                 break
             case emailConfirmService.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND:
-                args.header = g.message(code: "subscription.confirmation.failed.email.expired")
-                args.body = g.message(code: "subscription.confirmation.failed.email.expired.body")
-                args.actions[0].text = g.message(code: "subscription.confirmation.failed.requestNewVerificationEmail")
-                args.actions[0].link = g.createLink(controller: "emailConfirm", action: "requestVerificationEmail", absolute:true)
+                messageCode = "subscription.confirmation.failed.email.expired"
+                args.message = g.message(code: "subscription.confirmation.failed.email.expired.body")
                 break
             case emailConfirmService.EMAIL_CONFIRMATION_TOKEN_NOT_PROVIDED:
-                args.header = g.message(code: "subscription.confirmation.failed.email.invalid")
-                args.body = g.message(code: "subscription.confirmation.failed.email.invalid.body")
-                args.actions[0].text = g.message(code: "subscription.confirmation.success.goLoginPage")
-                args.actions[0].link = g.createLink(uri: '/signin', absolute:true)
-                args.actions << [
-                        text: g.message(code: "security.user.createAccount"),
-                        link: g.createLink(uri: '/signup', absolute:true)
-                ]
+                messageCode = "subscription.confirmation.failed.email.invalid"
+                args.message = g.message(code: "subscription.confirmation.failed.email.invalid.body")
                 break
         }
-        render(view: "confirmResult", model: args)
+        if(success) { doSuccessWithArgs(messageCode, [items: args]) }
+        else { doFailWithArgs(messageCode, [items: args]) }
     }
 
     def requestNewVerificationEmail(){
