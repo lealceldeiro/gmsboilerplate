@@ -94,17 +94,16 @@ function systemSrv(notificationSrv, __env) {
                                     successCallbackText, unSuccessCallback, unSuccessCallbackText) {
         validate(storeKey);
         if (data) {
+            self.service.apiItems[storeKey] = data[self.service.items_resp];
+            self.service.apiTotalCount[storeKey] = data[self.service.total_count_resp];
+            self.service.apiItem[storeKey] = data[self.service.item_resp];
             if (data[self.service.success_resp]) {
                 self.service.apiMessage[storeKey] = data[self.service.success_message_resp]
                     || notificationSrv.utilText.successful_operation;
-                self.service.apiTotalCount[storeKey] = data[self.service.total_count_resp];
-                self.service.apiItems[storeKey] = data[self.service.items_resp];
-                self.service.apiItem[storeKey] = data[self.service.item_resp];
                 if (notifyOnSuccess) {
                     notificationSrv.showNotification(notificationSrv.type.SUCCESS, self.service.apiMessage[storeKey],
                         successCallback ? [successCallback] : [], successCallbackText ? [successCallbackText] : []);
                 }
-
                 return true
             }
             else {
