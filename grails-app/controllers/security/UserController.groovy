@@ -233,7 +233,7 @@ class UserController implements ExceptionHandler{
                      subButtonText = g.message(code: "subscription.confirmation.required.button"),
                      subject = g.message(code: "subscription.confirmation.required.subject"),
                      confirmBaseUrl = g.createLink(uri: "/email/verification/", absolute:true)
-        final e = userService.registerSubscriber(cmd, subject, emailText, subButtonText, confirmBaseUrl)
+        final def e = userService.registerSubscriber(cmd, subject, emailText, subButtonText, confirmBaseUrl)
         if(e){
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
             doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])

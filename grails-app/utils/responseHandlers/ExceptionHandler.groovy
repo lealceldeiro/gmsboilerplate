@@ -26,7 +26,13 @@ trait ExceptionHandler implements ResponseHandler{
     }
 
     def handleNotFoundException(NotFoundException ex) {
-        String err = g.message(code: ex.i18nMainMessage, args:[g.message(code:ex.i18nNotFoundEntity), ex.male ? "o" : "a"])
+        String err
+        if(ex.i18nNotFoundEntity && ex.i18nNotFoundEntity != ""){
+            err = g.message(code: ex.i18nMainMessage, args:[g.message(code:ex.i18nNotFoundEntity), ex.male ? "o" : "a"])
+        }
+        else {
+            err = g.message(code: ex.i18nMainMessage)
+        }
         response.status = HttpStatus.OK.value()
         doFail(err)
     }

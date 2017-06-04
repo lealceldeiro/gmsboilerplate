@@ -9,10 +9,10 @@ angular
     .controller('emailVerificationCtrl', emailVerificationCtrl);
 
 /*@ngInject*/
-function emailVerificationCtrl(emailVerificationSrv, navigationSrv, systemSrv, translatorSrv, blockSrv) {
+function emailVerificationCtrl(emailVerificationSrv, navigationSrv, systemSrv, translatorSrv, blockSrv, indexSrv) {
     var vm = this;
 
-    var keyP = 'EMAIL_';
+    var keyP = 'EMAIL_VERIFICATION';
 
     vm.wizard = {
         code: {
@@ -41,7 +41,8 @@ function emailVerificationCtrl(emailVerificationSrv, navigationSrv, systemSrv, t
         if (params && params['token']) {
             var fnKey = keyP + "fnInit-verifySubscriber";
             emailVerificationSrv.verifySubscriber(params['token']).then(function (data) {
-                    var e = systemSrv.eval(data, fnKey, false, true);
+                    systemSrv.eval(data, fnKey, false, !emailVerificationSrv.notified);
+                    emailVerificationSrv.notified = true;
                     vm.wizard.response = systemSrv.getItems(fnKey);
                     vm.wizard.response.header = systemSrv.getMessage(fnKey);
                     blockSrv.unBlock();

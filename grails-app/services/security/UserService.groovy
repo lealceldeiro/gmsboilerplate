@@ -245,7 +245,7 @@ class UserService {
         }
         if(e) { return [id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled] }
         else if(!silenceNotFoundException) throw new NotFoundException("general.not_found" ,"security.user.user", true)
-        else return false
+        else return null
     }
 
     /**
@@ -340,40 +340,37 @@ class UserService {
         EOwnedEntity oe = ownedEntityService.getDefaultOwnedEntity()
         BUser_Role_OwnedEntity.addRole(u, subscriberRole, oe)
 
+        return sendSubscription(u, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, confirmBaseUrl)
+    }
+
+    def requestNewVerificationEmail(String email, String emailVerificationSubject, String emailVerificationText,
+                                    String emailVerificationBtnText, String confirmBaseUrl) {
+        def u = getBy([email: email], true)
+        if(u) {
+            return sendSubscription(u as EUser, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, confirmBaseUrl)
+        }
+        else { throw new NotFoundException("subscription.email.not.found") }
+    }
+
+    private def sendSubscription(EUser u, String emailVerificationSubject, String emailVerificationText,
+                                 String emailVerificationBtnText, String confirmBaseUrl){
         String token = tokenGeneratorService.getTokenFor(u.username)
 
-        BEmailVerificationToken evt = new BEmailVerificationToken(user: u, token: token)
+        BEmailVerificationToken evt = new BEmailVerificationToken(token: token)
 
         Integer MAX = 5
         while (!evt.validate() && MAX-- > 0) {
             token = tokenGeneratorService.getTokenFor(u.username)
-            evt = new BEmailVerificationToken(user: u, token: token)
+            evt = new BEmailVerificationToken(token: token)
         }
         if(evt.validate()) {
-            evt.save(flush: true, failOnError: true)
+            u.emailVerificationToken = evt
+            u.save(flush: true, failOnError: true)
             emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText,
                     emailVerificationBtnText, confirmBaseUrl + token)
 
             return (confirmBaseUrl + token)
         }
-        else return false
-    }
-
-    def requestNewVerificationEmail(String email, String emailVerificationSubject, String emailVerificationText,
-                                    String emailVerificationBtnText, String confirmBaseUrl) {
-        EUser u = getBy([email: email]) as EUser
-        if(u) {
-            String token = tokenGeneratorService.getTokenFor(u.username)
-            BEmailVerificationToken evt = new BEmailVerificationToken(user: u, token: token)
-            evt.save(flush: true, failOnError: true)
-
-            emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText,
-                    emailVerificationBtnText, confirmBaseUrl + token)
-
-            return true
-        }
-        else {
-            //todo
-        }
+        return false
     }
 }

@@ -41,7 +41,8 @@ class UrlMappings {
         //endregion
 
         //region email
-        "/api/email/verify/subscription"        (controller: "emailConfirm", action: "verifySubscriber")
+        "/api/email/verify/subscription"        (controller: "subscriberEmail", action: "verifySubscriber")
+        "/api/email/new"                        (controller: "subscriberEmail", action: "requestNewVerificationEmail")
         //endregion
 
         //default

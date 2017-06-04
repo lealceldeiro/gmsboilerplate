@@ -38,7 +38,7 @@ class EUser implements Serializable {
         enabled nullable: true
         emailVerified nullable: true
         emailVerificationToken nullable: true
-        emailVerificationToken unique: true
+        emailVerificationToken unique: true, nullable: true
     }
 
     static mapping = {password column: '`password`'}

@@ -1,0 +1,43 @@
+<div class="min-width-500px">
+    <form role="form" name="requestEmailForm" novalidate>
+        <md-content class="md-no-momentum">
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <div class="md-headline">{{ 'REGISTER.request_new_email' | translate}}</div>
+                        <div class="md-subhead">
+                            <!--email-->
+                            <md-input-container class="md-icon-float md-block">
+                                <label>{{'string.email' | translate}}</label>
+                                <md-icon md-svg-src="assets/app/modules/_common/img/communication/ic_email_24px.svg"></md-icon>
+                                <input ng-model="vm.email" type="email" name="email" required
+                                       data-ng-model-options="{debounce: 500}"
+                                       data-ng-change="vm.checkEmail()"/>
+                                <input type="hidden" name="emailExists" data-ng-if="requestEmailForm.email.$valid && !vm.emailExists" ng-model="vm.ctrlEmailExists" required>
+
+                                <div ng-messages="requestEmailForm.emailExists.$error" md-auto-hide="false">
+                                    <div ng-message="required">
+                                        {{'string.email_does_n_exist' | translate}} &nbsp; <a href="" ng-click="idxCtrl.go('/signup')">{{'string.want_to_subscribe' | translate}}</a>
+                                    </div>
+                                </div>
+                                <div ng-messages="requestEmailForm.email.$error" md-auto-hide="false">
+                                    <div ng-message="required">
+                                        {{'string.email_required' | translate}}
+                                    </div>
+                                    <div ng-message="email">
+                                        {{'string.email_invalid' | translate}}
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button class="md-primary md-raised" ng-click="vm.sendEmail(requestEmailForm)">
+                        {{'button.accept' | translate}}
+                    </md-button>
+                </md-card-actions>
+            </md-card>
+        </md-content>
+    </form>
+</div>

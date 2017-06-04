@@ -205,6 +205,11 @@ function routing($routeProvider, ROUTE, $locationProvider, __env) {
             controller: 'emailVerificationCtrl',
             controllerAs: 'vm'
         })
+        .when(ROUTE.EMAIL_REQUEST, {
+            templateUrl: 'assets/app/modules/registration/email.newrequest/email.request.html',
+            controller: 'emailRequestCtrl',
+            controllerAs: 'vm'
+        })
         //endregion
 
         //default path

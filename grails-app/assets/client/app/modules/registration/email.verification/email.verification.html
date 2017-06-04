@@ -4,7 +4,7 @@
             <md-card-title>
                 <md-card-title-text>
                     <div class="md-headline" data-ng-bind="vm.response.header"></div>
-                    <div class="md-subhead" data-ng-bind="vm.response.message">Large</div>
+                    <div class="md-subhead" data-ng-bind="vm.response.message"></div>
                 </md-card-title-text>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
@@ -12,7 +12,8 @@
                     ng-click="idxCtrl.go('/signin')">
                     {{'button.go_login' | translate}}
                 </md-button>
-                <md-button class="md-primary md-raised" ng-show="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND">
+                <md-button class="md-primary md-raised" ng-show="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND"
+                    ng-click="idxCtrl.go('/email/request')">
                     {{'button.requestNewVerificationEmail' | translate}}
                 </md-button>
                 <md-button class="md-primary md-raised"

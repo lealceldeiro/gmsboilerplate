@@ -34,7 +34,8 @@ angular
             ADMIN_CONFIG_PARAMS: '/admin/config/params',
 
             HOME: '/home',
-            EMAIL_VERIFICATION: '/email/verification/:token', EMAIL_VERIFICATION_PL: ':token'
+            EMAIL_VERIFICATION: '/email/verification/:token', EMAIL_VERIFICATION_PL: ':token',
+            EMAIL_REQUEST: '/email/request'
         }
     )
     .constant(

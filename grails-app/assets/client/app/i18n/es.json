@@ -53,6 +53,8 @@
   "string.valid_user_description": "Por cuestiones de seguridad los usuarios introducidos deben cumplir con las condiciones siguientes: <br /><br /> - Solamente un caracter especial (._-) permitido y no puede ser a los extremos <br /> - El primer caracter no puede ser un número <br />- Todos los demás caracteres permitidos son letras y números <br /> - La longitud total debe ser entre 3 y 20 caracteres <br /><br /> Ejemplo: <span class='blue'>niceBoy.cuban</span>",
   "string.user_taken": "Este usuario ya está en uso",
   "string.email_taken": "Este email ya está en uso",
+  "string.email_does_n_exist": "Email desconocido",
+  "string.want_to_subscribe": "¿Suscribirse ahora?",
   "string.name": "Nombre",
   "string.name_required": "El nombre es obligatorio",
   "string.description": "Descripción",
@@ -129,5 +131,6 @@
   "REGISTER.email_sent": "¡Éxito! Se ha enviado un email a '{email}' con la información necesaria para terminar el registro",
   "REGISTER.almost_finished": "Casi hemos terminado",
 
-  "REGISTER.verify_email": "Verficación de email"
+  "REGISTER.verify_email": "Verficación de email",
+  "REGISTER.request_new_email": "Solicitar un nuevo email"
 }
