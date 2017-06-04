@@ -52,8 +52,8 @@
 
 //= require ../client/app/modules/home/home.ctrl
 
-//= require ../client/app/modules/registration/email.verification.srv
-//= require ../client/app/modules/registration/email.verification.ctrl
+//= require ../client/app/modules/registration/email.verification/email.verification.srv
+//= require ../client/app/modules/registration/email.verification/email.verification.ctrl
 
 
 // --components--

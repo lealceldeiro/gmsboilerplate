@@ -201,7 +201,7 @@ function routing($routeProvider, ROUTE, $locationProvider, __env) {
 
         //region email verification
         .when(ROUTE.EMAIL_VERIFICATION, {
-            templateUrl: 'assets/app/modules/registration/email.verification.html',
+            templateUrl: 'assets/app/modules/registration/email.verification/email.verification.html',
             controller: 'emailVerificationCtrl',
             controllerAs: 'vm'
         })
