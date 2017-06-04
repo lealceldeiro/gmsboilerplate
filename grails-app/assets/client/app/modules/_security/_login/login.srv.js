@@ -18,7 +18,7 @@ function loginSrv($http, systemSrv, baseSrv, sessionSrv, $rootScope, BROADCAST, 
     var passVar = systemSrv.auth_login_password_req;
 
     vm.service = {
-        siteTile: '',
+        siteTitle: '',
 
         login: fnDoLogin,
         logout: fnDoLogout,

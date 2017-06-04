@@ -22,7 +22,7 @@ function errorCtrl(errorSrv, indexSrv) {
 
     //fn
     function fnInit() {
-        indexSrv.siteTile = 'Error';
+        indexSrv.siteTitle = 'Error';
         vm.wizard.title = errorSrv.title;
         vm.wizard.message = errorSrv.message;
     }

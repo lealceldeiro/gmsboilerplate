@@ -40,7 +40,7 @@ function userListCtrl(indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv
 
     //fn
     function fnInit() {
-        translatorSrv.setText('USER.users', indexSrv, 'siteTile');
+        translatorSrv.setText('USER.users', indexSrv, 'siteTitle');
         paginationSrv.resetPagination();
     }
 

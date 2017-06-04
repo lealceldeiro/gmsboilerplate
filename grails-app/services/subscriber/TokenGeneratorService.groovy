@@ -1,4 +1,4 @@
-package util
+package subscriber
 
 import grails.transaction.Transactional
 
@@ -9,7 +9,7 @@ class TokenGeneratorService {
 
     Random random = new Random()
 
-    String getTokenFor(String username = "", Integer min = 50, Integer max = 100) {
+    String getTokenFor(String username = "", Integer min = 90, Integer max = 300) {
         return (username.replaceAll("\\.", "")) + (random.with {
             (min..max).collect { alphabet[ nextInt( alphabet.length() ) ] }.join("")
         })

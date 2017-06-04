@@ -40,14 +40,14 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
 
     //fn
     function fnInit() {
-        translatorSrv.setText("string.index", indexSrv, 'siteTile');
+        translatorSrv.setText("string.index", indexSrv, 'siteTitle');
         vm.wizard.logged = sessionSrv.isLogged();
 
         configSrv.changeLanguage(sessionSrv.getLanguage(), true);
     }
 
     function fnSiteTitle() {
-        return indexSrv.siteTile;
+        return indexSrv.siteTitle;
     }
 
     function fnGo(link) {

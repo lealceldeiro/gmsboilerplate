@@ -42,7 +42,7 @@ function roleViewCtrl(ROUTE, indexSrv, roleSrv, navigationSrv, notificationSrv, 
         if (p && null !== p.id && typeof p.id !== 'undefined' && p.id !== 'undefined'&& p.id !== 'null') {
             vm.id = p.id;
             fnLoadData(p.id);
-            translatorSrv.setText('ROLE.view', indexSrv, 'siteTile');
+            translatorSrv.setText('ROLE.view', indexSrv, 'siteTitle');
         }
         else{
             notificationSrv.showNotification(notificationSrv.type.WARNING, notificationSrv.utilText.select_element_required);

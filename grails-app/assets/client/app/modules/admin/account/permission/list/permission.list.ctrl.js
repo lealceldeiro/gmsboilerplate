@@ -30,7 +30,7 @@ function permissionCtrl(indexSrv, systemSrv, permissionSrv, paginationSrv, block
 
     //fn
     function fnInit() {
-        translatorSrv.setText('PERMISSIONS.permissions', indexSrv, 'siteTile');
+        translatorSrv.setText('PERMISSIONS.permissions', indexSrv, 'siteTitle');
         paginationSrv.resetPagination();
     }
 

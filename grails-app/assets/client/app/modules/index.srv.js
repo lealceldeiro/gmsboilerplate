@@ -14,7 +14,7 @@ function indexSrv() {
     var self = this;
 
     self.service = {
-        siteTile: ''
+        siteTitle: ''
     };
 
     return self.service;

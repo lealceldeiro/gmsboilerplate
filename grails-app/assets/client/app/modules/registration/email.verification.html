@@ -8,13 +8,16 @@
                 </md-card-title-text>
             </md-card-title>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-primary md-raised" ng-hide="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND">
+                <md-button class="md-primary md-raised" ng-hide="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND"
+                    ng-click="idxCtrl.go('/signin')">
                     {{'button.go_login' | translate}}
                 </md-button>
                 <md-button class="md-primary md-raised" ng-show="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND">
                     {{'button.requestNewVerificationEmail' | translate}}
                 </md-button>
-                <md-button class="md-primary md-raised" ng-show="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_PROVIDED">
+                <md-button class="md-primary md-raised"
+                           ng-show="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_PROVIDED || vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND"
+                           ng-click="idxCtrl.go('/signup')">
                     {{'button.createAccount' | translate}}
                 </md-button>
             </md-card-actions>

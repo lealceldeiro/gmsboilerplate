@@ -122,7 +122,7 @@
   "LOGIN.authentication": "Autenticación",
   "LOGIN.new_account": "Nueva cuenta",
   "LOGIN.user_email": "Usuario o dirección email",
-  "LOGIN.user_email_required": "El usuario o email es obligtorio",
+  "LOGIN.user_email_required": "El usuario o email es obligatorio",
   "LOGIN.password": "@:string.password",
   "LOGIN.password_required": "@:string.password_required",
 

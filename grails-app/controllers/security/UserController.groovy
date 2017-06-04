@@ -238,5 +238,6 @@ class UserController implements ExceptionHandler{
             String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
             doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
         }
+        else doFail("subscription.error.generating.email")
     }
 }

@@ -1,4 +1,4 @@
-package util
+package subscriber
 
 import grails.transaction.Transactional
 import security.EUser

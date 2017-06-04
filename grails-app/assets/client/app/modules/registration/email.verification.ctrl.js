@@ -36,7 +36,7 @@ function emailVerificationCtrl(emailVerificationSrv, navigationSrv, systemSrv, t
 
     function fnInit() {
         blockSrv.block();
-        translatorSrv.setText("REGISTER.verify_email", indexSrv, 'siteTile');
+        translatorSrv.setText("REGISTER.verify_email", indexSrv, 'siteTitle');
         var params = navigationSrv.currentParams();
         if (params && params['token']) {
             var fnKey = keyP + "fnInit-verifySubscriber";

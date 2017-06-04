@@ -36,7 +36,7 @@ function ownedEntityViewCtrl(ROUTE, indexSrv, ownedEntitySrv, navigationSrv, not
         if (p && null !== p.id && typeof p.id !== 'undefined' && p.id !== 'undefined'&& p.id !== 'null') {
             vm.id = p.id;
             fnLoadData(p.id);
-            translatorSrv.setText('ENTITY.view', indexSrv, 'siteTile');
+            translatorSrv.setText('ENTITY.view', indexSrv, 'siteTitle');
         }
         else{
             notificationSrv.showNotification(notificationSrv.type.WARNING, notificationSrv.utilText.select_element_required);

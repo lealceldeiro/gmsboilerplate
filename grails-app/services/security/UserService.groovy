@@ -6,7 +6,7 @@ import exceptions.GenericException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
 import grails.transaction.Transactional
-import util.BEmailVerificationToken
+import subscriber.BEmailVerificationToken
 
 @Transactional
 class UserService {
@@ -343,12 +343,20 @@ class UserService {
         String token = tokenGeneratorService.getTokenFor(u.username)
 
         BEmailVerificationToken evt = new BEmailVerificationToken(user: u, token: token)
-        evt.save(flush: true, failOnError: true)
 
-        emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText,
-                emailVerificationBtnText, confirmBaseUrl + token)
+        Integer MAX = 5
+        while (!evt.validate() && MAX-- > 0) {
+            token = tokenGeneratorService.getTokenFor(u.username)
+            evt = new BEmailVerificationToken(user: u, token: token)
+        }
+        if(evt.validate()) {
+            evt.save(flush: true, failOnError: true)
+            emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText,
+                    emailVerificationBtnText, confirmBaseUrl + token)
 
-        return (confirmBaseUrl + token)
+            return (confirmBaseUrl + token)
+        }
+        else return false
     }
 
     def requestNewVerificationEmail(String email, String emailVerificationSubject, String emailVerificationText,

@@ -1,4 +1,4 @@
-package util
+package subscriber
 
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.http.HttpMethod

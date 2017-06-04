@@ -3,7 +3,7 @@ package security
 import configuration.ConfigurationService
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
-import util.BEmailVerificationToken
+import subscriber.BEmailVerificationToken
 
 @EqualsAndHashCode(includes = 'username')
 @ToString(includes = 'username', includeNames = true, includePackage = false)
