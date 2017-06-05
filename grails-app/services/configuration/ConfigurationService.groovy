@@ -6,11 +6,18 @@ import grails.transaction.Transactional
 @Transactional
 class ConfigurationService {
 
-    boolean isThereAnyConfiguration(){
+    Boolean Cached_DEFAULT_ADMIN_UN_SET_UP_CONFIGURED = null
+    Boolean Cached_DEFAULT_ADMIN_UN_SETUP = null
+    Boolean Cached_IS_MULTI_ENTITY_APP = null
+    Boolean Cached_IS_USER_REGISTRATION_ALLOWED = null
+    Boolean Cached_DEFAULT_USER_CREATED = null
+    Boolean Cached_DEFAULT_OWNED_ENTITY_CREATED = null
+
+    Boolean isThereAnyConfiguration(){
         return BConfiguration.count() > 0
     }
 
-    boolean createDefaultConfig(){
+    Boolean createDefaultConfig(){
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SET_UP_CONFIGURED, false)
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SETUP, false)
         setField(EnumConfigFields.IS_MULTI_ENTITY_APP, false)
@@ -19,28 +26,46 @@ class ConfigurationService {
         return true
     }
 
-    boolean isDefaultAdminUnSetup(){
-        isThere(EnumConfigFields.DEFAULT_ADMIN_UN_SETUP, true)
+    Boolean isDefaultAdminUnSetup(){
+        if(Cached_DEFAULT_ADMIN_UN_SETUP == null){
+            Cached_DEFAULT_ADMIN_UN_SETUP = isThere(EnumConfigFields.DEFAULT_ADMIN_UN_SETUP, true)
+        }
+        return Cached_DEFAULT_ADMIN_UN_SETUP
     }
 
     boolean isDefaultAdminUnSetupChanged(){
-        isThere(EnumConfigFields.DEFAULT_ADMIN_UN_SET_UP_CONFIGURED, true)
+        if(Cached_DEFAULT_ADMIN_UN_SET_UP_CONFIGURED == null) {
+            Cached_DEFAULT_ADMIN_UN_SET_UP_CONFIGURED = isThere(EnumConfigFields.DEFAULT_ADMIN_UN_SET_UP_CONFIGURED, true)
+        }
+        return Cached_DEFAULT_ADMIN_UN_SET_UP_CONFIGURED
     }
 
-    boolean isDefaultUserCreated(){
-        isThere(EnumConfigFields.DEFAULT_USER_CREATED, true)
+    Boolean isDefaultUserCreated(){
+        if(Cached_DEFAULT_USER_CREATED) {
+            Cached_DEFAULT_USER_CREATED = isThere(EnumConfigFields.DEFAULT_USER_CREATED, true)
+        }
+        return Cached_DEFAULT_USER_CREATED
     }
 
-    boolean isDefaultOwnedEntityCreated(){
-        isThere(EnumConfigFields.DEFAULT_OWNED_ENTITY_CREATED, true)
+    Boolean isDefaultOwnedEntityCreated(){
+        if(Cached_DEFAULT_OWNED_ENTITY_CREATED) {
+            Cached_DEFAULT_OWNED_ENTITY_CREATED = isThere(EnumConfigFields.DEFAULT_OWNED_ENTITY_CREATED, true)
+        }
+        return Cached_DEFAULT_OWNED_ENTITY_CREATED
     }
 
-    boolean isMultiEntityApplication(){
-        isThere(EnumConfigFields.IS_MULTI_ENTITY_APP, true)
+    Boolean isMultiEntityApplication(){
+        if(Cached_IS_MULTI_ENTITY_APP) {
+            Cached_IS_MULTI_ENTITY_APP = isThere(EnumConfigFields.IS_MULTI_ENTITY_APP, true)
+        }
+        return Cached_IS_MULTI_ENTITY_APP
     }
 
-    boolean isUserRegistrationAllowed(){
-        isThere(EnumConfigFields.IS_USER_REGISTRATION_ALLOWED, true)
+    Boolean isUserRegistrationAllowed(){
+        if(Cached_IS_USER_REGISTRATION_ALLOWED == null) {
+            Cached_IS_USER_REGISTRATION_ALLOWED = isThere(EnumConfigFields.IS_USER_REGISTRATION_ALLOWED, true)
+        }
+        return Cached_IS_USER_REGISTRATION_ALLOWED
     }
 
 
@@ -49,7 +74,7 @@ class ConfigurationService {
         return c ? Long.parseLong(c.value) : null
     }
 
-    boolean setLanguage(Long userId, String lan) {
+    Boolean setLanguage(Long userId, String lan) {
         setField(EnumConfigFields.LANGUAGE, lan, userId)
         return true
     }
@@ -60,37 +85,44 @@ class ConfigurationService {
     }
 
 
-    boolean setDefaultAdminUnSetUp() {
+    Boolean setDefaultAdminUnSetUp() {
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SETUP, true)
+        Cached_DEFAULT_ADMIN_UN_SETUP = true
+
         setField(EnumConfigFields.DEFAULT_ADMIN_UN_SET_UP_CONFIGURED, true)
+        Cached_DEFAULT_ADMIN_UN_SET_UP_CONFIGURED = true
         return true
     }
 
-    boolean setDefaultOwnedEntityCreated() {
+    Boolean setDefaultOwnedEntityCreated() {
         setField(EnumConfigFields.DEFAULT_OWNED_ENTITY_CREATED, true)
+        Cached_DEFAULT_OWNED_ENTITY_CREATED = true
         return true
     }
 
-    boolean setDefaultUserCreated(){
+    Boolean setDefaultUserCreated(){
         setField(EnumConfigFields.DEFAULT_USER_CREATED, true)
+        Cached_DEFAULT_USER_CREATED = true
         return true
     }
 
-    boolean setIsMultiEntityApp(Boolean multi = false) {
+    Boolean setIsMultiEntityApp(Boolean multi = false) {
         setField(EnumConfigFields.IS_MULTI_ENTITY_APP, multi)
+        Cached_IS_MULTI_ENTITY_APP = multi
         return true
     }
 
-    boolean setIsUserRegistrationsAllowed(Boolean allowed = false) {
+    Boolean setIsUserRegistrationsAllowed(Boolean allowed = false) {
         setField(EnumConfigFields.IS_USER_REGISTRATION_ALLOWED, allowed)
+        Cached_IS_USER_REGISTRATION_ALLOWED = allowed
         return true
     }
 
-    boolean setLastAccessedOwnedEntity(Long id, Long userid){
+    Boolean setLastAccessedOwnedEntity(Long id, Long userid){
         BConfiguration.withNewTransaction { setField(EnumConfigFields.LAST_ACCESSED_ENTITY, id, userid) }
     }
 
-    boolean deleteUserConfiguration(Long userId) {
+    Boolean deleteUserConfiguration(Long userId) {
         BConfiguration.executeUpdate(
                 "delete from BConfiguration bc where bc.userid = :userid", [userid: String.valueOf(userId)]
         )
@@ -110,7 +142,7 @@ class ConfigurationService {
         return t
     }
 
-    private static boolean isThere(Object field, Object value, Long userid = null){
+    private static Boolean isThere(Object field, Object value, Long userid = null){
         def t = userid ? BConfiguration.findByParamAndUserid(String.valueOf(field), String.valueOf(userid))
                 : BConfiguration.findByParam(String.valueOf(field))
         if(t){

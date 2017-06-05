@@ -14,6 +14,8 @@ class SubscriberEmailController implements ExceptionHandler{
 
     def grailsLinkGenerator
 
+    def configurationService
+
     static allowedMethods = [
             verifySubscriber                : HttpMethod.GET.name(),
             requestNewVerificationEmail     : HttpMethod.GET.name(),
@@ -49,20 +51,23 @@ class SubscriberEmailController implements ExceptionHandler{
     }
 
     def requestNewVerificationEmail(){
-        final String emailText = g.message(code: "subscription.confirmation.required.text", args: [grailsLinkGenerator.serverBaseURL]),
-                     subButtonText = g.message(code: "subscription.confirmation.required.button"),
-                     subject = g.message(code: "subscription.confirmation.required.subject"),
-                     confirmBaseUrl = g.createLink(uri: "/email/verification/", absolute:true)
-        String email = params.email
-        if(email != null && email != ""){
-            final def r = userService.requestNewVerificationEmail(email, subject, emailText, subButtonText, confirmBaseUrl)
-            if(r){
-                String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
-                doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: r.id])
+        if(configurationService.isUserRegistrationAllowed()) {
+            final String emailText = g.message(code: "subscription.confirmation.required.text", args: [grailsLinkGenerator.serverBaseURL]),
+                         subButtonText = g.message(code: "subscription.confirmation.required.button"),
+                         subject = g.message(code: "subscription.confirmation.required.subject"),
+                         confirmBaseUrl = g.createLink(uri: "/email/verification/", absolute:true)
+            String email = params.email
+            if(email != null && email != ""){
+                final def r = userService.requestNewVerificationEmail(email, subject, emailText, subButtonText, confirmBaseUrl)
+                if(r){
+                    String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
+                    doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: r.id])
+                }
+                else doFail("subscription.error.generating.email")
             }
-            else doFail("subscription.error.generating.email")
+            else { throw new ValidationsException() }
         }
-        else { throw new ValidationsException() }
+        else { doFail("REGISTRATION.not.allowed")}
     }
 
 }

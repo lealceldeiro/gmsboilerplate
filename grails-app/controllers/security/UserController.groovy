@@ -229,15 +229,17 @@ class UserController implements ExceptionHandler{
 
     @Secured("permitAll")
     def registerSubscriber(UserCommand cmd) {
-        final String emailText = g.message(code: "subscription.confirmation.required.text", args: [grailsLinkGenerator.serverBaseURL]),
-                     subButtonText = g.message(code: "subscription.confirmation.required.button"),
-                     subject = g.message(code: "subscription.confirmation.required.subject"),
-                     confirmBaseUrl = g.createLink(uri: "/email/verification/", absolute:true)
-        final def e = userService.registerSubscriber(cmd, subject, emailText, subButtonText, confirmBaseUrl)
-        if(e){
-            String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
-            doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
+        if(configurationService.isUserRegistrationAllowed()) {
+            final String emailText = g.message(code: "subscription.confirmation.required.text", args: [grailsLinkGenerator.serverBaseURL]),
+                         subButtonText = g.message(code: "subscription.confirmation.required.button"),
+                         subject = g.message(code: "subscription.confirmation.required.subject"),
+                         confirmBaseUrl = g.createLink(uri: "/email/verification/", absolute: true)
+            final def e = userService.registerSubscriber(cmd, subject, emailText, subButtonText, confirmBaseUrl)
+            if (e) {
+                String p0 = g.message(code: "article.the_male_singular"), p1 = g.message(code: "security.user.user")
+                doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
+            } else doFail("subscription.error.generating.email")
         }
-        else doFail("subscription.error.generating.email")
+        else { doFail("REGISTRATION.not.allowed")}
     }
 }
