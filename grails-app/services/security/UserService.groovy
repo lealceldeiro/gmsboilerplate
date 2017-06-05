@@ -357,20 +357,20 @@ class UserService {
         String token = tokenGeneratorService.getTokenFor(u.username)
 
         BEmailVerificationToken evt = new BEmailVerificationToken(token: token)
+        u.emailVerificationToken = evt
+        evt.user = u
 
         Integer MAX = 5
         while (!evt.validate() && MAX-- > 0) {
-            token = tokenGeneratorService.getTokenFor(u.username)
-            evt = new BEmailVerificationToken(token: token)
+            evt.token = tokenGeneratorService.getTokenFor(u.username)
         }
         if(evt.validate()) {
-            u.emailVerificationToken = evt
             u.save(flush: true, failOnError: true)
             emailSenderService.sendSubscriptionVerification(u.email, emailVerificationSubject, emailVerificationText,
                     emailVerificationBtnText, confirmBaseUrl + token)
 
-            return (confirmBaseUrl + token)
+            return u
         }
-        return false
+        return null
     }
 }
