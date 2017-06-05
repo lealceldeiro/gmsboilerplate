@@ -41,21 +41,21 @@ class ConfigurationService {
     }
 
     Boolean isDefaultUserCreated(){
-        if(Cached_DEFAULT_USER_CREATED) {
+        if(Cached_DEFAULT_USER_CREATED == null) {
             Cached_DEFAULT_USER_CREATED = isThere(EnumConfigFields.DEFAULT_USER_CREATED, true)
         }
         return Cached_DEFAULT_USER_CREATED
     }
 
     Boolean isDefaultOwnedEntityCreated(){
-        if(Cached_DEFAULT_OWNED_ENTITY_CREATED) {
+        if(Cached_DEFAULT_OWNED_ENTITY_CREATED == null) {
             Cached_DEFAULT_OWNED_ENTITY_CREATED = isThere(EnumConfigFields.DEFAULT_OWNED_ENTITY_CREATED, true)
         }
         return Cached_DEFAULT_OWNED_ENTITY_CREATED
     }
 
     Boolean isMultiEntityApplication(){
-        if(Cached_IS_MULTI_ENTITY_APP) {
+        if(Cached_IS_MULTI_ENTITY_APP == null) {
             Cached_IS_MULTI_ENTITY_APP = isThere(EnumConfigFields.IS_MULTI_ENTITY_APP, true)
         }
         return Cached_IS_MULTI_ENTITY_APP
