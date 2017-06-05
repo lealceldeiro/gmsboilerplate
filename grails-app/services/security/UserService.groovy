@@ -243,7 +243,7 @@ class UserService {
                 }
             }
         }
-        if(e) { return [id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled] }
+        if(e) { return [id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled, emailVerificationToken: e.emailVerificationToken] }
         else if(!silenceNotFoundException) throw new NotFoundException("general.not_found" ,"security.user.user", true)
         else return null
     }
@@ -345,9 +345,15 @@ class UserService {
 
     def requestNewVerificationEmail(String email, String emailVerificationSubject, String emailVerificationText,
                                     String emailVerificationBtnText, String confirmBaseUrl) {
-        def u = getBy([email: email], true)
+        EUser u = EUser.findByEmail(email)
         if(u) {
-            return sendSubscription(u as EUser, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, confirmBaseUrl)
+            BEmailVerificationToken evt = u.emailVerificationToken
+            if(evt){
+                u.emailVerificationToken = null
+                u.save flush: true
+                evt.delete()
+            }
+            return sendSubscription(u, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, confirmBaseUrl)
         }
         else { throw new NotFoundException("subscription.email.not.found") }
     }

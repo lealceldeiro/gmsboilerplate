@@ -52,13 +52,13 @@ class SubscriberEmailController implements ExceptionHandler{
         final String emailText = g.message(code: "subscription.confirmation.required.text", args: [grailsLinkGenerator.serverBaseURL]),
                      subButtonText = g.message(code: "subscription.confirmation.required.button"),
                      subject = g.message(code: "subscription.confirmation.required.subject"),
-                     confirmBaseUrl = g.createLink(controller: "subscriberEmail", action: "verifySubscriber", absolute:true)
+                     confirmBaseUrl = g.createLink(uri: "/email/verification/", absolute:true)
         String email = params.email
         if(email != null && email != ""){
             final def r = userService.requestNewVerificationEmail(email, subject, emailText, subButtonText, confirmBaseUrl)
             if(r){
                 String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
-                doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: e.id])
+                doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: r.id])
             }
             else doFail("subscription.error.generating.email")
         }
