@@ -16,6 +16,8 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
 
     vm.wizard = {
 
+        canRegister: false,
+
         lan: {
             'spanish': 'es',
             'english': 'en'
@@ -40,6 +42,15 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
 
     //fn
     function fnInit() {
+        if (angular.isDefined(configSrv.config.isUserRegistrationAllowed)) {
+            vm.wizard.canRegister = configSrv.config.isUserRegistrationAllowed;
+        } else {
+            configSrv.loadConfig().then(
+                function (config) {
+                    vm.wizard.canRegister = configSrv.config.isUserRegistrationAllowed;
+                }
+            );
+        }
         translatorSrv.setText("string.index", indexSrv, 'siteTitle');
         vm.wizard.logged = sessionSrv.isLogged();
 

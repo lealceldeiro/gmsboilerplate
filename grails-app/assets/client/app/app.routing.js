@@ -34,7 +34,7 @@ function routing($routeProvider, ROUTE, $locationProvider, __env) {
             }
         )
         .when(ROUTE.REGISTER,{
-                templateUrl: 'assets/app/modules/_security/register/register.html',
+                templateUrl: 'assets/app/modules/registration/register/register.html',
                 controller: 'registerCtrl',
                 controllerAs: 'vm'
             }

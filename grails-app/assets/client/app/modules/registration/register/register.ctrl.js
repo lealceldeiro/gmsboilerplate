@@ -9,7 +9,8 @@ angular
     .controller('registerCtrl', registerCtrl);
 
 /*@ngInject*/
-function registerCtrl(indexSrv, registerSrv, systemSrv, dialogSrv, blockSrv, translatorSrv, $timeout, navigationSrv, ROUTE) {
+function registerCtrl(indexSrv, registerSrv, systemSrv, dialogSrv, blockSrv, translatorSrv, $timeout, navigationSrv, ROUTE,
+                      configSrv) {
     var vm = this;
 
     var keyP = "registerCtrl";
@@ -30,6 +31,19 @@ function registerCtrl(indexSrv, registerSrv, systemSrv, dialogSrv, blockSrv, tra
 
     //fn
     function fnInit() {
+        if (angular.isDefined(configSrv.config.isUserRegistrationAllowed)) {
+            if (!configSrv.config.isUserRegistrationAllowed) {
+                navigationSrv.goTo(ROUTE.HOME);
+            }
+        } else {
+            configSrv.loadConfig().then(
+                function (config) {
+                    if (!configSrv.config.isUserRegistrationAllowed) {
+                        navigationSrv.goTo(ROUTE.HOME);
+                    }
+                }
+            );
+        }
         translatorSrv.setText("LOGIN.new_account", indexSrv, 'siteTitle');
     }
 

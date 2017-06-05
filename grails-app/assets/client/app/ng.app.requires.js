@@ -23,9 +23,6 @@
 //= require ../client/app/modules/_security/_login/login.srv
 //= require ../client/app/modules/_security/_login/login.ctrl
 
-//= require ../client/app/modules/_security/register/register.srv
-//= require ../client/app/modules/_security/register/register.ctrl
-
 //= require ../client/app/modules/admin/main/main.srv
 //= require ../client/app/modules/admin/main/main.ctrl
 
@@ -51,6 +48,9 @@
 //= require ../client/app/modules/admin/config/params.ctrl
 
 //= require ../client/app/modules/home/home.ctrl
+
+//= require ../client/app/modules/registration/register/register.srv
+//= require ../client/app/modules/registration/register/register.ctrl
 
 //= require ../client/app/modules/registration/email.verification/email.verification.srv
 //= require ../client/app/modules/registration/email.verification/email.verification.ctrl

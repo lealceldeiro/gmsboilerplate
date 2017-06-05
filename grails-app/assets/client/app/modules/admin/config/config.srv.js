@@ -17,7 +17,10 @@ function configSrv(baseSrv, $http, systemSrv, sessionSrv, $timeout, $translate) 
     var url = systemSrv.APIAbsoluteUrl + "config/";
 
     self.service = {
-        config:{},
+        config:{
+            isUserRegistrationAllowed: undefined,
+            multiEntity: undefined
+        },
 
         loadConfig: fnLoadConfig,
         save: fnSave,

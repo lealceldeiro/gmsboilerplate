@@ -1,6 +1,7 @@
 <a ng-click="idxCtrl.changeLanguage(idxCtrl.lan.english)" class="hand-pointer">
     {{'LANGUAGE.english' | translate}}
 </a>
+<br />
 <a ng-click="idxCtrl.changeLanguage(idxCtrl.lan.spanish)" class="hand-pointer">
     {{'LANGUAGE.spanish' | translate}}
 </a>
@@ -9,5 +10,5 @@
 <br>
 
 <h3 class="hand-pointer" data-ng-click="idxCtrl.go('/signin')">{{'button.login' | translate}}</h3>
-<h4>{{'string.or' | translate}}</h4>
-<h3 class="hand-pointer" data-ng-click="idxCtrl.go('/signup')">{{'button.register' | translate}}</h3>
+<h4 data-ng-show="idxCtrl.canRegister">{{'string.or' | translate}}</h4>
+<h3 class="hand-pointer"  data-ng-show="idxCtrl.canRegister" data-ng-click="idxCtrl.go('/signup')">{{'button.register' | translate}}</h3>
