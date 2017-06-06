@@ -9,9 +9,10 @@
                 data-ng-bind="vm.response.header"></h3>
             <div class="card-block">
                 <!--<h4 class="card-title"></h4>-->
-                <p class="card-text"data-ng-bind="vm.response.message"></p>
-                <md-button class="md-primary md-raised" ng-hide="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND"
-                           ng-click="idxCtrl.go('/signin')">
+                <p class="card-text" data-ng-bind="vm.response.message"></p>
+                <span class="float-right">
+                    <md-button class="md-primary md-raised" ng-hide="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND"
+                               ng-click="idxCtrl.go('/signin')">
                     {{'button.go_login' | translate}}
                 </md-button>
                 <md-button class="md-primary md-raised" ng-show="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND"
@@ -23,6 +24,7 @@
                            ng-click="idxCtrl.go('/signup')">
                     {{'button.createAccount' | translate}}
                 </md-button>
+                </span>
             </div>
         </div>
         <!--/.Panel-->
