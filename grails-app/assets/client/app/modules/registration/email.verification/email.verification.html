@@ -1,19 +1,21 @@
-<div class="min-width-500px">
-    <md-content class="md-no-momentum">
-        <md-card>
-            <md-card-title>
-                <md-card-title-text>
-                    <div class="md-headline" data-ng-bind="vm.response.header"></div>
-                    <div class="md-subhead" data-ng-bind="vm.response.message"></div>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
+<div class="row mt-5">
+    <div class="col-md-8 mlr-auto">
+        <!--Panel-->
+        <div class="card">
+            <h3 class="card-header white-text"
+                data-ng-class="{'card-success': vm.response.code == vm.code.EMAIL_CONFIRMATION_OK,
+                 'card-danger': (vm.response.code == vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND || vm.response.code == vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_PROVIDED),
+                  'card-warning': vm.response.code == vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_ASSOCIATED_TO_USER }"
+                data-ng-bind="vm.response.header"></h3>
+            <div class="card-block">
+                <!--<h4 class="card-title"></h4>-->
+                <p class="card-text"data-ng-bind="vm.response.message"></p>
                 <md-button class="md-primary md-raised" ng-hide="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND"
-                    ng-click="idxCtrl.go('/signin')">
+                           ng-click="idxCtrl.go('/signin')">
                     {{'button.go_login' | translate}}
                 </md-button>
                 <md-button class="md-primary md-raised" ng-show="vm.response.code === vm.code.EMAIL_CONFIRMATION_TOKEN_NOT_FOUND"
-                    ng-click="idxCtrl.go('/email/request')">
+                           ng-click="idxCtrl.go('/email/request')">
                     {{'button.requestNewVerificationEmail' | translate}}
                 </md-button>
                 <md-button class="md-primary md-raised"
@@ -21,7 +23,8 @@
                            ng-click="idxCtrl.go('/signup')">
                     {{'button.createAccount' | translate}}
                 </md-button>
-            </md-card-actions>
-        </md-card>
-    </md-content>
+            </div>
+        </div>
+        <!--/.Panel-->
+    </div>
 </div>
