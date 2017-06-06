@@ -2,9 +2,6 @@
 @import "margins";
 @import "sizes";
 
-body, html {
-    height: auto;
-}
 md-content { @include margin(null, 8px, null, 8px) }
 
 md-menu-bar {
