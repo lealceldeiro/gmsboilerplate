@@ -1,8 +1,16 @@
 @mixin padding($top, $left, $bottom, $right) {
-  padding-top: $top !important;
-  padding-left: $left !important;
-  padding-bottom: $bottom !important;
-  padding-right: $right !important;
+  @if($top != null) {
+    padding-top: $top !important;
+  }
+  @if($left != null) {
+    padding-left: $left !important;
+  }
+  @if($bottom != null) {
+    padding-bottom: $bottom !important;
+  }
+  @if($right != null) {
+    padding-right: $right !important;
+  }
 }
 
 

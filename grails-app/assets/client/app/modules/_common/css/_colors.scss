@@ -1,16 +1,24 @@
 @mixin background($color){
-    background: $color;
+    @if($color != null){
+        background: $color;
+    }
 }
 @mixin color($color) {
-    color: $color;
+    @if($color != null) {
+        color: $color;
+    }
 }
-@mixin selected-item($background, $color, $borderColor){
+@mixin selected-item($background, $color, $borderColor) {
     @include background($background);
     @include color($color);
-    border: 1px $borderColor solid !important;
+    @if($borderColor != null) {
+        border: 1px $borderColor solid !important;
+    }
 }
 @mixin opacity($opacity) {
-    opacity: $opacity;
+    @if($opacity != null) {
+        opacity: $opacity;
+    }
 }
 
 

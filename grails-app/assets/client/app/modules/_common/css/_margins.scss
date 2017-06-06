@@ -1,8 +1,16 @@
 @mixin margin($top, $left, $bottom, $right) {
-    margin-top: $top !important;
-    margin-left: $left !important;
-    margin-bottom: $bottom !important;
-    margin-right: $right !important;
+    @if($top != null){
+        margin-top: $top !important;
+    }
+    @if($left != null) {
+        margin-left: $left !important;
+    }
+    @if($bottom != null) {
+        margin-bottom: $bottom !important;
+    }
+    @if($right != null) {
+        margin-right: $right !important;
+    }
 }
 
 
