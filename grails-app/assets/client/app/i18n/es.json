@@ -24,6 +24,7 @@
   "button.accept": "Aceptar",
   "button.login": "Acceder",
   "button.register": "Crear nueva cuenta",
+  "button.create": "Crear",
   "button.save": "Guardar",
   "button.cancel": "Cancelar",
   "button.edit": "Editar",
@@ -33,7 +34,7 @@
   "button.close_session_now": "Cerrar sesión ahora",
   "button.go_login": "Ir a la página de acceso",
   "button.requestNewVerificationEmail": "Solicitar un nuevo email de verificación",
-  "button.createAccount": "Crear una cuenta nueva",
+  "button.createAccount": "@:button.register",
 
   "string.or": "o",
   "string.role_lc": "rol",
