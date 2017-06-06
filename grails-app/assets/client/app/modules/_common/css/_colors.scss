@@ -1,0 +1,23 @@
+@mixin background($color){
+    background: $color;
+}
+@mixin color($color) {
+    color: $color;
+}
+@mixin selected-item($background, $color, $borderColor){
+    @include background($background);
+    @include color($color);
+    border: 1px $borderColor solid !important;
+}
+@mixin opacity($opacity) {
+    opacity: $opacity;
+}
+
+
+.even-class { @include background(#e4e2e2) }
+
+.selected-item { @include selected-item(#a6a6a6, black, #696666)}
+
+.opacity-05 { @include opacity(0.5) }
+
+.blue { @include color(dodgerblue) }

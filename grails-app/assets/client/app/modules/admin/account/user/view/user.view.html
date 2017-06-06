@@ -32,7 +32,7 @@
                 <md-content class="md-no-momentum">
                     <div layout="row" layout-padding>
                         <div flex="50">
-                            <md-checkbox class="m-left-m-10px" ng-model="vm.entity.enabled" aria-label="{{'string.active' | translate}}" disabled>
+                            <md-checkbox class="ml-m-10" ng-model="vm.entity.enabled" aria-label="{{'string.active' | translate}}" disabled>
                                 {{'string.active' | translate}}
                             </md-checkbox>
                         </div>
@@ -45,7 +45,7 @@
             </div>
 
             <!--Roles when single Entity-->
-            <div class="m-left-m-10px" flex="100" layout="row" data-ng-controller="chipCtrl as chipCtrl"
+            <div class="ml-m-10" flex="100" layout="row" data-ng-controller="chipCtrl as chipCtrl"
                  data-ng-if="!vm.isProfile && vm.roles.all.length && vm.entities.length === 1">
                 <div flex="5" layout="center start">
                     <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
@@ -82,7 +82,7 @@
                     >
                         <span data-ng-bind="item.name + ' (' + item.username + ')'"></span>
                         <span flex></span>
-                        <small class="m-right-6px">
+                        <small class="mr-6">
                             <span data-ng-if="item.id === vm.selectedEntity.id" class="text-italic">(seleccionada)
                             </span>
                         </small>
@@ -91,7 +91,7 @@
             </div>
             <!--Roles-->
             <div flex="50">
-                <div class="m-left-m-10px" flex="100" layout="row" data-ng-controller="chipCtrl as chipCtrl"
+                <div class="ml-m-10" flex="100" layout="row" data-ng-controller="chipCtrl as chipCtrl"
                      data-ng-if="vm.roles.all.length && vm.entities.length > 1"
                      data-ng-hide="vm.roles.loading">
                     <div flex="5" layout="center start">

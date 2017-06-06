@@ -1,0 +1,234 @@
+.even-class {
+  background: #e4e2e2; }
+
+.selected-item {
+  background: #a6a6a6;
+  color: black;
+  border: 1px #696666 solid !important; }
+
+.opacity-05 {
+  opacity: 0.5; }
+
+.blue {
+  color: dodgerblue; }
+
+.rrms-error-panel .emotion {
+  margin-bottom: 3%;
+  font-size: 30px;
+  font-weight: bold;
+  color: #86868a;
+  text-align: center; }
+.rrms-error-panel .panel-heading {
+  text-transform: uppercase;
+  text-align: center;
+  color: red;
+  font-weight: bold; }
+.rrms-error-panel .panel-body {
+  margin-top: 6%;
+  font-style: italic;
+  text-align: center; }
+
+/*top*/
+.mt-4 {
+  margin-top: 4px !important;
+  margin-left: !important;
+  margin-bottom: !important;
+  margin-right: !important; }
+
+/*left*/
+.ml-12 {
+  margin-top: !important;
+  margin-left: 12px !important;
+  margin-bottom: !important;
+  margin-right: !important; }
+
+.ml-m-10 {
+  margin-top: !important;
+  margin-left: -10px !important;
+  margin-bottom: !important;
+  margin-right: !important; }
+
+/*bottom*/
+/*right*/
+.mr-6 {
+  margin-top: !important;
+  margin-left: !important;
+  margin-bottom: !important;
+  margin-right: 6px !important; }
+
+.mr-20 {
+  margin-top: !important;
+  margin-left: !important;
+  margin-bottom: !important;
+  margin-right: 20px !important; }
+
+/*top-bottom*/
+.mlr-auto {
+  margin-top: auto !important;
+  margin-left: !important;
+  margin-bottom: auto !important;
+  margin-right: !important; }
+
+/*left-right*/
+.mlr-auto {
+  margin-top: !important;
+  margin-left: auto !important;
+  margin-bottom: !important;
+  margin-right: auto !important; }
+
+/*all*/
+.ma-auto {
+  margin-top: auto !important;
+  margin-left: auto !important;
+  margin-bottom: auto !important;
+  margin-right: auto !important; }
+
+/*top*/
+/*left*/
+/*bottom*/
+/*right*/
+/*top-bottom*/
+/*left-right*/
+/*all*/
+.pa-0 {
+  padding-top: 0 !important;
+  padding-left: 0 !important;
+  padding-bottom: 0 !important;
+  padding-right: 0 !important; }
+
+.h-100 {
+  height: 100px; }
+
+.fs-12 {
+  font-size: 12px; }
+
+.text-italic {
+  font-style: italic; }
+
+.even-class {
+  background: #e4e2e2; }
+
+.selected-item {
+  background: #a6a6a6;
+  color: black;
+  border: 1px #696666 solid !important; }
+
+.opacity-05 {
+  opacity: 0.5; }
+
+.blue {
+  color: dodgerblue; }
+
+/*top*/
+.mt-4 {
+  margin-top: 4px !important;
+  margin-left: !important;
+  margin-bottom: !important;
+  margin-right: !important; }
+
+/*left*/
+.ml-12 {
+  margin-top: !important;
+  margin-left: 12px !important;
+  margin-bottom: !important;
+  margin-right: !important; }
+
+.ml-m-10 {
+  margin-top: !important;
+  margin-left: -10px !important;
+  margin-bottom: !important;
+  margin-right: !important; }
+
+/*bottom*/
+/*right*/
+.mr-6 {
+  margin-top: !important;
+  margin-left: !important;
+  margin-bottom: !important;
+  margin-right: 6px !important; }
+
+.mr-20 {
+  margin-top: !important;
+  margin-left: !important;
+  margin-bottom: !important;
+  margin-right: 20px !important; }
+
+/*top-bottom*/
+.mlr-auto {
+  margin-top: auto !important;
+  margin-left: !important;
+  margin-bottom: auto !important;
+  margin-right: !important; }
+
+/*left-right*/
+.mlr-auto {
+  margin-top: !important;
+  margin-left: auto !important;
+  margin-bottom: !important;
+  margin-right: auto !important; }
+
+/*all*/
+.ma-auto {
+  margin-top: auto !important;
+  margin-left: auto !important;
+  margin-bottom: auto !important;
+  margin-right: auto !important; }
+
+.h-100 {
+  height: 100px; }
+
+.fs-12 {
+  font-size: 12px; }
+
+md-content {
+  margin-top: !important;
+  margin-left: 8px !important;
+  margin-bottom: !important;
+  margin-right: 8px !important; }
+
+md-menu-bar button {
+  font-size: 17px;
+  color: white; }
+md-menu-bar button:focus {
+  color: buttontext; }
+md-menu-bar md-menu.md-open > button {
+  color: buttontext; }
+
+md-virtual-repeat-container {
+  height: 200px;
+  border: 1px solid lightgray; }
+
+div.repeated-item {
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box;
+  height: 40px;
+  padding-top: 10px; }
+
+.hand-pointer {
+  cursor: hand;
+  cursor: pointer; }
+
+md-toolbar .md-error {
+  background-color: #e23d3d; }
+md-toolbar .md-question {
+  background-color: #d0a352; }
+
+button .md-error {
+  color: #e23d3d; }
+button .md-question {
+  color: #cc922b; }
+
+.password-strength-ch > div {
+  max-width: 600px;
+  margin-left: 36px;
+  max-height: 2px;
+  margin-top: -40px;
+  margin-bottom: 39px; }
+
+md-icon.s12 {
+  height: 12px;
+  width: 12px;
+  min-height: 12px;
+  min-width: 12px; }
+
+/*# sourceMappingURL=styles.css.map */

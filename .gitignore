@@ -32,6 +32,7 @@
 .idea/
 .project
 .slcache/
+.sass-cache
 grailsw
 grailsw.bat
 lib/

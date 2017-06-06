@@ -1,0 +1,47 @@
+@mixin margin($top, $left, $bottom, $right) {
+    margin-top: $top !important;
+    margin-left: $left !important;
+    margin-bottom: $bottom !important;
+    margin-right: $right !important;
+}
+
+
+
+/*top*/
+
+.mt-4 { @include margin(4px, null, null, null); }
+
+
+
+/*left*/
+
+.ml-12 { @include margin(null, 12px, null, null) }
+.ml-m-10 { @include margin(null, -10px, null, null)}
+
+
+
+/*bottom*/
+
+
+
+/*right*/
+
+.mr-6 { @include margin(null, null, null, 6px)}
+.mr-20 { @include margin(null, null, null, 20px) }
+
+
+
+/*top-bottom*/
+
+.mlr-auto { @include margin(auto, null, auto, null)}
+
+
+
+/*left-right*/
+
+.mlr-auto { @include margin(null, auto, null, auto)}
+
+
+/*all*/
+
+.ma-auto { @include margin(auto, auto, auto, auto)}

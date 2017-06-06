@@ -116,7 +116,7 @@
 
                     <div layout="row" layout-padding>
                         <div flex="50">
-                            <md-checkbox class="m-left-m-10px" ng-model="vm.entity.enabled" aria-label="Activo">
+                            <md-checkbox class="ml-m-10" ng-model="vm.entity.enabled" aria-label="Activo">
                                 {{'string.active' | translate}}
                             </md-checkbox>
                         </div>
@@ -128,7 +128,7 @@
                 </md-content>
             </div>
 
-            <div layout="row" flex="100" class="m-left-12px" data-ng-if="vm.canUpdateRoles()">
+            <div layout="row" flex="100" class="ml-12" data-ng-if="vm.canUpdateRoles()">
                 <md-checkbox aria-label="{{'USER.permissions_only_in_this_entity' | translate}}&nbsp;({{sCtrl.oEntity.name || sCtrl.oEntity.username}})"
                              ng-change="vm.toggleEMode()"
                              ng-disabled="!vm.canToogleSingleEntityMode"
@@ -168,7 +168,7 @@
                     >
                         <span data-ng-bind="item.name + ' (' + item.username + ')'"></span>
                         <span flex></span>
-                        <small class="m-right-6px">
+                        <small class="mr-6">
                             <span data-ng-if="item.id === vm.selectedEntity.id" class="text-italic">({{'string.selected' | translate}})
                             </span>
                         </small>

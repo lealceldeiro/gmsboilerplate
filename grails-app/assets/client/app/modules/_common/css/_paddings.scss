@@ -1,0 +1,35 @@
+@mixin padding($top, $left, $bottom, $right) {
+  padding-top: $top !important;
+  padding-left: $left !important;
+  padding-bottom: $bottom !important;
+  padding-right: $right !important;
+}
+
+
+/*top*/
+
+
+
+/*left*/
+
+
+
+/*bottom*/
+
+
+
+/*right*/
+
+
+
+/*top-bottom*/
+
+
+
+/*left-right*/
+
+
+
+/*all*/
+
+.pa-0 { @include padding(0, 0, 0, 0)}

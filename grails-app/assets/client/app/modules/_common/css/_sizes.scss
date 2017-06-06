@@ -1,0 +1,20 @@
+@mixin width ($width) {
+  width: $width;
+}
+
+@mixin height ($height) {
+  height: $height;
+}
+
+@mixin fs ($size) {
+  font-size: $size;
+}
+
+//width
+
+
+//height
+.h-100 { @include height(100px) }
+
+//font-sizes
+.fs-12 { @include fs(12px)}
