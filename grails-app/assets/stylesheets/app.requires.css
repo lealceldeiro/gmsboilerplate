@@ -7,6 +7,8 @@ MDBootstrap
 ngMaterial
 *= require ../client/bower_components/angular-material/angular-material.min
 
+*= require ../client/bower_components/angular-material-sidemenu/dest/angular-material-sidemenu
+
 
 *= require ../client/app/ng.app.requires
 

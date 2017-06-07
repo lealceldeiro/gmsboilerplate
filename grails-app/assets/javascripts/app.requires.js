@@ -13,6 +13,11 @@
 //= require ../client/bower_components/messageformat/messageformat.min
 //= require ../client/bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.min
 
+
+//= require ../client/bower_components/MDBootstrap/js/tether.min
+//= require ../client/bower_components/MDBootstrap/js/bootstrap.min
+//= require ../client/bower_components/MDBootstrap/js/mdb.min
+
 // ngMaterial
 //= require ../client/bower_components/angular-aria/angular-aria.min
 //= require ../client/bower_components/angular-animate/angular-animate.min
@@ -34,6 +39,9 @@
 // password strength meter
 //= require ../client/bower_components/lodash/lodash.min
 //= require ../client/bower_components/ng-password-strength/dist/scripts/ng-password-strength.min
+
+// sidemenu
+//= require ../client/bower_components/angular-material-sidemenu/dest/angular-material-sidemenu
 
 // customjs
 //= require ../client/_customjs/bootstrapper

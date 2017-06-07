@@ -30,7 +30,8 @@
     "angular-translate-interpolation-messageformat": "^2.15.1",
     "ng-password-strength": "^0.2.1",
     "angular-moment-picker": "moment-picker#^0.10.1",
-    "MDBootstrap": "^4.3.2"
+    "MDBootstrap": "^4.3.2",
+    "angular-material-sidemenu": "https://github.com/agnjunio/angular-material-sidemenu/archive/master.zip"
   },
   "resolutions": {
     "angular": "1.5.8"

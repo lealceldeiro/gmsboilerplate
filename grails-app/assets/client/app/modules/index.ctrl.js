@@ -19,8 +19,10 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
         canRegister: false,
 
         lan: {
+            //keys must be the same as defined in i18n files (en.json and es.json)
             'spanish': 'es',
-            'english': 'en'
+            'english': 'en',
+            current: null
         },
         init: fnInit,
         go: fnGo,
@@ -54,7 +56,7 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
         translatorSrv.setText("string.index", indexSrv, 'siteTitle');
         vm.wizard.logged = sessionSrv.isLogged();
 
-        configSrv.changeLanguage(sessionSrv.getLanguage(), true);
+        fnChangeLanguage(sessionSrv.getLanguage(), true);
     }
 
     function fnSiteTitle() {
@@ -67,5 +69,13 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
 
     function fnChangeLanguage(lan, doNotPersist) {
         configSrv.changeLanguage(lan, doNotPersist);
+        for(var k in vm.wizard.lan){
+            if (vm.wizard.lan.hasOwnProperty(k)) {
+                if(vm.wizard.lan[k] === lan){
+                    vm.wizard.lan.current = "LANGUAGE." + k;
+                    break;
+                }
+            }
+        }
     }
 }

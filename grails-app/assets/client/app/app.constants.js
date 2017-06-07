@@ -65,6 +65,9 @@ angular
                     OPEN: 'toast.OPEN',
                     CLOSE: 'toast.CLOSE'
                 }
+            },
+            sidenav: {
+                'close': 'SIDENAV.close'
             }
         }
     );

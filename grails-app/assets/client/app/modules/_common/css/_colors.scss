@@ -1,11 +1,11 @@
 @mixin background($color){
     @if($color != null){
-        background: $color;
+        background: $color !important;
     }
 }
 @mixin color($color) {
     @if($color != null) {
-        color: $color;
+        color: $color !important;
     }
 }
 @mixin selected-item($background, $color, $borderColor) {
@@ -17,7 +17,7 @@
 }
 @mixin opacity($opacity) {
     @if($opacity != null) {
-        opacity: $opacity;
+        opacity: $opacity !important;
     }
 }
 

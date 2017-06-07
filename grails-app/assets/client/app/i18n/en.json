@@ -76,6 +76,9 @@
   "string.headline.information": "Information",
 
   "string.message.delete": "Are you sure you want to delete this {element}?",
+  "string.menu.main": "Main Menu",
+
+  "string.toggle_navigation": "Toggle navigation",
 
   "ENTITY.entities": "Entities",
   "ENTITY.new": "New entity",

@@ -76,6 +76,9 @@
   "string.headline.information": "Información",
 
   "string.message.delete": "¿Confirmas que deseas borrar est{GENDER, select, male{e} female{a} other{e}} {element}?",
+  "string.menu.main": "Menú principal",
+
+  "string.toggle_navigation": "Mostrar/Ocultar navegación",
 
   "ENTITY.entities": "Entidades",
   "ENTITY.new": "Nueva entidad",

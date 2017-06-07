@@ -1,191 +1,183 @@
 <!--logged-->
 <div data-ng-controller="sessionCtrl as sCtrl" ng-cloak>
 
-    <md-content>
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <md-icon md-svg-icon="assets/app/modules/_common/img/action/ic_home_24px.svg" aria-label="GMS Boilerplate"></md-icon>
+    <span data-ng-controller="menuCtrl as mc">
+        <nav class="navbar navbar-dark green navbar-toggleable-sm">
+        <a><md-icon md-svg-icon="assets/app/modules/_common/img/navigation/ic_menu_24px.svg" aria-label="GMS Boilerplate" class="text-white" ng-click="mc.toggleMenu()"></md-icon></a>
+        <button class="navbar-toggler navbar-toggler-right p-0" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="{{'string.toggle_navigation' | translate}}">
+            <md-icon md-svg-icon="assets/app/modules/_common/img/navigation/ic_menu_24px.svg"
+                     class="text-white"></md-icon>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav1">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown btn-group">
+                    <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{idxCtrl.lan.current | translate}}</a>
+                    <div class="dropdown-menu dropdown dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                        <a class="dropdown-item" ng-click="idxCtrl.changeLanguage(idxCtrl.lan.english)">English</a>
+                        <a class="dropdown-item" ng-click="idxCtrl.changeLanguage(idxCtrl.lan.spanish)">Espa&ntilde;ol</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-                <md-menu-bar>
-                    <span>&boxv;</span>
+        <!--left sideNav (main menu)-->
+        <md-sidenav class="md-sidenav-left md-whiteframe-4" md-component-id="snLeft">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">
+                    <span>GMS - Boilerplate</span>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="mc.closeSideNav()">
+                        <md-icon md-svg-src="assets/app/modules/_common/img/navigation/ic_close_24px.svg" aria-label="{{'button.close' | translate}}"></md-icon>
+                    </md-button>
+                </h1>
+            </md-toolbar>
+            <md-content ng-controller="GMSSideNavCtrl as snc" layout-padding>
+
+                <!--side menu-->
+                <md-sidemenu>
+
+                    <!--profile-->
+                    <md-sidemenu-group ng-show="sCtrl.isMultiEntityApp && sCtrl.can.manageOwnedEntity()">
+                        <md-sidemenu-content md-heading="{{sCtrl.user.username || sCtrl.user.email}}&nbsp;{{sCtrl.user.entities.length > 1 ? '(' + (sCtrl.oEntity.name || sCtrl.oEntity.username) + ')' : ''}}"
+                                             class="text-muted"
+                                             md-svg-icon="action:ic_account_circle_24px"
+                                             md-svg-arrow="hardware:ic_keyboard_arrow_down_24px">
+                            <md-sidemenu-button ng-click="sCtrl.viewProfile(); snc.close()">
+                                <span>
+                                    <md-icon md-svg-icon="social:ic_person_24px" class="mr-0"></md-icon>
+                                    {{'SESSION.my_profile' | translate}}
+                                </span>
+                            </md-sidemenu-button>
+                            <md-sidemenu-button ng-click="sCtrl.go('/main'); snc.close()"
+                                                ng-if="sCtrl.user.entities.length > 1">
+                                <span>
+                                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_compare_arrows_24px.svg" class="mr-0"></md-icon>
+                                    {{'SESSION.select_entity' | translate}}
+                                </span>
+                            </md-sidemenu-button>
+                        </md-sidemenu-content>
+                    </md-sidemenu-group>
 
                     <!--owned entities-->
-                    <md-menu ng-show="sCtrl.isMultiEntityApp && sCtrl.can.manageOwnedEntity()">
-                        <button class="md-primary" ng-click="$mdMenu.open()">
-                        {{'ENTITY.entities' | translate}}
-                        </button>
-                        <md-menu-content>
-                            <md-menu-item ng-show="sCtrl.can.createOwnedEntity()">
-                                <md-button ng-click="sCtrl.go('/admin/owned-entities/new')">
-                                    {{'ENTITY.new' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-divider ng-show="sCtrl.can.createOwnedEntity() && sCtrl.can.readOwnedEntity()"></md-menu-divider>
-                            <md-menu-item ng-show="sCtrl.can.readOwnedEntity()">
-                                <md-button ng-click="sCtrl.go('/admin/owned-entities')">
-                                    {{'ENTITY.list' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                    <md-sidemenu-group ng-show="sCtrl.isMultiEntityApp && sCtrl.can.manageOwnedEntity()">
+                        <!--<md-subheader class="md-no-sticky"></md-subheader>-->
+                        <md-divider></md-divider>
 
-                    <!--User-->
-                    <md-menu ng-show="sCtrl.can.manageUser()">
-                        <button class="md-raised md-primary" ng-click="$mdMenu.open()">
-                            {{'USER.users' | translate}}
-                        </button>
-                        <md-menu-content>
-                            <md-menu-item ng-show="sCtrl.can.createUser()">
-                                <md-button ng-click="sCtrl.go('/admin/users/new')">
-                                    {{'USER.new' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-divider ng-show="sCtrl.can.createUser() && sCtrl.can.readUser()"></md-menu-divider>
-                            <md-menu-item ng-show="sCtrl.can.readUser()">
-                                <md-button ng-click="sCtrl.go('/admin/users')">
-                                    {{'USER.list' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                        <md-sidemenu-content md-heading="{{'ENTITY.entities' | translate}}"
+                                             md-svg-arrow="hardware:ic_keyboard_arrow_down_24px">
+                            <md-sidemenu-button ng-click="sCtrl.go('/admin/owned-entities/new'); snc.close()"
+                                                ng-show="sCtrl.can.createOwnedEntity()">
+                                {{'ENTITY.new' | translate}}
+                            </md-sidemenu-button>
+                            <md-sidemenu-button ng-click="sCtrl.go('/admin/owned-entities'); snc.close()"
+                                                ng-show="sCtrl.can.readOwnedEntity()">
+                                {{'ENTITY.list' | translate}}
+                            </md-sidemenu-button>
+                        </md-sidemenu-content>
+                    </md-sidemenu-group>
 
-                    <!--Roles-->
-                    <md-menu ng-show="sCtrl.can.manageRole()">
-                        <button class="md-primary" ng-click="$mdMenu.open()">
-                            {{'ROLE.roles' | translate}}
-                        </button>
-                        <md-menu-content>
-                            <md-menu-item ng-show="sCtrl.can.createRole()">
-                                <md-button ng-click="sCtrl.go('/admin/roles/new')">
-                                    {{'ROLE.new' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-divider ng-show="sCtrl.can.readRole() && sCtrl.can.createRole()"></md-menu-divider>
-                            <md-menu-item ng-show="sCtrl.can.readRole()">
-                                <md-button ng-click="sCtrl.go('/admin/roles')">
-                                    {{'ROLE.list' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                    <!--users-->
+                    <md-sidemenu-group ng-show="sCtrl.can.manageUser()">
+                        <md-divider></md-divider>
 
-                    <!--Permissions-->
-                    <md-menu ng-show="sCtrl.can.managePermission()">
-                        <button class="md-primary" ng-click="$mdMenu.open()">
-                            {{'PERMISSIONS.permissions' | translate}}
-                        </button>
-                        <md-menu-content ng-show="sCtrl.can.readPermission()">
-                            <md-menu-item>
-                                <md-button ng-click="sCtrl.go('/admin/permissions')">
-                                    {{'PERMISSIONS.list' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                        <md-sidemenu-content md-heading="{{'USER.users' | translate}}"
+                                             md-svg-arrow="hardware:ic_keyboard_arrow_down_24px">
+                            <md-sidemenu-button ng-click="sCtrl.go('/admin/users/new'); snc.close()"
+                                                ng-show="sCtrl.can.createUser()">
+                                {{'USER.new' | translate}}
+                            </md-sidemenu-button>
+                            <md-sidemenu-button ng-click="sCtrl.go('/admin/users'); snc.close()"
+                                                ng-show="sCtrl.can.readUser()">
+                                {{'USER.list' | translate}}
+                            </md-sidemenu-button>
+                        </md-sidemenu-content>
+                    </md-sidemenu-group>
 
-                    <!--Configuration-->
-                    <md-menu ng-if="sCtrl.can.conf()">
-                        <button class="md-primary" ng-click="$mdMenu.open()">
-                            {{'CONFIGURATION.configuration' | translate}}
-                        </button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button ng-click="sCtrl.go('/admin/config/params')">
-                                    {{'CONFIGURATION.parameters' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                    <!--roles-->
+                    <md-sidemenu-group ng-show="sCtrl.can.manageRole()">
+                        <md-divider></md-divider>
 
-                    <!--Language-->
-                    <md-menu>
-                        <button class="md-primary" ng-click="$mdMenu.open()">
-                            {{'LANGUAGE.language' | translate}}
-                        </button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button ng-click="idxCtrl.changeLanguage(idxCtrl.lan.english)">
-                                    {{'LANGUAGE.english' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                            <md-menu-divider></md-menu-divider>
-                            <md-menu-item>
-                                <md-button ng-click="idxCtrl.changeLanguage(idxCtrl.lan.spanish)">
-                                    {{'LANGUAGE.spanish' | translate}}
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
+                        <md-sidemenu-content md-heading="{{'ROLE.roles' | translate}}"
+                                             md-svg-arrow="hardware:ic_keyboard_arrow_down_24px">
+                            <md-sidemenu-button ng-click="sCtrl.go('/admin/roles/new'); snc.close()"
+                                                ng-show="sCtrl.can.createRole()">
+                                {{'ROLE.new' | translate}}
+                            </md-sidemenu-button>
+                            <md-sidemenu-button ng-click="sCtrl.go('/admin/roles'); snc.close()"
+                                                ng-show="sCtrl.can.readRole()">
+                                {{'ROLE.list' | translate}}
+                            </md-sidemenu-button>
+                        </md-sidemenu-content>
+                    </md-sidemenu-group>
 
-                </md-menu-bar>
+                    <!--permissions-->
+                    <md-sidemenu-group ng-show="sCtrl.can.managePermission()">
+                        <md-divider></md-divider>
 
-                <span flex></span>
+                        <md-sidemenu-content md-heading="{{'PERMISSIONS.permissions' | translate}}"
+                                             md-svg-arrow="hardware:ic_keyboard_arrow_down_24px">
+                            <md-sidemenu-button ng-click="sCtrl.go('/admin/permissions'); snc.close()"
+                                                ng-show="sCtrl.can.readPermission()">
+                                {{'PERMISSIONS.list' | translate}}
+                            </md-sidemenu-button>
+                        </md-sidemenu-content>
+                    </md-sidemenu-group>
 
-                <!--session info-->
-                <div data-ng-controller="fabSpeedDial as fsd" class="lock-size" layout="row" layout-align="center center"
-                     ng-show="sCtrl.user.username || sCtrl.user.email">
-                    <md-fab-speed-dial md-open="fsd.isOpen" md-direction="{{fsd.selectedDirection}}" ng-class="fsd.selectedMode">
-                        <md-fab-trigger>
-                            <md-button aria-label="menu" class="md-fab md-mini">
-                                <md-tooltip md-direction="down">
-                                    {{'SESSION.options' | translate}}
-                                </md-tooltip>
-                                <md-icon md-svg-src="assets/app/modules/_common/img/navigation/ic_more_vert_24px.svg"></md-icon>
-                            </md-button>
-                        </md-fab-trigger>
+                    <!--configuration-->
+                    <md-sidemenu-group ng-show="sCtrl.can.conf()">
+                        <md-divider></md-divider>
 
-                        <md-fab-actions>
+                        <md-sidemenu-content md-heading="{{'CONFIGURATION.configuration' | translate}}"
+                                             md-svg-arrow="hardware:ic_keyboard_arrow_down_24px">
+                            <md-sidemenu-button ng-click="sCtrl.go('/admin/config/params'); snc.close()">
+                                {{'CONFIGURATION.parameters' | translate}}
+                            </md-sidemenu-button>
+                        </md-sidemenu-content>
+                    </md-sidemenu-group>
 
-                            <md-button aria-label="{{'SESSION.close' | translate}}" class="md-fab md-mini md-warn" ng-click="sCtrl.logout()">
-                                <md-tooltip md-direction="down">{{'SESSION.close' | translate}}</md-tooltip>
-                                <md-icon md-no-ink md-svg-src="assets/app/modules/_common/img/action/ic_exit_to_app_24px.svg" aria-label="{{'SESSION.close' | translate}}"></md-icon>
-                            </md-button>
+                    <!--profile-->
+                    <md-sidemenu-group ng-show="sCtrl.isMultiEntityApp && sCtrl.can.manageOwnedEntity()">
+                        <md-divider></md-divider>
 
-                            <md-button aria-label="{{'SESSION.my_profile' | translate}}" class="md-fab md-mini md-accent" ng-click="sCtrl.viewProfile()">
-                                <md-tooltip md-direction="down">
-                                    {{'SESSION.my_profile' | translate}} ({{sCtrl.user.username || sCtrl.user.email + (sCtrl.user.entities.length > 1 ? sCtrl.oEntity.name || sCtrl.oEntity.username : "")}})
-                                </md-tooltip>
-                                <md-icon md-no-ink md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg" aria-label="Mi perfil"></md-icon>
-                            </md-button>
+                        <md-sidemenu-content md-heading="{{'SESSION.close' | translate}}"
+                                             class="text-muted"
+                                             ng-click="sCtrl.logout()">
+                        </md-sidemenu-content>
+                    </md-sidemenu-group>
 
-                            <md-button aria-label="{{'SESSION.select_entity' | translate}}" class="md-fab md-mini md-hue-1" ng-click="sCtrl.go('/main')"
-                                       ng-if="sCtrl.user.entities.length > 1">
-                                <md-tooltip md-direction="down">{{'SESSION.select_entity' | translate}} ("{{sCtrl.oEntity.name || sCtrl.oEntity.username}}")
-                                </md-tooltip>
-                                <md-icon md-no-ink md-svg-src="assets/app/modules/_common/img/action/ic_compare_arrows_24px.svg" aria-label="{{'SESSION.select_entity' | translate}}"></md-icon>
-                            </md-button>
+                </md-sidemenu>
+                <!--./side menu-->
+            </md-content>
 
-                        </md-fab-actions>
-                    </md-fab-speed-dial>
-                </div>
-            </div>
-        </md-toolbar>
-    </md-content>
+        </md-sidenav>
+        <!--./left sideNav (main menu)-->
 
-    <div data-ng-controller="paginationCtrl as pc" class="ml-20 mr-20">
+        <div data-ng-controller="paginationCtrl as pc" class="ml-20 mr-20">
 
-        <md-content style="min-height: 260px;">
-            <md-fab-toolbar ng-controller="toolBarCtrl as tbc" ng-if="tbc.show"
-                            md-open="tbc.isOpen" count="tbc.count"
-                            md-direction="{{tbc.direction}}">
-                <md-fab-trigger class="align-with-text">
-                    <md-button aria-label="menu" class="md-fab md-primary">
-                        <md-icon md-svg-src="assets/app/modules/_common/img/navigation/ic_menu_24px.svg"></md-icon>
-                    </md-button>
-                </md-fab-trigger>
-
-                <md-toolbar>
-                    <md-fab-actions class="md-toolbar-tools" ng-repeat="button in buttonsArr track by $index">
-                        <md-button aria-label="{{button.aria}}" class="md-icon-button"
-                                   ng-click="tbc.doAction($index)">
-                            <md-icon md-svg-src="{{button.image}}"></md-icon>
+            <md-content style="min-height: 260px;">
+                <md-fab-toolbar ng-controller="toolBarCtrl as tbc" ng-if="tbc.show"
+                                md-open="tbc.isOpen" count="tbc.count"
+                                md-direction="{{tbc.direction}}">
+                    <md-fab-trigger class="align-with-text">
+                        <md-button aria-label="menu" class="md-fab md-primary">
+                            <md-icon md-svg-src="assets/app/modules/_common/img/navigation/ic_menu_24px.svg"></md-icon>
                         </md-button>
-                    </md-fab-actions>
-                </md-toolbar>
-            </md-fab-toolbar>
-            <br/>
-            <ng-view></ng-view>
-        </md-content>
-    </div>
+                    </md-fab-trigger>
 
+                    <md-toolbar>
+                        <md-fab-actions class="md-toolbar-tools" ng-repeat="button in buttonsArr track by $index">
+                            <md-button aria-label="{{button.aria}}" class="md-icon-button"
+                                       ng-click="tbc.doAction($index)">
+                                <md-icon md-svg-src="{{button.image}}"></md-icon>
+                            </md-button>
+                        </md-fab-actions>
+                    </md-toolbar>
+                </md-fab-toolbar>
+                <br/>
+                <ng-view></ng-view>
+            </md-content>
+        </div>
+
+    </span>
 </div>

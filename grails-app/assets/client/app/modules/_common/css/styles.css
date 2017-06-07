@@ -15,18 +15,18 @@
   text-align: center; }
 
 .even-class {
-  background: #e4e2e2; }
+  background: #e4e2e2 !important; }
 
 .selected-item {
-  background: #a6a6a6;
-  color: black;
+  background: #a6a6a6 !important;
+  color: black !important;
   border: 1px #696666 solid !important; }
 
 .opacity-05 {
-  opacity: 0.5; }
+  opacity: 0.5 !important; }
 
 .blue {
-  color: dodgerblue; }
+  color: dodgerblue !important; }
 
 /*top*/
 .mt-4 {
@@ -70,16 +70,13 @@
 .fs-12 {
   font-size: 12px; }
 
-body, html {
-  height: auto; }
-
 md-content {
   margin-left: 8px !important;
   margin-right: 8px !important; }
 
 md-menu-bar button {
   font-size: 17px;
-  color: white; }
+  color: white !important; }
 md-menu-bar button:focus {
   color: buttontext; }
 md-menu-bar md-menu.md-open > button {
@@ -137,5 +134,10 @@ md-icon.s12 {
 
 .text-italic {
   font-style: italic; }
+
+@media (max-width: 767px) {
+  .dropdown-menu-right {
+    right: inherit;
+    margin-left: inherit; } }
 
 /*# sourceMappingURL=styles.css.map */

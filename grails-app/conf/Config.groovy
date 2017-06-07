@@ -149,23 +149,27 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 grails.assets.excludes = ["bower_components/**/*", "app/**/*.html", "app/**/*.json", "bower.json"]
 grails.assets.includes = [
-        //js
         "bower_components/angular/angular.min.js",
         "bower_components/angular-animate/angular-animate.min.js",
         "bower_components/angular-aria/angular-aria.min.js",
         "bower_components/angular-local-storage/dist/angular-local-storage.min.js",
         "bower_components/angular-material/angular-material.min.js",
         "bower_components/angular-material/angular-material.min.css",
+        "bower_components/angular-material-sidemenu/dest/angular-material-sidemenu.js",
+        "bower_components/angular-material-sidemenu/dest/angular-material-sidemenu.css",
         "bower_components/angular-messages/angular-messages.min.js",
         "bower_components/angular-route/angular-route.min.js",
         "bower_components/angular-sanitize/angular-sanitize.min.js",
         "bower_components/angular-translate/angular-translate.min.js",
         "bower_components/angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js",
-        "bower_components/MDBootstrap/css/bootstrap.min.css",
-        "bower_components/MDBootstrap/css/mdb.min.css",
         "bower_components/jquery/dist/jquery.min.js",
         "bower_components/lodash/lodash.min.js",
         "bower_components/material-angular-paging/build/dist.min.js",
+        "bower_components/MDBootstrap/js/tether.min.js",
+        "bower_components/MDBootstrap/js/bootstrap.min.js",
+        "bower_components/MDBootstrap/js/mdb.min.js",
+        "bower_components/MDBootstrap/css/bootstrap.min.css",
+        "bower_components/MDBootstrap/css/mdb.min.css",
         "bower_components/messageformat/messageformat.min.js",
         "bower_components/ng-password-strength/dist/scripts/ng-password-strength.min.js"
 ]

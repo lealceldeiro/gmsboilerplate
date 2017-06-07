@@ -58,12 +58,23 @@
     //endregion
 
     /*@ngInject*/
-    function config($logProvider, $mdThemingProvider) {
+    function config($logProvider, $mdThemingProvider, $mdIconProvider) {
         $logProvider.debugEnabled(true);
 
         $mdThemingProvider.theme('default')
             .primaryPalette('green')
             .accentPalette('blue');
+
+        var iconsSet = ['action', 'alert', 'av', 'communication', 'content', 'device', 'editor', 'file',
+            'hardware', 'image', 'maps', 'navigation', 'notification', 'places', 'social', 'toggle'];
+        var base = 'assets/app/modules/_common/img/sprite/svg-sprite-';
+        var ext = '.svg';
+        for(var i = 0; i < iconsSet.length; i++) {
+            (function (idx) {
+                $mdIconProvider
+                    .iconSet(iconsSet[idx], base + iconsSet[idx] + ext)
+            })(i);
+        }
     }
 
 
@@ -164,8 +175,8 @@
             }
         });
 
-        //triggered when a new token was retrieved since the old one expired, so we need to refresh the last requested
-        //view, since it wasn't resolved due to the forbidden backend response
+        /*triggered when a new token was retrieved since the old one expired, so we need to refresh the last requested
+         view, since it wasn't resolved due to the forbidden backend response*/
         $rootScope.$on('UNAUTHORIZED_BACKWARD', function () {
             if (navigationSrv.prevRoute) {
                 if (params && typeof params['id']  !== 'undefined' && params['id'] !== null
@@ -205,7 +216,8 @@
                 'ngMaterial',
                 'ngMessages',
                 'pascalprecht.translate',                           //angular-translate
-                'ngPasswordStrength'
+                'ngPasswordStrength',
+                'ngMaterialSidemenu'                                //material side menu
 
             ]
         )
