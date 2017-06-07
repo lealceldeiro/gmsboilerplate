@@ -7,14 +7,14 @@
                 <!--name-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.name' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="social:ic_group_24px"></md-icon>
                     <input ng-model="vm.role.label" type="text" readonly/>
                 </md-input-container>
 
                 <!--description-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.description' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_description_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="action:ic_description_24px"></md-icon>
                     <textarea ng-model="vm.role.description" readonly></textarea>
                 </md-input-container>
 
@@ -22,7 +22,7 @@
                 <!--permissions-->
                 <div layout="row" data-ng-controller="chipCtrl as chipCtrl" data-ng-if="vm.permissions.all.length">
                     <div flex="3" layout="center center">
-                        <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_verified_user_24px.svg"></md-icon>
+                        <md-icon md-svg-icon="action:ic_verified_user_24px"></md-icon>
                     </div>
                     <span flex></span>
                     <div flex="95">

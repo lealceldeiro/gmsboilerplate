@@ -8,21 +8,21 @@
                     <!--name-->
                     <md-input-container class="md-icon-float md-block">
                         <label>{{'string.name' | translate}}</label>
-                        <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_outline_24px.svg"></md-icon>
+                        <md-icon md-svg-icon="social:ic_person_outline_24px"></md-icon>
                         <input ng-model="vm.entity.name" type="text" readonly/>
                     </md-input-container>
 
                     <!--username-->
                     <md-input-container class="md-icon-float md-block">
                         <label>{{'string.user' | translate}}</label>
-                        <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg"></md-icon>
+                        <md-icon md-svg-icon="social:ic_person_24px"></md-icon>
                         <input ng-model="vm.entity.username" type="text" readonly/>
                     </md-input-container>
 
                     <!--email-->
                     <md-input-container class="md-icon-float md-block">
                         <label>{{'string.email' | translate}}</label>
-                        <md-icon md-svg-src="assets/app/modules/_common/img/communication/ic_email_24px.svg"></md-icon>
+                        <md-icon md-svg-icon="communication:ic_email_24px"></md-icon>
                         <input ng-model="vm.entity.email" type="text" readonly/>
                     </md-input-container>
                 </md-content>
@@ -48,7 +48,7 @@
             <div class="ml-m-10" flex="100" layout="row" data-ng-controller="chipCtrl as chipCtrl"
                  data-ng-if="!vm.isProfile && vm.roles.all.length && vm.entities.length === 1">
                 <div flex="5" layout="center start">
-                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="social:ic_group_24px"></md-icon>
                 </div>
                 <div flex="95">
                     <md-chips ng-model="vm.roles.all" readonly="true">
@@ -95,7 +95,7 @@
                      data-ng-if="vm.roles.all.length && vm.entities.length > 1"
                      data-ng-hide="vm.roles.loading">
                     <div flex="5" layout="center start">
-                        <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                        <md-icon md-svg-icon="social:ic_group_24px"></md-icon>
                     </div>
                     <div flex="95">
                         <md-chips ng-model="vm.roles.all" readonly="true">

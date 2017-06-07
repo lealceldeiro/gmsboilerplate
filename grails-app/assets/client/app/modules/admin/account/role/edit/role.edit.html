@@ -7,7 +7,7 @@
                 <!--name-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.name' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_group_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="hardware:ic_security_24px"></md-icon>
                     <input ng-model="vm.role.label" type="text" required name="label" />
                     <div ng-messages="editRoleForm.label.$error" md-auto-hide="false">
                         <div ng-message="required">
@@ -19,7 +19,7 @@
                 <!--description-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.description' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_description_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="action:ic_description_24px"></md-icon>
                     <textarea ng-model="vm.role.description" required name="description"></textarea>
                     <div ng-messages="editRoleForm.description.$error" md-auto-hide="false">
                         <div ng-message="required">
@@ -33,7 +33,7 @@
                 <div layout="column" data-ng-if="vm.permissions.all.length">
                     <md-input-container class="md-icon-float md-block">
                         <label>{{'PERMISSIONS.permissions' | translate}}</label>
-                        <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_verified_user_24px.svg"></md-icon>
+                        <md-icon md-svg-icon="action:ic_verified_user_24px"></md-icon>
                         <md-select ng-model="vm.permissions.selected" multiple name="permissions" required>
                             <md-optgroup ng-repeat="cat in vm.permissionsCaterories" label="{{cat}}">
                                 <md-option ng-value="item" ng-repeat="item in vm.permissions.all | filter: {category: cat}">{{item.label}}</md-option>

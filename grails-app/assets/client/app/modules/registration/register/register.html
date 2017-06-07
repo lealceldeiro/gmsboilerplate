@@ -19,7 +19,7 @@
                 <!--name-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.name' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_outline_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="social:ic_person_outline_24px"></md-icon>
                     <input ng-model="vm.name" type="text" name="name" required/>
 
                     <div ng-messages="registerForm.name.$error" md-auto-hide="false">
@@ -32,7 +32,7 @@
                 <!--username-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.user' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="social:ic_person_24px"></md-icon>
                     <input ng-model="vm.username" type="text" name="username" required
                            data-ng-model-options="{debounce: 500}"
                            data-ng-change="vm.checkUsername()"
@@ -61,7 +61,7 @@
                 <!--email-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.email' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/communication/ic_email_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="communication:ic_email_24px"></md-icon>
                     <input ng-model="vm.email" type="email" name="email" required
                            data-ng-model-options="{debounce: 500}"
                            data-ng-change="vm.checkEmail()"/>
@@ -85,7 +85,7 @@
                 <!--password-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.password' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_lock_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="action:ic_lock_24px"></md-icon>
                     <input ng-model="vm.password" type="password" name="password" required
                            data-ng-change="vm.checkPasswordMatch()"
                     />
@@ -106,7 +106,7 @@
                 <!--repeat password-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.password_repeat' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_lock_outline_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="action:ic_lock_outline_24px"></md-icon>
                     <input ng-model="vm.password2" type="password" name="password2" required
                            data-ng-change="vm.checkPasswordMatch()"/>
                     <div ng-messages="registerForm.password2.$error" md-auto-hide="false">

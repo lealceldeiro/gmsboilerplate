@@ -1,0 +1,7 @@
+@mixin z-index($value) {
+  @if(value != null) {
+    z-index: $value !important;
+  }
+}
+
+.zi-1100 { @include z-index(1100) }

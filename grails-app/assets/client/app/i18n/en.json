@@ -51,7 +51,7 @@
   "string.user_required": "The user is required",
   "string.it_is_not": "It is not a ",
   "string.valid_user": "valid user",
-  "string.valid_user_description": "For security reasons, users must fulfill the following conditions: <br /><br /> - Only one special char (._-) allowed and it must not be at the extremes of the string <br /> - The first character cannot be a number <br />- All the other characters allowed are letters and numbers <br /> - The total length should be between 3 and 20 chars <br /><br /> Example: <span class='blue'>niceBoy.cuban</span>",
+  "string.valid_user_description": "For security reasons, users must fulfill the following conditions: <br /><br /> - Only one special char (._-) allowed and it must not be at the extremes of the string <br /> - The first character cannot be a number <br />- All the other characters allowed are letters and numbers <br /> - The total length should be between 3 and 20 chars <br /><br /> Example: <span class='gms-blue'>niceBoy.cuban</span>",
   "string.user_taken": "This user is already in use",
   "string.email_taken": "This email is already in use",
   "string.email_does_n_exist": "Unknown email",

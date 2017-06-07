@@ -32,7 +32,7 @@ function toolBarSrv($rootScope, BROADCAST) {
      *         [
      *              {
              *                  aria: "Some button aria",
-             *                  image: "_common/img/svg/myIco.svg",
+             *                  image: "social:ic_myIco24px",
              *                  action: function(){console.log('do something');}
              *                  showCondition:
              *              },

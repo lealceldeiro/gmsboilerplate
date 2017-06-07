@@ -6,7 +6,7 @@
                 <!--name-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.name' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_home_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="action:ic_dashboard_24px"></md-icon>
                     <input ng-model="vm.entity.name" type="text" name="name" required data-ng-readonly="vm.entity.id && vm.entity.name == 'HOME'"/>
 
                     <div ng-messages="editEntityForm.name.$error" md-auto-hide="false">
@@ -19,7 +19,7 @@
                 <!--username-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.user' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/social/ic_person_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="social:ic_person_24px"></md-icon>
                     <input data-ng-model="vm.entity.username" name="username" required
                            data-ng-model-options="{debounce: 500}"
                            data-ng-change="vm.checkUsername()"
@@ -49,7 +49,7 @@
                 <!--description-->
                 <md-input-container class="md-icon-float md-block">
                     <label>{{'string.description' | translate}}</label>
-                    <md-icon md-svg-src="assets/app/modules/_common/img/action/ic_description_24px.svg"></md-icon>
+                    <md-icon md-svg-icon="action:ic_description_24px"></md-icon>
                     <textarea ng-model="vm.entity.description" name="description" required></textarea>
 
                     <div ng-messages="editEntityForm.description.$error" md-auto-hide="false">
