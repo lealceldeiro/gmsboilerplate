@@ -1,5 +1,5 @@
 @mixin z-index($value) {
-  @if(value != null) {
+  @if($value != null) {
     z-index: $value !important;
   }
 }

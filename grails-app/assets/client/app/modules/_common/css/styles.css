@@ -25,7 +25,7 @@
 .opacity-05 {
   opacity: 0.5 !important; }
 
-.blue {
+.gms-blue {
   color: dodgerblue !important; }
 
 /*top*/
@@ -131,6 +131,9 @@ md-icon.s12 {
   padding-left: 0 !important;
   padding-bottom: 0 !important;
   padding-right: 0 !important; }
+
+.zi-1100 {
+  z-index: 1100 !important; }
 
 .text-italic {
   font-style: italic; }
