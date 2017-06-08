@@ -1,34 +1,12 @@
 <div ng-cloak layout-gt-sm="row" layout="column" >
     <div flex-gt-sm="99" flex>
-        <!--change role view-->
-        <md-button aria-label="{{'ROLE.view_my_roles_on_entity' | translate}}" class="md-icon-button"
-                   ng-show="sCtrl.can.readRole() && vm.roles.allLoaded"
-                   ng-click="vm.search(true)">
-            <md-icon md-svg-icon="action:ic_flip_to_back_24px"></md-icon>
-            <md-tooltip>{{'ROLE.view_my_roles_on_entity' | translate}}</md-tooltip>
-        </md-button>
-        <md-button aria-label="{{'ROLE.view_all' | translate}}" class="md-icon-button"
-                   ng-hide="!sCtrl.can.readAllRole() || vm.roles.allLoaded"
-                   ng-click="vm.searchAll(true)">
-            <md-icon md-svg-icon="action:ic_flip_to_front_24px"></md-icon>
-            <md-tooltip>{{'ROLE.view_all' | translate}}</md-tooltip>
-        </md-button>
-
-        <!--add new role-->
-        <md-button aria-label="{{'ROLE.new' | translate}}" class="md-icon-button"
-                   ng-click="vm.new()"
-                   ng-show="sCtrl.can.createRole()">
-            <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
-            <md-tooltip>{{'ROLE.new' | translate}}</md-tooltip>
-        </md-button>
-
         <md-content>
             <md-list flex>
                 <md-divider ng-show="vm.roles.all.length"></md-divider>
                 <md-list-item class="md-3-line" ng-repeat="item in vm.roles.all" ng-click="vm.view(item.id)" aria-label="Rol: {{item.label}}">
                     <div class="md-list-item-text" layout="column">
                         <h3 data-ng-bind="item.label"></h3>
-                        <p style="font-style: italic;" data-ng-bind="item.description"></p>
+                        <p class="text-italic" data-ng-bind="item.description"></p>
                         <p>({{item.enabled | humanReadable | translate}})</p>
                         <md-button class="md-secondary md-icon-button" aria-label="{{'button.edit' | translate}}"
                                    ng-click="vm.edit(item.id)"

@@ -56,3 +56,24 @@ md-icon.s12 {
     min-height: 12px;
     min-width: 12px;
 }
+
+.sidenav1 {
+    transform: translateX(0px);
+    position: fixed;
+}
+
+md-backdrop.md-sidenav-backdrop {
+    position: fixed!important;
+}
+
+hr { @include margin(0,0,0,0) }
+
+button.text-white md-icon svg {
+    fill: white;
+}
+
+.vertical-divider {
+    border-top-width: 0;
+    border-right: 1px solid white;
+    height: 100%;
+}

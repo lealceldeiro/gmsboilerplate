@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function roleListCtrl(indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv,
-                      sessionSrv, dialogSrv, translatorSrv, $timeout) {
+                      sessionSrv, dialogSrv, translatorSrv, $timeout, navBarSrv) {
 
     var vm = this;
     var keyP = 'ROLE_LIST';
@@ -41,6 +41,8 @@ function roleListCtrl(indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv
     function fnInit() {
         translatorSrv.setText('ROLE.roles', indexSrv, 'siteTitle');
         paginationSrv.resetPagination();
+
+        _generateNavBarButtons();
     }
 
     function fnSearch(changeFlag) {
@@ -188,6 +190,20 @@ function roleListCtrl(indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv
 
     function fnSearchByPageChange() {
         vm.wizard.roles.allLoaded? fnSearchAll() : fnSearch();
+    }
+
+    function _generateNavBarButtons() {
+        var sNgShow = function(){ return sessionSrv.can.readRole() && vm.wizard.roles.allLoaded; };
+        var search = navBarSrv.icoButton('ROLE.view_my_roles_on_entity', function(){fnSearch(true)}, 'action:ic_flip_to_back_24px', sNgShow);
+
+        var sANgHide = function(){ return (!sessionSrv.can.readAllRole() || vm.wizard.roles.allLoaded); };
+        var searchA = navBarSrv.icoButton('ROLE.view_all', function(){fnSearchAll(true)}, 'action:ic_flip_to_front_24px', null, sANgHide);
+
+        var addNgShow = function(){ return sessionSrv.can.createRole(); };
+        var add = navBarSrv.icoButton('ROLE.new', fnNew, 'content:ic_add_24px', addNgShow);
+
+        navBarSrv.setLeftButtons([search, searchA, add]);
+
     }
 
 }

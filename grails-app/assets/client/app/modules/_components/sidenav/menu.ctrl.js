@@ -9,12 +9,18 @@ angular
     .controller('menuCtrl', menuCtrl);
 
 /*@ngInject*/
-function menuCtrl($mdSidenav, GMSSideNavSrv) {
+function menuCtrl($mdSidenav, GMSSideNavSrv, $scope, BROADCAST, navBarSrv) {
     var vm = this;
     vm.wizard = {
+        leftButtons: [],
+
         toggleMenu: buildToggler('snLeft'),
         closeSideNav: fnCloseSideNav
     };
+
+    $scope.$on(BROADCAST.navBav.updateLeftButtons, function () {
+       vm.wizard.leftButtons = navBarSrv.leftButtons;
+    });
 
     return vm.wizard;
 

@@ -9,7 +9,7 @@ angular
     .service('sessionSrv', sessionSrv);
 
 /*@ngInject*/
-function sessionSrv(localStorageService, $rootScope) {
+function sessionSrv(localStorageService, $rootScope, systemSrv) {
 
     var self = this;
     var lsPrefix = "gMS_localS_";
@@ -55,8 +55,42 @@ function sessionSrv(localStorageService, $rootScope) {
         getLanguage: fnGetLanguage,
         setLanguage: fnSetLanguage,
 
-        has: fnHasPermissions
+        has: has
     };
+
+    //region show/hiders
+    var up = systemSrv.grant;
+    self.service.can = {
+        conf:               function () { return (has(up.MANAGE_CONFIGURATION)) },
+
+        manageOwnedEntity:  function () { return has(up.MANAGE_OWNED_ENTITY) && (self.service.can.createOwnedEntity() || self.service.can.readOwnedEntity()|| self.service.can.readAllOwnedEntity()) },
+        readOwnedEntity:    function () { return has([up.READ_OWNED_ENTITY, up.READ_ALL_OWNED_ENTITY], true) },
+        readAllOwnedEntity: function () { return has([up.READ_ALL_OWNED_ENTITY]) },
+        createOwnedEntity:  function () { return has(up.CREATE_OWNED_ENTITY) },
+        updateOwnedEntity:  function () { return has(up.UPDATE_OWNED_ENTITY) },
+        deleteOwnedEntity:  function () { return has(up.DELETE_OWNED_ENTITY) },
+
+        manageUser:         function () { return has(up.MANAGE_USER) && (self.service.can.createUser() || self.service.can.readUser() || self.service.can.readAllUser()) },
+        readUser:           function () { return has([up.READ_USER, up.READ_ALL_USER], true) },
+        readAllUser:        function () { return has(up.READ_ALL_USER) },
+        createUser:         function () { return has(up.CREATE_USER) },
+        updateUser:         function () { return has(up.UPDATE_USER) },
+        deleteUser:         function () { return has(up.DELETE_USER) },
+
+        manageRole:         function () { return has(up.MANAGE_ROLE) && (self.service.can.createRole() || self.service.can.readRole() || self.service.can.readAllRole()) },
+        readRole:           function () { return has(up.READ_ROLE) },
+        readAllRole:        function () { return has(up.READ_ALL_ROLE) },
+        createRole:         function () { return has(up.CREATE_ROLE) },
+        updateRole:         function () { return has(up.UPDATE_ROLE) },
+        deleteRole:         function () { return has(up.DELETE_ROLE) },
+
+        managePermission:   function () { return has(up.MANAGE_PERMISSION) && (self.service.can.createPermission() || self.service.can.readPermission()) },
+        readPermission:     function () { return has(up.READ_PERMISSION) },
+        createPermission:   function () { return has(up.CREATE_PERMISSION) },
+        updatePermission:   function () { return has(up.UPDATE_PERMISSION) },
+        deletePermission:   function () { return has(up.DELETE_PERMISSION) }
+    };
+    //endregion
 
     return self.service;
 
@@ -236,7 +270,7 @@ function sessionSrv(localStorageService, $rootScope) {
         localStorageService.set(lanKey, lan);
     }
 
-    function fnHasPermissions(permArgs, any) {
+    function has(permArgs, any) {
         var p = fnGetPermissions();
         if (p) {
             if (angular.isArray(permArgs)) {

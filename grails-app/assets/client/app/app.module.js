@@ -79,7 +79,7 @@
 
 
     /*@ngInject*/
-    function runConfig($rootScope, sessionSrv, navigationSrv, __env, errorSrv, translatorSrv) {
+    function runConfig($rootScope, sessionSrv, navigationSrv, __env, errorSrv, translatorSrv, navBarSrv) {
 
         var currentRoute, params;
 
@@ -172,6 +172,9 @@
                     navigationSrv.prevRoute = currentRoute;
                 }
                 currentRoute = prev['$$route']['originalPath'];
+            }
+            if (navBarSrv && navBarSrv.cleanLeftButtons) {
+                navBarSrv.cleanLeftButtons();
             }
         });
 

@@ -85,6 +85,8 @@
 //= require ../client/app/modules/_components/sidenav/sidenav.srv
 //= require ../client/app/modules/_components/sidenav/sidenav.ctrl
 
+//= require ../client/app/modules/_components/navBar/navBar.srv
+
 
 // --common--
 //= require ../client/app/modules/_common/js/notification/notification.srv

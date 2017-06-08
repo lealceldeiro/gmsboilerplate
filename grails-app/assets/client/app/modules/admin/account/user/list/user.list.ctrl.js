@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function userListCtrl(indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv, sessionSrv,
-                      dialogSrv, translatorSrv, $timeout) {
+                      dialogSrv, translatorSrv, $timeout, navBarSrv) {
 
     var vm = this;
     var keyP = 'USER_LIST';
@@ -42,6 +42,8 @@ function userListCtrl(indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv
     function fnInit() {
         translatorSrv.setText('USER.users', indexSrv, 'siteTitle');
         paginationSrv.resetPagination();
+
+        _generateNavBarButtons();
     }
 
     function fnSearch(changeFlag) {
@@ -254,4 +256,17 @@ function userListCtrl(indexSrv, systemSrv, userSrv, navigationSrv, paginationSrv
         vm.wizard.entities.allLoaded? fnSearchAll() : fnSearch();
     }
 
+    function _generateNavBarButtons() {
+        var sNgShow = function(){ return sessionSrv.can.readUser() && vm.wizard.entities.allLoaded; };
+        var search = navBarSrv.icoButton('USER.view_user_on_entity', function(){fnSearch(true)}, 'action:ic_flip_to_back_24px', sNgShow);
+
+        var sANgHide = function(){ return (!sessionSrv.can.readAllUser() || vm.wizard.entities.allLoaded); };
+        var searchA = navBarSrv.icoButton('USER.view_all', function(){fnSearchAll(true)}, 'action:ic_flip_to_front_24px', null, sANgHide);
+
+        var addNgShow = function(){ return sessionSrv.can.createUser(); };
+        var add = navBarSrv.icoButton('USER.new', fnNew, 'content:ic_add_24px', addNgShow);
+
+        navBarSrv.setLeftButtons([search, searchA, add]);
+
+    }
 }

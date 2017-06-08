@@ -6,6 +6,10 @@
   height: $height;
 }
 
+@mixin min-height ($height) {
+  min-height: $height;
+}
+
 @mixin fs ($size) {
   font-size: $size;
 }
@@ -15,6 +19,10 @@
 
 //height
 .h-100 { @include height(100px) }
+
+.h-100pc { @include height(100%) }
+
+.min-h-100vh { @include min-height(100vh) }
 
 //font-sizes
 .fs-12 { @include fs(12px)}

@@ -3,12 +3,13 @@
     <div flex-gt-sm="99" flex>
         <md-content>
             <md-list flex>
+                <md-divider ng-show="vm.entities.all.length"></md-divider>
                 <md-list-item class="md-2-line" ng-repeat="item in vm.entities.all">
                     <div class="md-list-item-text" layout="column">
                         <h3 data-ng-bind="item.label | caser"></h3>
                         <p>
                             <small>({{'string.label' | translate}}:</small>&nbsp;
-                            <small style="font-style: italic;" data-ng-bind="(item.name | caser) + ')'">
+                            <small class="text-italic" data-ng-bind="(item.name | caser) + ')'">
                             </small>
                         </p>
                     </div>

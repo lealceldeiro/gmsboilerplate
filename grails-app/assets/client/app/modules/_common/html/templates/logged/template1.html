@@ -2,13 +2,24 @@
 <div data-ng-controller="sessionCtrl as sCtrl" ng-cloak>
 
     <span data-ng-controller="menuCtrl as mc">
-        <nav class="navbar navbar-dark green navbar-toggleable-sm">
-        <a><md-icon md-svg-icon="navigation:ic_menu_24px" aria-label="GMS Boilerplate" class="text-white" ng-click="mc.toggleMenu()"></md-icon></a>
+        <nav class="navbar fixed-top navbar-dark green navbar-toggleable-sm">
+        <a class="mr-1"><md-icon md-svg-icon="navigation:ic_menu_24px" aria-label="GMS Boilerplate" class="text-white" ng-click="mc.toggleMenu()"></md-icon></a>
         <button class="navbar-toggler navbar-toggler-right p-0" type="button" data-toggle="collapse" data-target="#navbarNav1" aria-controls="navbarNav1" aria-expanded="false" aria-label="{{'string.toggle_navigation' | translate}}">
             <md-icon md-svg-icon="navigation:ic_menu_24px"
                      class="text-white"></md-icon>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav1">
+            <ul class="navbar-nav mr-auto hidden-sm-down">
+                <md-divider class="vertical-divider ml-2"></md-divider>
+                <li class="nav-item" data-ng-repeat="b in mc.leftButtons track by $index">
+                    <md-button aria-label="{{b.text | translate}}" class="{{b.bClass}}"
+                               ng-show="b.ngShow(b.text + b.icon, b.tryToHide)"
+                               ng-click="b.action()">
+                        <md-icon md-svg-icon="{{b.icon}}"></md-icon>
+                        <md-tooltip>{{b.text | translate}}</md-tooltip>
+                    </md-button>
+                </li>
+            </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown btn-group">
                     <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{idxCtrl.lan.current | translate}}</a>
@@ -22,7 +33,7 @@
     </nav>
 
         <!--left sideNav (main menu)-->
-        <md-sidenav class="md-sidenav-left md-whiteframe-4 zi-1100" md-component-id="snLeft">
+        <md-sidenav class="md-sidenav-left sidenav1 md-whiteframe-4 zi-1100" md-component-id="snLeft">
             <md-toolbar class="md-theme-indigo">
                 <h1 class="md-toolbar-tools">
                     <span>GMS - Boilerplate</span>
@@ -180,28 +191,33 @@
         </md-sidenav>
         <!--./left sideNav (main menu)-->
 
-        <div data-ng-controller="paginationCtrl as pc">
+        <div data-ng-controller="paginationCtrl as pc" class="mt-5">
             <md-content>
-                <md-fab-toolbar ng-controller="toolBarCtrl as tbc" ng-if="tbc.show"
-                                md-open="tbc.isOpen" count="tbc.count"
-                                md-direction="{{tbc.direction}}">
-                    <md-fab-trigger class="align-with-text">
-                        <md-button aria-label="menu" class="md-fab md-primary">
-                            <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
-                        </md-button>
-                    </md-fab-trigger>
+                <md-card class="h-100pc min-h-100vh">
+                        <!--<md-fab-toolbar ng-controller="toolBarCtrl as tbc" ng-if="tbc.show"
+                                        md-open="tbc.isOpen" count="tbc.count"
+                                        md-direction="{{tbc.direction}}">
+                            <md-fab-trigger class="align-with-text">
+                                <md-button aria-label="menu" class="md-fab md-primary">
+                                    <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
+                                </md-button>
+                            </md-fab-trigger>
 
-                    <md-toolbar>
-                        <md-fab-actions class="md-toolbar-tools" ng-repeat="button in buttonsArr track by $index">
-                            <md-button aria-label="{{button.aria}}" class="md-icon-button"
-                                       ng-click="tbc.doAction($index)">
-                                <md-icon md-svg-icon="{{button.image}}"></md-icon>
-                            </md-button>
-                        </md-fab-actions>
-                    </md-toolbar>
-                </md-fab-toolbar>
-                <br/>
-                <ng-view></ng-view>
+                            <md-toolbar>
+                                <md-fab-actions class="md-toolbar-tools" ng-repeat="button in buttonsArr track by $index">
+                                    <md-button aria-label="{{button.aria}}" class="md-icon-button"
+                                               ng-click="tbc.doAction($index)">
+                                        <md-icon md-svg-icon="{{button.image}}"></md-icon>
+                                    </md-button>
+                                </md-fab-actions>
+                            </md-toolbar>
+                        </md-fab-toolbar>
+                        <hr>-->
+                    <md-card-content>
+                        <ng-view></ng-view>
+                    </md-card-content>
+
+                </md-card>
             </md-content>
         </div>
 

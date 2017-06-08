@@ -1,34 +1,12 @@
 <div ng-cloak layout-gt-sm="row" layout="column" >
     <div flex-gt-sm="99" flex>
-        <!--change user view-->
-        <md-button aria-label="{{'view_user_on_entity' | translate}}" class="md-icon-button"
-                   ng-show="sCtrl.can.readUser() && vm.entities.allLoaded"
-                   ng-click="vm.search(true)">
-            <md-icon md-svg-icon="action:ic_flip_to_back_24px"></md-icon>
-            <md-tooltip>{{'USER.view_user_on_entity' | translate}}</md-tooltip>
-        </md-button>
-        <md-button aria-label="{{'view_all' | translate}}" class="md-icon-button"
-                   ng-hide="!sCtrl.can.readAllUser() || vm.entities.allLoaded"
-                   ng-click="vm.searchAll(true)">
-            <md-icon md-svg-icon="action:ic_flip_to_front_24px"></md-icon>
-            <md-tooltip>{{'USER.view_all' | translate}}</md-tooltip>
-        </md-button>
-
-        <!--add new user-->
-        <md-button aria-label="{{'USER.new' | translate}}" class="md-icon-button"
-                   ng-click="vm.new()"
-                   ng-show="sCtrl.can.createUser()">
-            <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
-            <md-tooltip>{{'USER.new' | translate}}</md-tooltip>
-        </md-button>
-
         <md-content>
             <md-list flex>
                 <md-divider ng-show="vm.entities.all.length"></md-divider>
                 <md-list-item class="md-3-line" ng-repeat="item in vm.entities.all" ng-click="vm.view(item.id)" aria-label="Usuario: {{item.label}}">
                     <div class="md-list-item-text" layout="column">
                         <h3 data-ng-bind="item.name + ' (' + item.username + ')'"></h3>
-                        <p style="font-style: italic;" data-ng-bind="item.email"></p>
+                        <p class="text-italic" data-ng-bind="item.email"></p>
                         <p>({{item.enabled | humanReadable | translate}})</p>
                         <md-button class="md-secondary md-icon-button" aria-label="{{'button.edit' | translate}}"
                                    ng-click="vm.edit(item.id)"

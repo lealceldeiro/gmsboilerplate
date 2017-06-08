@@ -37,10 +37,12 @@ function configSrv(baseSrv, $http, systemSrv, sessionSrv, $timeout, $translate) 
         var def =  $http.get(url + (uid ? "?uid=" + uid : ""));
         def.then(
             function (response) {
-                var data = response.data;
-                var e = systemSrv.eval(data, fnKey, false, false);
-                if (e) {
-                    self.service.config = systemSrv.getItems(fnKey);
+                if (response) {
+                    var data = response.data;
+                    var e = systemSrv.eval(data, fnKey, false, false);
+                    if (e) {
+                        self.service.config = systemSrv.getItems(fnKey);
+                    }
                 }
                 return self.service.config;
             },

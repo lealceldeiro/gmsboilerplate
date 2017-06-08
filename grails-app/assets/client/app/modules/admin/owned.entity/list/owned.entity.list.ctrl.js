@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function ownedEntityListCtrl(indexSrv, systemSrv, ownedEntitySrv, navigationSrv, paginationSrv, ROUTE, searchSrv, blockSrv,
-                             sessionSrv, dialogSrv, translatorSrv, $timeout) {
+                             sessionSrv, dialogSrv, translatorSrv, $timeout, navBarSrv) {
 
     var vm = this;
     var keyP = 'OWNED_ENTITY_LIST';
@@ -40,6 +40,8 @@ function ownedEntityListCtrl(indexSrv, systemSrv, ownedEntitySrv, navigationSrv,
     function fnInit() {
         translatorSrv.setText('ENTITY.entities', indexSrv, 'siteTitle');
         paginationSrv.resetPagination();
+
+        _generateNavBarButtons();
     }
 
     function fnSearch(changeFlag) {
@@ -169,6 +171,20 @@ function ownedEntityListCtrl(indexSrv, systemSrv, ownedEntitySrv, navigationSrv,
 
     function fnSearchByPageChange() {
         vm.wizard.entities.allLoaded? fnSearchAll() : fnSearch();
+    }
+
+    function _generateNavBarButtons() {
+        var sNgShow = function(){ return sessionSrv.can.readOwnedEntity() && vm.wizard.entities.allLoaded; };
+        var search = navBarSrv.icoButton('ENTITY.view_mine', function(){fnSearch(true)}, 'action:ic_flip_to_back_24px', sNgShow);
+
+        var sANgHide = function(){ return (!sessionSrv.can.readAllOwnedEntity() || vm.wizard.entities.allLoaded); };
+        var searchA = navBarSrv.icoButton('ENTITY.view_all', function(){fnSearchAll(true)}, 'action:ic_flip_to_front_24px', null, sANgHide);
+
+        var addNgShow = function(){ return sessionSrv.can.createOwnedEntity(); };
+        var add = navBarSrv.icoButton('ENTITY.new', fnNew, 'content:ic_add_24px', addNgShow);
+
+        navBarSrv.setLeftButtons([search, searchA, add]);
+
     }
 
 }

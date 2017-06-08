@@ -1,39 +1,15 @@
 <div ng-cloak layout-gt-sm="row" layout="column" >
 
     <div flex-gt-sm="99" flex>
-        <!--change oe view-->
-        <md-button aria-label="{{'ENTITY.view_mine' | translate}}" class="md-icon-button"
-                   ng-show="sCtrl.can.readOwnedEntity() && vm.entities.allLoaded"
-                   ng-click="vm.search(true)">
-            <md-icon md-svg-icon="action:ic_flip_to_back_24px"></md-icon>
-            <md-tooltip>{{'ENTITY.view_mine' | translate}}</md-tooltip>
-        </md-button>
-        <md-button aria-label="{{'ENTITY.view_all' | translate}}" class="md-icon-button"
-                   ng-hide="!sCtrl.can.readAllOwnedEntity() || vm.entities.allLoaded"
-                   ng-click="vm.searchAll(true)">
-            <md-icon md-svg-icon="action:ic_flip_to_front_24px"></md-icon>
-            <md-tooltip>{{'ENTITY.view_all' | translate}}</md-tooltip>
-        </md-button>
-
-        <!--add new oe-->
-        <md-button aria-label="{{'ENTITY.new' | translate}}" class="md-icon-button"
-                   ng-click="vm.new()"
-                   ng-show="sCtrl.can.createOwnedEntity()">
-            <md-icon md-svg-icon="content:ic_add_24px"></md-icon>
-            <md-tooltip>{{'ENTITY.new' | translate}}</md-tooltip>
-        </md-button>
-
         <md-content>
             <md-list flex>
                 <md-list-item class="md-2-line" ng-repeat="item in vm.entities.all" ng-click="vm.view(item.id)" aria-label="Entidad: {{item.name}}">
                     <div class="md-list-item-text" layout="column">
                         <h3 data-ng-bind="item.name + ' (' + item.username + ')'"></h3>
 
-                        <p>
-                            <small>
-                                <span style="font-style: italic;" data-ng-bind="item.description"></span>
-                            </small>
-                        </p>
+                        <p><small>
+                           <span class="text-italic" data-ng-bind="item.description"></span>
+                        </small></p>
 
                         <md-button class="md-secondary md-icon-button" aria-label="{{'button.edit' | translate}}"
                                    ng-click="vm.edit(item.id)" ng-show="sCtrl.can.updateOwnedEntity()">

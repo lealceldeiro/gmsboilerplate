@@ -68,6 +68,9 @@ angular
             },
             sidenav: {
                 'close': 'SIDENAV.close'
+            },
+            navBav: {
+                'updateLeftButtons': 'navBar.updateLeftButtons'
             }
         }
     );
