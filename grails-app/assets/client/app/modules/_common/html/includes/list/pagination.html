@@ -1,0 +1,10 @@
+<md-content>
+    <br>
+    <cl-paging flex cl-pages="pc.getTotalPages()"
+               cl-steps="pc.getMaxLinks()"
+               cl-page-changed="vm.changePage(pc.currentPage)"
+               cl-align="center center"
+               cl-current-page="pc.currentPage"></cl-paging>
+
+    <br>
+</md-content>

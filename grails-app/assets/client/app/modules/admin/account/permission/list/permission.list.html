@@ -21,16 +21,7 @@
 </div>
 
 <div  data-ng-show="!vm.entities.loading && vm.entities.all.length && pc.showPagination()">
-    <md-content>
-        <br>
-        <cl-paging flex cl-pages="pc.getTotalPages()"
-                   cl-steps="pc.getMaxLinks()"
-                   cl-page-changed="vm.changePage(pc.currentPage)"
-                   cl-align="center center"
-                   cl-current-page="pc.currentPage"></cl-paging>
-
-        <br>
-    </md-content>
+    <div data-ng-include="'assets/app/modules/_common/html/includes/list/pagination.html'"></div>
 </div>
 
 <div data-ng-hide="!vm.entities.loading" layout="row" layout-align="center center">
