@@ -20,9 +20,9 @@ function paginationSrv($rootScope, BROADCAST) {
             offset: 0
         },
 
-        itemsPerPage: 5,
+        itemsPerPage: 6,
         totalItems: 0,
-        maxLinks: 7
+        maxLinks: 5
     };
 
     self.service = {

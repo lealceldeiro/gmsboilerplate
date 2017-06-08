@@ -194,29 +194,9 @@
         <div data-ng-controller="paginationCtrl as pc" class="mt-5">
             <md-content>
                 <md-card class="h-100pc min-h-100vh">
-                        <!--<md-fab-toolbar ng-controller="toolBarCtrl as tbc" ng-if="tbc.show"
-                                        md-open="tbc.isOpen" count="tbc.count"
-                                        md-direction="{{tbc.direction}}">
-                            <md-fab-trigger class="align-with-text">
-                                <md-button aria-label="menu" class="md-fab md-primary">
-                                    <md-icon md-svg-icon="navigation:ic_menu_24px"></md-icon>
-                                </md-button>
-                            </md-fab-trigger>
-
-                            <md-toolbar>
-                                <md-fab-actions class="md-toolbar-tools" ng-repeat="button in buttonsArr track by $index">
-                                    <md-button aria-label="{{button.aria}}" class="md-icon-button"
-                                               ng-click="tbc.doAction($index)">
-                                        <md-icon md-svg-icon="{{button.image}}"></md-icon>
-                                    </md-button>
-                                </md-fab-actions>
-                            </md-toolbar>
-                        </md-fab-toolbar>
-                        <hr>-->
-                    <md-card-content>
+                    <md-card-content class="pb-0">
                         <ng-view></ng-view>
                     </md-card-content>
-
                 </md-card>
             </md-content>
         </div>
