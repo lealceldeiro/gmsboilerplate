@@ -88,7 +88,11 @@ function sessionSrv(localStorageService, $rootScope, systemSrv) {
         readPermission:     function () { return has(up.READ_PERMISSION) },
         createPermission:   function () { return has(up.CREATE_PERMISSION) },
         updatePermission:   function () { return has(up.UPDATE_PERMISSION) },
-        deletePermission:   function () { return has(up.DELETE_PERMISSION) }
+        deletePermission:   function () { return has(up.DELETE_PERMISSION) },
+
+        manageProfile:   function () { return has(up.MANAGE_PROFILE) || self.service.can.readProfile()},
+        readProfile:     function () { return has(up.READ_PROFILE) },
+        updateProfile:   function () { return has(up.UPDATE_PROFILE) }
     };
     //endregion
 
@@ -254,7 +258,7 @@ function sessionSrv(localStorageService, $rootScope, systemSrv) {
                     localStorageService.set(lanKey, lan);
                 }
             }
-            return lan['_b_session'];
+            return lan ? lan['_b_session'] : null;
         }
     }
 

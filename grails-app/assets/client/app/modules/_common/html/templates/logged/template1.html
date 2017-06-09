@@ -1,3 +1,10 @@
+<style>
+    body, html {
+        height: 85%;
+        min-height: 85vh;
+    }
+</style>
+
 <!--logged-->
 <div data-ng-controller="sessionCtrl as sCtrl" ng-cloak>
 
@@ -49,12 +56,12 @@
                 <md-sidemenu>
 
                     <!--profile-->
-                    <md-sidemenu-group ng-show="sCtrl.isMultiEntityApp && sCtrl.can.manageOwnedEntity()">
+                    <md-sidemenu-group ng-show="sCtrl.can.manageProfile()">
                         <md-sidemenu-content md-heading="{{sCtrl.user.username || sCtrl.user.email}}&nbsp;{{sCtrl.user.entities.length > 1 ? '(' + (sCtrl.oEntity.name || sCtrl.oEntity.username) + ')' : ''}}"
                                              class="text-muted"
                                              md-svg-icon="action:ic_account_circle_24px"
                                              md-svg-arrow="hardware:ic_keyboard_arrow_down_24px">
-                            <md-sidemenu-button ng-click="sCtrl.viewProfile(); snc.close()">
+                            <md-sidemenu-button ng-click="sCtrl.can.viewProfile(); snc.close()">
                                 <span>
                                     <md-icon md-svg-icon="social:ic_person_24px" class="mr-0"></md-icon>
                                     {{'SESSION.my_profile' | translate}}
@@ -173,8 +180,8 @@
                         </md-sidemenu-content>
                     </md-sidemenu-group>
 
-                    <!--profile-->
-                    <md-sidemenu-group ng-show="sCtrl.isMultiEntityApp && sCtrl.can.manageOwnedEntity()">
+                    <!--logout-->
+                    <md-sidemenu-group ng-show="sCtrl.can.manageProfile()">
                         <md-divider></md-divider>
 
                         <md-sidemenu-content md-heading="{{'SESSION.close' | translate}}"
@@ -193,7 +200,7 @@
 
         <div data-ng-controller="paginationCtrl as pc" class="mt-5">
             <md-content>
-                <md-card class="h-100pc min-h-100vh">
+                <md-card class="h-85pc min-h-85vh">
                     <md-card-content class="pb-0">
                         <ng-view></ng-view>
                     </md-card-content>

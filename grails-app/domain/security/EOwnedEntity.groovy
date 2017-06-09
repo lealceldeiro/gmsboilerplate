@@ -11,6 +11,10 @@ class EOwnedEntity implements Serializable{
     String username
     String description
 
+    static mapping = {
+        description sqlType: 'text'
+    }
+
     static constraints = {
         name blank: false, nullable: false
         username unique: true, blank: false, nullable: false

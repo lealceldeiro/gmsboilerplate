@@ -4,7 +4,7 @@
 
             <div class="card-block">
                 <!--Header-->
-                <div class="form-header green pa-0">
+                <div class="form-header green p-0">
                     <md-toolbar>
                         <div class="md-toolbar-tools" layout-align="center center">
                             <div layout-align="center center">
@@ -57,7 +57,7 @@
             <!--Footer-->
             <div class="modal-footer">
                 <div class="options">
-                    <p>{{'string.not_a_member' | translate}}&nbsp;<a href="" data-ng-click="idxCtrl.go('/signup')">{{'button.register' | translate}}</a></p>
+                    <p data-ng-if="idxCtrl.canRegister">{{'string.not_a_member' | translate}}&nbsp;<a href="" data-ng-click="idxCtrl.go('/signup')">{{'button.register' | translate}}</a></p>
                     <p>{{'string.forgot_the' | translate}} <a href="">{{'string._password' | translate}}</a></p>
                 </div>
             </div>

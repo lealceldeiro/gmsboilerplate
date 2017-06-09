@@ -18,11 +18,11 @@
 
 
 //height
-.h-100 { @include height(100px) }
+.h-85 { @include height(85px) }
 
-.h-100pc { @include height(100%) }
+.h-85pc { @include height(85%) }
 
-.min-h-100vh { @include min-height(100vh) }
+.min-h-85vh { @include min-height(85vh) }
 
 //font-sizes
 .fs-12 { @include fs(12px)}

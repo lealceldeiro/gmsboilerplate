@@ -11,6 +11,10 @@ class BRole implements Serializable {
     String description
     Boolean enabled
 
+    static mapping = {
+        description sqlType: 'text'
+    }
+
     static hasMany = [permissions: BRole_Permission]
 
     static constraints = {

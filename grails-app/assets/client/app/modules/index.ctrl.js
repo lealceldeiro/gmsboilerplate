@@ -68,14 +68,17 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
     }
 
     function fnChangeLanguage(lan, doNotPersist) {
-        configSrv.changeLanguage(lan, doNotPersist);
-        for(var k in vm.wizard.lan){
-            if (vm.wizard.lan.hasOwnProperty(k)) {
-                if(vm.wizard.lan[k] === lan){
-                    vm.wizard.lan.current = "LANGUAGE." + k;
-                    break;
+        if (lan) {
+            configSrv.changeLanguage(lan, doNotPersist);
+            for(var k in vm.wizard.lan){
+                if (vm.wizard.lan.hasOwnProperty(k)) {
+                    if(vm.wizard.lan[k] === lan.substring(0, 2)){
+                        vm.wizard.lan.current = "LANGUAGE." + k;
+                        break;
+                    }
                 }
             }
         }
+
     }
 }
