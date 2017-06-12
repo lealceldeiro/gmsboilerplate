@@ -32,16 +32,6 @@ div.repeated-item {
     cursor: pointer;
 }
 
-md-toolbar {
-    .md-error { background-color: rgb(226, 61, 61); }
-    .md-question { background-color: rgb(208, 163, 82); }
-}
-
-button {
-    .md-error { color: rgb(226, 61, 61); }
-    .md-question { color: rgb(204, 146, 43); }
-}
-
 .password-strength-ch > div {
     max-width: 600px;
     margin-left: 36px;

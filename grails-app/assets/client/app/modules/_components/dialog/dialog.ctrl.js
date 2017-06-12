@@ -87,10 +87,10 @@ function dialogCtrl($mdDialog, dialogSrv, $scope, BROADCAST) {
                 $scope.typeClass = 'md-warn';
                 break;
             case dialogSrv.type.ERROR:
-                $scope.typeClass = 'md-error';
+                $scope.typeClass = 'red';
                 break;
             case dialogSrv.type.QUESTION:
-                $scope.typeClass = 'md-question';
+                $scope.typeClass = 'md-hue-2';
                 break;
             case dialogSrv.type.SUCCESS:
                 $scope.typeClass = 'md-accent';
