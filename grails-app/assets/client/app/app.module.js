@@ -65,6 +65,7 @@
             .primaryPalette('green')
             .accentPalette('blue');
 
+        //material icons
         var iconsSet = ['action', 'alert', 'av', 'communication', 'content', 'device', 'editor', 'file',
             'hardware', 'image', 'maps', 'navigation', 'notification', 'places', 'social', 'toggle'];
         var base = 'assets/app/modules/_common/img/sprite/svg-sprite-';
@@ -74,6 +75,16 @@
                 $mdIconProvider
                     .iconSet(iconsSet[idx], base + iconsSet[idx] + ext)
             })(i);
+        }
+
+        //flags
+        //icons from http://flag-icon-css.lip.is/
+        var flags = ['es', 'en'];
+        ext = '.svg';
+        for(var k = 0; k < flags.length; k++) {
+            (function (p) {
+                $mdIconProvider.icon('flag:' + flags[p], 'assets/app/modules/_common/img/flags/' + flags[p] + ext)
+            })(k);
         }
     }
 

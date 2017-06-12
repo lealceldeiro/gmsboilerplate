@@ -22,7 +22,12 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
             //keys must be the same as defined in i18n files (en.json and es.json)
             'spanish': 'es',
             'english': 'en',
-            current: null
+            current: null,
+            countryFlag: null
+        },
+        lanFlag: { //flags properties names must match the language
+            'es': 'es', //spanish flag
+            'en': 'us'  //english flag
         },
         init: fnInit,
         go: fnGo,
@@ -71,9 +76,10 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
         if (lan) {
             configSrv.changeLanguage(lan, doNotPersist);
             for(var k in vm.wizard.lan){
-                if (vm.wizard.lan.hasOwnProperty(k)) {
+                if (vm.wizard.lan.hasOwnProperty(k) && vm.wizard.lan[k]) {
                     if(vm.wizard.lan[k] === lan.substring(0, 2)){
                         vm.wizard.lan.current = "LANGUAGE." + k;
+                        vm.wizard.lan.countryFlag = vm.wizard.lan[k];
                         break;
                     }
                 }

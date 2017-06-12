@@ -125,6 +125,15 @@ md-icon.s12 {
   min-height: 12px;
   min-width: 12px; }
 
+md-icon.flag-icon {
+  height: 20px;
+  width: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  margin-top: -2px; }
+  md-icon.flag-icon svg {
+    border-radius: 20%; }
+
 .sidenav1 {
   transform: translateX(0px);
   position: fixed; }
