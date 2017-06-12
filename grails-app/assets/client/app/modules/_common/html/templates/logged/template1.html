@@ -66,8 +66,9 @@
                         <md-sidemenu-content md-heading="{{sCtrl.user.username || sCtrl.user.email}}&nbsp;{{sCtrl.user.entities.length > 1 ? '(' + (sCtrl.oEntity.name || sCtrl.oEntity.username) + ')' : ''}}"
                                              class="text-muted"
                                              md-svg-icon="action:ic_account_circle_24px"
-                                             md-svg-arrow="hardware:ic_keyboard_arrow_down_24px">
-                            <md-sidemenu-button ng-click="sCtrl.can.viewProfile(); snc.close()">
+                                             md-svg-arrow="hardware:ic_keyboard_arrow_down_24px"
+                                             ng-show="sCtrl.can.manageProfile()">
+                            <md-sidemenu-button ng-click="sCtrl.viewProfile(); snc.close()">
                                 <span>
                                     <md-icon md-svg-icon="social:ic_person_24px" class="mr-0"></md-icon>
                                     {{'SESSION.my_profile' | translate}}
