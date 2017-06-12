@@ -85,6 +85,10 @@ button.text-white md-icon svg {
     fill: white;
 }
 
+button.highlight-over:hover md-icon svg {
+    fill:  rgba(255,255,255,.75);;
+}
+
 .vertical-divider {
     border-top-width: 0;
     border-right: 1px solid white;
