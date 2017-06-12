@@ -17,9 +17,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav1">
             <ul class="navbar-nav mr-auto hidden-sm-down">
-                <md-divider class="vertical-divider ml-2"></md-divider>
+                <md-divider class="vertical-divider ml-2 mr-2"></md-divider>
                 <li class="nav-item" data-ng-repeat="b in mc.leftButtons track by $index">
-                    <md-button aria-label="{{b.text | translate}}" class="{{b.bClass}}"
+                    <md-button aria-label="{{b.text | translate}}" class="mr-0 ml-m-4 {{b.bClass}}"
                                ng-show="b.ngShow(b.text + b.icon, b.tryToHide)"
                                ng-click="b.action()">
                         <md-icon md-svg-icon="{{b.icon}}"></md-icon>

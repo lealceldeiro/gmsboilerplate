@@ -1,4 +1,4 @@
-@mixin margin($top, $left, $bottom, $right) {
+@mixin margin($top, $right, $bottom, $left) {
     @if($top != null){
         margin-top: $top !important;
     }
@@ -23,8 +23,9 @@
 
 /*left*/
 
-.ml-12 { @include margin(null, 12px, null, null) }
-.ml-m-10 { @include margin(null, -10px, null, null)}
+.ml-12 { @include margin(null, null, null, 12px) }
+.ml-m-10 { @include margin(null, null, null, -10px)}
+.ml-m-4 { @include margin(null, null, null, -4px)}
 
 
 
@@ -34,8 +35,8 @@
 
 /*right*/
 
-.mr-6 { @include margin(null, null, null, 6px)}
-.mr-20 { @include margin(null, null, null, 20px) }
+.mr-6 { @include margin(null, 6px, null, null)}
+.mr-20 { @include margin(null, 20px, null, null) }
 
 
 
