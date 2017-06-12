@@ -21,6 +21,7 @@ function toastCtrl($scope, $mdToast, BROADCAST) {
     $scope.showCustomToast = function() {
         $mdToast.show({
             hideDelay   : 3000,
+            parent      : document.getElementById('toaster'),
             position    : 'top right',
             controller  : 'toastManagerCtrl',
             templateUrl : 'assets/app/modules/_components/toast/toast.tmpl.html'

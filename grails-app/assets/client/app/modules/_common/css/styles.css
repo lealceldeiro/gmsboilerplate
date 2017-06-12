@@ -39,7 +39,13 @@
 .ml-m-10 {
   margin-left: -10px !important; }
 
+.ml-m-4 {
+  margin-left: -4px !important; }
+
 /*bottom*/
+.mb-6 {
+  margin-bottom: 6px !important; }
+
 /*right*/
 .mr-6 {
   margin-right: 6px !important; }
@@ -150,10 +156,20 @@ hr {
 button.text-white md-icon svg {
   fill: white; }
 
+button.highlight-over:hover md-icon svg {
+  fill: rgba(255, 255, 255, 0.75); }
+
 .vertical-divider {
   border-top-width: 0;
   border-right: 1px solid white;
   height: 100%; }
+
+#toaster {
+  position: fixed;
+  top: 50px;
+  right: 0;
+  width: 100%;
+  z-index: 10000; }
 
 /*top*/
 /*left*/

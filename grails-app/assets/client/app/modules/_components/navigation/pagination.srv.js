@@ -20,9 +20,9 @@ function paginationSrv($rootScope, BROADCAST) {
             offset: 0
         },
 
-        itemsPerPage: 6,
+        itemsPerPage: FIRST_STEP,
         totalItems: 0,
-        maxLinks: 5
+        maxLinks: 4
     };
 
     self.service = {
@@ -64,7 +64,7 @@ function paginationSrv($rootScope, BROADCAST) {
 
     /**
      * Sets a new number of items per page. If the new value of items per page is different to the old one, the
-     * pagination values are resetter. After calling this method the 'search' method should be called again.
+     * pagination values are reset. After calling this method the 'search' method should be called again.
      * @param ipp
      */
     function fnSetItemsPerPage(ipp) {
@@ -101,7 +101,7 @@ function paginationSrv($rootScope, BROADCAST) {
             if (i > 40) {
                 i += FIRST_STEP;                //first step three times
             }
-        }while(i <= t);
+        } while(i <= t);
 
         return r;
     }

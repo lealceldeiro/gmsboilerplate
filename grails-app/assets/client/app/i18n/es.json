@@ -36,6 +36,7 @@
   "button.requestNewVerificationEmail": "Solicitar un nuevo email de verificación",
   "button.createAccount": "@:button.register",
 
+  "string.of": "de",
   "string.or": "o",
   "string.role_lc": "rol",
   "string.user_lc": "usuario",
@@ -139,5 +140,9 @@
   "REGISTER.almost_finished": "Casi hemos terminado",
 
   "REGISTER.verify_email": "Verficación de email",
-  "REGISTER.request_new_email": "Solicitar un nuevo email"
+  "REGISTER.request_new_email": "Solicitar un nuevo email",
+
+  "PAGINATION.per_page": "por página",
+  "PAGINATION.items": "elemento(s)"
+
 }

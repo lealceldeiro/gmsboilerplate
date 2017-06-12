@@ -21,7 +21,7 @@
     </div>
 
     <!--messages-->
-    <div data-ng-controller="toastCtrl as tmc"></div>
+    <div data-ng-controller="toastCtrl as tmc" id="toaster"></div>
 
     <!--instantiate login ctr so login service get called and this way listen for 401 and re-authenticate-->
     <span data-ng-controller="loginCtrl as loginCtrl"></span>

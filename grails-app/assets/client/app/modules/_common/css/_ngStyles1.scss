@@ -94,3 +94,11 @@ button.highlight-over:hover md-icon svg {
     border-right: 1px solid white;
     height: 100%;
 }
+
+#toaster {
+  position: fixed;
+  top: 50px;
+  right: 0;
+  width: 100%;
+  z-index: 10000;
+}

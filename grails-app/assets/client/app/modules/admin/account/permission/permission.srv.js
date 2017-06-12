@@ -15,7 +15,9 @@ function permissionSrv(baseSrv, systemSrv, $http) {
     var url = systemSrv.APIAbsoluteUrl + 'permission/';
 
     self.service = {
-        search: fnSearch
+        search: fnSearch,
+
+        searchByPageChange: fnSearchByPageChange
     };
 
     return self.service;
@@ -26,5 +28,9 @@ function permissionSrv(baseSrv, systemSrv, $http) {
 
         var def =  $http.get(url + params);
         return baseSrv.resolveDeferred(def);
+    }
+
+    function fnSearchByPageChange() {
+        fnSearch();
     }
 }
