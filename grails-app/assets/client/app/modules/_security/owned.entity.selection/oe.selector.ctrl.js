@@ -39,15 +39,17 @@ function oeSelectorCtrl(indexSrv, sessionSrv, userSrv, systemSrv, paginationSrv,
 
     function __search() {
         blockSrv.setIsLoading(vm.wizard.entities, true);
-        userSrv.entitiesByUser(sessionSrv.currentUser().id, 0, 0).then(function (data) {
-            var fnKey = keyP + "fnInit-entitiesByUser";
-            var e = systemSrv.eval(data, fnKey, false, true);
-            if (e) {
-                paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
-                vm.wizard.entities.all = systemSrv.getItems(fnKey);
+        userSrv.entitiesByUser(sessionSrv.currentUser().id, paginationSrv.getOffset(), paginationSrv.getItemsPerPage()).then(
+            function (data) {
+                var fnKey = keyP + "fnInit-entitiesByUser";
+                var e = systemSrv.eval(data, fnKey, false, true);
+                if (e) {
+                    paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
+                    vm.wizard.entities.all = systemSrv.getItems(fnKey);
+                }
+                blockSrv.setIsLoading(vm.wizard.entities);
             }
-            blockSrv.setIsLoading(vm.wizard.entities);
-        });
+        );
     }
 
     function fnSearchByPageChange() {
