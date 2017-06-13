@@ -67,7 +67,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
 
         _loadRoles();
         if (navigationSrv.currentPath() === ROUTE.ADMIN_USER_NEW) {
-            translatorSrv.setText('USER.new', indexSrv, 'siteTitle');
+            indexSrv.setTitle('USER.new');
         }
         else {
             vm.wizard.entity = null;
@@ -75,7 +75,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
             if (p && null !== p.id && typeof p.id !== 'undefined' && p.id !== 'undefined'&& p.id !== 'null') {
                 vm.id = p.id;
                 _loadData(p.id);
-                translatorSrv.setText('USER.new', indexSrv, 'siteTitle');
+                indexSrv.setTitle('USER.edit');
             }
             else{
                 notificationSrv.showNotification(notificationSrv.type.WARNING, notificationSrv.utilText.select_element_required);

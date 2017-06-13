@@ -143,6 +143,10 @@
   "REGISTER.request_new_email": "Request a new email",
 
   "PAGINATION.per_page": "per page",
-  "PAGINATION.items": "item(s)"
+  "PAGINATION.items": "item(s)",
+
+  "MAIN.main": "Main",
+
+  "HOME.home": "Home"
 
 }

@@ -48,13 +48,13 @@ function userViewCtrl(ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, 
         if (p && null !== p.id && typeof p.id !== 'undefined' && p.id !== 'undefined'&& p.id !== 'null') {
             vm.id = p.id;
             fnLoadData(p.id);
-            translatorSrv.setText('USER.view', indexSrv, 'siteTitle');
+            indexSrv.setTitle('USER.view');
         }
         else if(navigationSrv.currentPath() === ROUTE.USER_PROFILE) {
             vm.wizard.isProfile = true;
             vm.id = sessionSrv.currentUser().id;
             fnLoadData(vm.id);
-            translatorSrv.setText('USER.profile', indexSrv, 'siteTitle');
+            indexSrv.setTitle('USER.profile');
         }
 
         else {

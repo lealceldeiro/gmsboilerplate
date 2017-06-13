@@ -9,7 +9,7 @@ angular
     .controller('emailVerificationCtrl', emailVerificationCtrl);
 
 /*@ngInject*/
-function emailVerificationCtrl(emailVerificationSrv, navigationSrv, systemSrv, translatorSrv, blockSrv, indexSrv) {
+function emailVerificationCtrl(emailVerificationSrv, navigationSrv, systemSrv, blockSrv, indexSrv) {
     var vm = this;
 
     var keyP = 'EMAIL_VERIFICATION';
@@ -36,7 +36,7 @@ function emailVerificationCtrl(emailVerificationSrv, navigationSrv, systemSrv, t
 
     function fnInit() {
         blockSrv.block();
-        translatorSrv.setText("REGISTER.verify_email", indexSrv, 'siteTitle');
+        indexSrv.setTitle('REGISTER.verify_email');
         var params = navigationSrv.currentParams();
         if (params && params['token']) {
             var fnKey = keyP + "fnInit-verifySubscriber";

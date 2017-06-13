@@ -45,7 +45,7 @@ function roleEditCtrl(indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notifi
     function fnInit() {
         if (navigationSrv.currentPath() === ROUTE.ADMIN_ROLE_NEW) {
             fnLoadPermissionsList();
-            translatorSrv.setText('ROLE.new', indexSrv, 'siteTitle');
+            indexSrv.setTitle('ROLE.new');
         }
         else {
             vm.wizard.role = null;
@@ -54,7 +54,7 @@ function roleEditCtrl(indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notifi
                 vm.id = p.id;
                 fnLoadPermissionsList(false, true);
                 fnLoadData(p.id);
-                translatorSrv.setText('ROLE.edit', indexSrv, 'siteTitle');
+                indexSrv.setTitle('ROLE.edit');
             }
             else{
                 notificationSrv.showNotification(notificationSrv.type.WARNING, notificationSrv.utilText.select_element_required);

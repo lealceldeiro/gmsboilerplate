@@ -9,7 +9,7 @@ angular
     .controller('configParamsCtrl', configParamsCtrl);
 
 /*@ngInject*/
-function configParamsCtrl(configSrv, systemSrv, blockSrv, ROUTE, navigationSrv, sessionSrv, $window) {
+function configParamsCtrl(configSrv, systemSrv, blockSrv, ROUTE, navigationSrv, sessionSrv, $window, indexSrv) {
 
     var vm = this;
     var keyP = "ADMIN_CONFIG_PARAMS";
@@ -41,6 +41,7 @@ function configParamsCtrl(configSrv, systemSrv, blockSrv, ROUTE, navigationSrv, 
         else {
             _isMultiEntityApp();
         }
+        indexSrv.setTitle('CONFIGURATION.configuration');
     }
 
     function _isMultiEntityApp() {

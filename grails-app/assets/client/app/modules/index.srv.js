@@ -9,13 +9,18 @@ angular
     .service('indexSrv', indexSrv);
 
 /*@ngInject*/
-function indexSrv() {
+function indexSrv(translatorSrv) {
 
     var self = this;
 
     self.service = {
-        siteTitle: ''
+        siteTitle: '',
+        setTitle: fnSetTitle
     };
 
     return self.service;
+
+    function fnSetTitle(i18nTitle) {
+        translatorSrv.setText(i18nTitle, self.service, 'siteTitle');
+    }
 }

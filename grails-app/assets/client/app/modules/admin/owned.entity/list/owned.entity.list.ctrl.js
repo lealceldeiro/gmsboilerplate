@@ -38,7 +38,7 @@ function ownedEntityListCtrl(indexSrv, systemSrv, ownedEntitySrv, navigationSrv,
 
     //fn
     function fnInit() {
-        translatorSrv.setText('ENTITY.entities', indexSrv, 'siteTitle');
+        indexSrv.setTitle('ENTITY.entities');
         paginationSrv.resetPagination();
 
         _generateNavBarButtons();

@@ -143,6 +143,10 @@
   "REGISTER.request_new_email": "Solicitar un nuevo email",
 
   "PAGINATION.per_page": "por página",
-  "PAGINATION.items": "elemento(s)"
+  "PAGINATION.items": "elemento(s)",
+
+  "MAIN.main": "Principal",
+
+  "HOME.home": "Inicio"
 
 }

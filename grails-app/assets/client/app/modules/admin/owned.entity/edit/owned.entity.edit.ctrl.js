@@ -9,7 +9,7 @@ angular
     .controller('ownedEntityEditCtrl', ownedEntityEditCtrl);
 
 /*@ngInject*/
-function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, systemSrv, notificationSrv, blockSrv, translatorSrv,
+function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, systemSrv, notificationSrv, blockSrv,
                              dialogSrv) {
 
     var vm = this;
@@ -35,7 +35,7 @@ function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, sys
     //fn
     function fnInit() {
         if (navigationSrv.currentPath() === ROUTE.ADMIN_OWNED_ENTITY_NEW) {
-            translatorSrv.setText('ENTITY.new', indexSrv, 'siteTitle');
+            indexSrv.setTitle('ENTITY.new');
         }
         else {
             vm.wizard.entity = null;
@@ -43,7 +43,7 @@ function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, sys
             if (p && null !== p.id && typeof p.id !== 'undefined' && p.id !== 'undefined'&& p.id !== 'null') {
                 vm.id = p.id;
                 fnLoadData(p.id);
-                translatorSrv.setText('ENTITY.edit', indexSrv, 'siteTitle');
+                indexSrv.setTitle('ENTITY.edit');
             }
             else{
                 notificationSrv.showNotification(notificationSrv.type.WARNING, notificationSrv.utilText.select_element_required);

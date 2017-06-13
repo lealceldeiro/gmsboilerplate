@@ -58,7 +58,7 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
                 }
             );
         }
-        translatorSrv.setText("string.index", indexSrv, 'siteTitle');
+        indexSrv.setTitle('string.index');
         vm.wizard.logged = sessionSrv.isLogged();
 
         fnChangeLanguage(sessionSrv.getLanguage(), true);

@@ -8,7 +8,7 @@ angular
     .module('gmsBoilerplate')
     .controller('permissionCtrl', permissionCtrl);
 
-function permissionCtrl(indexSrv, systemSrv, permissionSrv, paginationSrv, blockSrv, translatorSrv) {
+function permissionCtrl(indexSrv, systemSrv, permissionSrv, paginationSrv, blockSrv) {
     var vm = this;
     var keyP = 'PERMISSIONS_LIST';
 
@@ -30,7 +30,7 @@ function permissionCtrl(indexSrv, systemSrv, permissionSrv, paginationSrv, block
 
     //fn
     function fnInit() {
-        translatorSrv.setText('PERMISSIONS.permissions', indexSrv, 'siteTitle');
+        indexSrv.setTitle('PERMISSIONS.permissions');
         paginationSrv.resetPagination();
     }
 

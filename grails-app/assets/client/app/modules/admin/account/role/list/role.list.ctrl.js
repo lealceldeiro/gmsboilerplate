@@ -39,7 +39,7 @@ function roleListCtrl(indexSrv, systemSrv, roleSrv, navigationSrv, paginationSrv
 
     //fn
     function fnInit() {
-        translatorSrv.setText('ROLE.roles', indexSrv, 'siteTitle');
+        indexSrv.setTitle('ROLE.roles');
         paginationSrv.resetPagination();
 
         _generateNavBarButtons();

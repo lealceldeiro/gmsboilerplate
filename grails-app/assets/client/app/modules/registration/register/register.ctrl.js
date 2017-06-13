@@ -44,7 +44,7 @@ function registerCtrl(indexSrv, registerSrv, systemSrv, dialogSrv, blockSrv, tra
                 }
             );
         }
-        translatorSrv.setText("LOGIN.new_account", indexSrv, 'siteTitle');
+        indexSrv.setTitle('LOGIN.new_account');
     }
 
     function fnCheckUsername() {

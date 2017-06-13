@@ -9,7 +9,7 @@ angular
     .controller('homeCtrl', homeCtrl);
 
 /*@ngInject*/
-function homeCtrl() {
+function homeCtrl(indexSrv) {
 
     var vm = this;
 
@@ -23,5 +23,6 @@ function homeCtrl() {
 
     //fn
     function fnInit() {
+        indexSrv.setTitle('HOME.home');
     }
 }

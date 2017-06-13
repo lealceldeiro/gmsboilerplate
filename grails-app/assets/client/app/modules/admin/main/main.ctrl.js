@@ -23,7 +23,7 @@ function mainCtrl(indexSrv) {
 
     //fn
     function fnInit() {
-        indexSrv.siteTitle = 'Main'
+        indexSrv.setTitle('MAIN.main');
     }
 
 }

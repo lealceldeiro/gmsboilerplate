@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function loginCtrl(indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROUTE, blockSrv, userSrv, $rootScope,
-                   notificationSrv, translatorSrv, configSrv) {
+                   notificationSrv, configSrv) {
 
     var vm = this;
     const keyP = 'LOGIN__';
@@ -35,7 +35,7 @@ function loginCtrl(indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROU
         if (angular.isDefined(configSrv.config.isUserRegistrationAllowed)) {
             vm.wizard.isUserRegistrationAllowed = configSrv.config.isUserRegistrationAllowed;
         } else { _loadConfig(); }
-        translatorSrv.setText('button.login', indexSrv, 'siteTitle');
+        indexSrv.setTitle('button.login');
     }
 
     function fnLogin(form) {

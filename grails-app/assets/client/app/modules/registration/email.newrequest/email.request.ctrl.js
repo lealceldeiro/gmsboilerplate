@@ -28,7 +28,7 @@ function emailRequestCtrl(emailRequestSrv, systemSrv, translatorSrv, blockSrv, i
     return vm.wizard;
 
     function fnInit() {
-        translatorSrv.setText('button.requestNewVerificationEmail', indexSrv, 'siteTitle');
+        indexSrv.setTitle('button.requestNewVerificationEmail');
     }
     
     function fnSendEmail(form) {
