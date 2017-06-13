@@ -1,0 +1,43 @@
+<div ng-cloak layout-gt-sm="row" layout="column" >
+
+    <div flex-gt-sm="99" flex>
+        <md-content>
+            <md-list flex>
+                <md-list-item class="md-2-line" ng-repeat="item in vm.entities.all" aria-label="{{item.name}}">
+                    <div class="md-list-item-text" layout="column">
+                        <h3 data-ng-bind="item.name + ' (' + item.username + ')'"></h3>
+
+                        <p class="hidden-md-down"><small>
+                            <span class="text-italic" data-ng-bind="item.description | trimmer:130:'...'"></span>
+                        </small></p>
+
+                        <md-button class="md-secondary md-accent md-raised pl-13" aria-label="{{'button.select' | translate}}"
+                                   ng-click="vm.select(item.id)"
+                                   ng-if="item.id != vm.currentEntityId"
+                        >
+                            {{'button.select' | translate}}
+                            &nbsp;
+                            <md-icon md-svg-icon="av:ic_play_arrow_24px"></md-icon>
+                        </md-button>
+
+                        <md-button class="md-secondary md-icon-button" aria-label="{{'button.selected' | translate}}"
+                                   ng-if="item.id == vm.currentEntityId"
+                        >
+                            <md-icon md-svg-icon="action:ic_done_24px"></md-icon>
+                        </md-button>
+
+                    </div>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+</div>
+
+<div data-ng-show="!vm.entities.loading && vm.entities.all.length">
+    <div data-ng-include="'assets/app/modules/_common/html/includes/list/pagination.html'"></div>
+</div>
+
+<div data-ng-hide="!vm.entities.loading" layout="row" layout-align="center center">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>

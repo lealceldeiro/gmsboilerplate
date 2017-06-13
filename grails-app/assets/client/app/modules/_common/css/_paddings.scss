@@ -1,4 +1,4 @@
-@mixin padding($top, $left, $bottom, $right) {
+@mixin padding($top, $bottom, $right, $left) {
   @if($top != null) {
     padding-top: $top !important;
   }
@@ -35,7 +35,7 @@
 
 
 /*left-right*/
-
+.pl-13 { @include padding(null, null, null, 13px)}
 
 
 /*all*/

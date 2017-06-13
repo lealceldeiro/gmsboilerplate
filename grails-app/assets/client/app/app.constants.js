@@ -12,6 +12,7 @@ angular
             LOGIN: '/signin',
             REGISTER: '/signup',
             MAIN: '/main',
+            CHANGE_ENTITY: '/owned-entities/select',
 
             ADMIN_ROLES: '/admin/roles',
             ADMIN_ROLE_EDIT: '/admin/roles/:id/edit', ADMIN_ROLE_EDIT_PL: ':id',

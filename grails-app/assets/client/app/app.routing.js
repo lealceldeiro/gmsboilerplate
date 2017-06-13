@@ -47,6 +47,15 @@ function routing($routeProvider, ROUTE, $locationProvider, __env) {
                 }
             }
         )
+        .when(ROUTE.CHANGE_ENTITY,{
+                templateUrl: 'assets/app/modules/_security/owned.entity.selection/oe.selector.html',
+                controller: 'oeSelectorCtrl',
+                controllerAs: 'vm',
+                secured: {
+                    requiresAll:[__env.grant.READ_PROFILE]
+                }
+            }
+        )
         //endregion
 
         //region roles

@@ -35,6 +35,7 @@
   "button.go_login": "Go to login page",
   "button.requestNewVerificationEmail": "Request a new verification email",
   "button.createAccount": "@:button.register",
+  "button.select": "Select",
 
   "string.of": "of",
   "string.or": "or",
