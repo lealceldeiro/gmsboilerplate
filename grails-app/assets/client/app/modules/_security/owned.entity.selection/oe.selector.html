@@ -3,17 +3,17 @@
     <div flex-gt-sm="99" flex>
         <md-content>
             <md-list flex>
-                <md-list-item class="md-2-line" ng-repeat="item in vm.entities.all" aria-label="{{item.name}}">
+                <md-list-item class="md-2-line" ng-repeat="item in vm.entities.all track by $index" aria-label="{{item.name}}">
                     <div class="md-list-item-text" layout="column">
-                        <h3 data-ng-bind="item.name + ' (' + item.username + ')'"></h3>
+                        <h3 data-ng-bind="::(item.name + ' (' + item.username + ')')"></h3>
 
                         <p class="hidden-md-down"><small>
-                            <span class="text-italic" data-ng-bind="item.description | trimmer:130:'...'"></span>
+                            <span class="text-italic" data-ng-bind="::item.description | trimmer:130:'...'"></span>
                         </small></p>
 
                         <md-button class="md-secondary md-accent md-raised pl-13" aria-label="{{'button.select' | translate}}"
-                                   ng-click="vm.select(item.id)"
-                                   ng-if="item.id != vm.currentEntityId"
+                                   ng-click="vm.select(item)"
+                                   ng-if="item.id != vm.currentEntityId && item.id != vm.currentIdInProgress"
                         >
                             {{'button.select' | translate}}
                             &nbsp;
@@ -24,6 +24,12 @@
                                    ng-if="item.id == vm.currentEntityId"
                         >
                             <md-icon md-svg-icon="action:ic_done_24px"></md-icon>
+                        </md-button>
+
+                        <md-button class="md-secondary md-icon-button loading-btn" aria-label="{{'button.selecting' | translate}}"
+                                   ng-if="item.id == vm.currentIdInProgress"
+                        >
+                            <md-icon md-svg-icon="action:ic_cached_24px"></md-icon>
                         </md-button>
 
                     </div>

@@ -3,11 +3,12 @@
  */
 
 angular
-.module('gmsBoilerplate')
-.controller('oeSelectorCtrl', oeSelectorCtrl);
+    .module('gmsBoilerplate')
+    .controller('oeSelectorCtrl', oeSelectorCtrl);
 
 /*@ngInject*/
-function oeSelectorCtrl(indexSrv, sessionSrv, userSrv, systemSrv, paginationSrv, blockSrv) {
+function oeSelectorCtrl(indexSrv, sessionSrv, userSrv, systemSrv, paginationSrv, blockSrv, oeSelectorSrv, $window,
+                        $timeout, translatorSrv) {
 
     var vm = this;
     const keyP = 'oeSelectorCtrl__';
@@ -32,9 +33,22 @@ function oeSelectorCtrl(indexSrv, sessionSrv, userSrv, systemSrv, paginationSrv,
         vm.wizard.currentEntityId = sessionSrv.loginEntity().id;
     }
 
-    function fnSelect(id) {
-        //todo: call Service
-        vm.wizard.currentEntityId = id;
+    function fnSelect(item) {
+        vm.wizard.currentIdInProgress = item.id;
+        var aux = {};
+        translatorSrv.setText("SESSION.reloading_config", aux, 'text');
+
+        oeSelectorSrv.selectNewSessionEntity(item.id).then(function (data) {
+            var fnKey = keyP + "fnSelect";
+            var e = systemSrv.eval(data, fnKey, aux['text'], true);
+            if (e) {
+                sessionSrv.setCurrentOwnedEntity(item);
+                sessionSrv.setPermissions(systemSrv.getItems(fnKey));
+                $timeout(function () {
+                    $window.location.reload();
+                });
+            }
+        })
     }
 
     function __search() {

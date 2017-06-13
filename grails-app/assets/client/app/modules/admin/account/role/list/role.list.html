@@ -3,10 +3,10 @@
         <md-content>
             <md-list flex>
                 <md-divider ng-show="vm.roles.all.length"></md-divider>
-                <md-list-item class="md-3-line" ng-repeat="item in vm.roles.all" ng-click="vm.view(item.id)" aria-label="{{item.label}}">
+                <md-list-item class="md-3-line" ng-repeat="item in vm.roles.all track by $index" ng-click="vm.view(item.id)" aria-label="{{item.label}}">
                     <div class="md-list-item-text" layout="column">
-                        <h3 data-ng-bind="item.label"></h3>
-                        <p class="text-italic" data-ng-bind="item.description | trimmer:130:'...'"></p>
+                        <h3 data-ng-bind="::item.label"></h3>
+                        <p class="text-italic" data-ng-bind="::item.description | trimmer:130:'...'"></p>
                         <p>({{item.enabled | humanReadable | translate}})</p>
                         <md-button class="md-secondary md-icon-button" aria-label="{{'button.edit' | translate}}"
                                    ng-click="vm.edit(item.id)"

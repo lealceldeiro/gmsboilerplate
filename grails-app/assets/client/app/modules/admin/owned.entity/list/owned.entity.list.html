@@ -3,12 +3,12 @@
     <div flex-gt-sm="99" flex>
         <md-content>
             <md-list flex>
-                <md-list-item class="md-2-line" ng-repeat="item in vm.entities.all" ng-click="vm.view(item.id)" aria-label="{{item.name}}">
+                <md-list-item class="md-2-line" ng-repeat="item in vm.entities.all track by $index" ng-click="vm.view(item.id)" aria-label="{{item.name}}">
                     <div class="md-list-item-text" layout="column">
-                        <h3 data-ng-bind="item.name + ' (' + item.username + ')'"></h3>
+                        <h3 data-ng-bind="::(item.name + ' (' + item.username + ')')"></h3>
 
                         <p class="hidden-md-down"><small>
-                           <span class="text-italic" data-ng-bind="item.description | trimmer:130:'...'"></span>
+                           <span class="text-italic" data-ng-bind="::item.description | trimmer:130:'...'"></span>
                         </small></p>
 
                         <md-button class="md-secondary md-icon-button" aria-label="{{'button.edit' | translate}}"

@@ -55,4 +55,17 @@ class BRole_Permission implements Serializable{
 
         }
     }
+
+    static def getPermissionsByRoleAsStrings(Long id, Map params){
+        createCriteria().list(params) {
+            createAlias("permission","p")
+
+            projections { property("p.name") }
+
+            role {
+                eq "id", id
+            }
+
+        }
+    }
 }

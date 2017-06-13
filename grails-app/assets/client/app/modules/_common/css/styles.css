@@ -149,6 +149,12 @@ button.text-white md-icon svg {
 button.highlight-over:hover md-icon svg {
   fill: rgba(255, 255, 255, 0.75); }
 
+button.loading-btn {
+  -webkit-animation: spin 1s linear infinite reverse;
+  /* Chrome, Opera 15+, Safari 5+ */
+  animation: spin 1s linear infinite reverse;
+  /* Chrome, Firefox 16+, IE 10+, Opera */ }
+
 .vertical-divider {
   border-top-width: 0;
   border-right: 1px solid white;
@@ -167,6 +173,9 @@ button.highlight-over:hover md-icon svg {
 /*right*/
 /*top-bottom*/
 /*left-right*/
+.pl-13 {
+  padding-left: 13px !important; }
+
 /*all*/
 .zi-1100 {
   z-index: 1100 !important; }

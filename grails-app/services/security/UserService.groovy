@@ -218,7 +218,7 @@ class UserService {
      * @param id Identifier of the user that is going to be shown
      * @return The user's info or false if none user is found
      */
-    def show (long id){
+    def show (Long id){
         def e = Optional.ofNullable(EUser.get(id))
         if(e.isPresent()){
             def i = e.value
@@ -246,6 +246,12 @@ class UserService {
         if(e) { return [id: e.id, username: e.username, email: e.email, name: e.name, enabled: e.enabled, emailVerificationToken: e.emailVerificationToken] }
         else if(!silenceNotFoundException) throw new NotFoundException("general.not_found" ,"security.user.user", true)
         else return null
+    }
+
+    EUser findByUsername(String username){
+        EUser u  = EUser.findByUsername(username)
+        if(!u){ throw new NotFoundException("general.not_found" ,"security.user.user", true) }
+        else return u
     }
 
     /**

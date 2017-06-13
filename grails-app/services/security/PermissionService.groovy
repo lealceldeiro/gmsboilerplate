@@ -50,4 +50,18 @@ class PermissionService {
         return response
     }
 
+    Set<String> getPermissionsFromRoles(List roleList) {
+        Set<String> allPermissions = []
+
+        def permissions
+        roleList.each {
+            if(it.enabled){ //guarantee the role is enabled
+                permissions = BRole_Permission.getPermissionsByRoleAsStrings((it.id as Long), [:])
+                allPermissions.addAll(permissions as List)
+            }
+        }
+
+        return allPermissions
+    }
+
 }

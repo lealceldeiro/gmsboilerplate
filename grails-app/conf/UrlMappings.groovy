@@ -45,6 +45,10 @@ class UrlMappings {
         "/api/email/new"                        (controller: "subscriberEmail", action: "requestNewVerificationEmail")
         //endregion
 
+        //region session
+        "/api/reauthenticate/"                  (controller: "session", action: "reauthenticate")
+        //endregion
+
         //default
         "/"(view:"/index")
         "404"(view:"/index")

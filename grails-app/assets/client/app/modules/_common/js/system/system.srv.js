@@ -98,8 +98,8 @@ function systemSrv(notificationSrv, __env) {
             self.service.apiTotalCount[storeKey] = data[self.service.total_count_resp];
             self.service.apiItem[storeKey] = data[self.service.item_resp];
             if (data[self.service.success_resp]) {
-                self.service.apiMessage[storeKey] = data[self.service.success_message_resp]
-                    || notificationSrv.utilText.successful_operation;
+                self.service.apiMessage[storeKey] = (notifyOnSuccess && typeof notifyOnSuccess === "string") ? notifyOnSuccess :
+                    data[self.service.success_message_resp] || notificationSrv.utilText.successful_operation;
                 if (notifyOnSuccess) {
                     notificationSrv.showNotification(notificationSrv.type.SUCCESS, self.service.apiMessage[storeKey],
                         successCallback ? [successCallback] : [], successCallbackText ? [successCallbackText] : []);

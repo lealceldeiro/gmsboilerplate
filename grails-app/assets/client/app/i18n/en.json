@@ -18,6 +18,7 @@
   "SESSION.my_profile": "My profile",
   "SESSION.select_entity": "Select entity",
   "SESSION.close": "Exit",
+  "SESSION.reloading_config": "Reloading configuration...",
 
   "button.deactivate": "Deactivate",
   "button.close": "Close",
@@ -45,6 +46,7 @@
 
   "string.index": "Index",
   "string.selected": "selected",
+  "string.selecting": "selecting...",
   "string.activate_deactivate": "Activate/Deactivate",
   "string.active": "Active",
   "string.inactive": "Inactive",
