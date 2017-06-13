@@ -108,16 +108,6 @@ div.repeated-item {
   cursor: hand;
   cursor: pointer; }
 
-md-toolbar .md-error {
-  background-color: #e23d3d; }
-md-toolbar .md-question {
-  background-color: #d0a352; }
-
-button .md-error {
-  color: #e23d3d; }
-button .md-question {
-  color: #cc922b; }
-
 .password-strength-ch > div {
   max-width: 600px;
   margin-left: 36px;
