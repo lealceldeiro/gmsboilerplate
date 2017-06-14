@@ -20,9 +20,9 @@
 //height
 .h-85 { @include height(85px) }
 
-.h-85pc { @include height(85%) }
+.h-89pc { @include height(89%) }
 
-.min-h-85vh { @include min-height(85vh) }
+.min-h-89vh { @include min-height(89vh) }
 
 //font-sizes
 .fs-12 { @include fs(12px)}

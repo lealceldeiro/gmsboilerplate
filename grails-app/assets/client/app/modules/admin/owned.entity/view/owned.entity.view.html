@@ -1,6 +1,6 @@
 <div data-ng-cloak>
     <form data-ng-show="vm.entity" role="form" name="editEntityForm">
-        <div layout="column" layout-padding>
+        <div layout="column">
             <md-content class="md-no-momentum">
 
                 <!--name-->
@@ -36,13 +36,15 @@
     <md-divider></md-divider>
     <br/>
 
-    <md-button class="md-primary md-raised" ng-click="vm.cancel()">
-        {{'button.back' | translate}}
-    </md-button>
-    <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateOwnedEntity()">
-        {{'button.edit' | translate}}
-    </md-button>
-    <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteOwnedEntity()">
-        {{'button.delete' | translate}}
-    </md-button>
+    <div class="float-right">
+        <md-button class="md-primary md-raised" ng-click="vm.cancel()">
+            {{'button.back' | translate}}
+        </md-button>
+        <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateOwnedEntity()">
+            {{'button.edit' | translate}}
+        </md-button>
+        <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteOwnedEntity()">
+            {{'button.delete' | translate}}
+        </md-button>
+    </div>
 </div>

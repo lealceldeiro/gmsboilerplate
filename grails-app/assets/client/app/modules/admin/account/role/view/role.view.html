@@ -1,6 +1,6 @@
 <div class="demo-md-panel-content"  data-ng-cloak data-ng-show="vm.role">
 
-    <div layout="column" layout-padding>
+    <div layout="column">
         <form data-ng-show="vm.role" role="form" name="viewRoleForm">
             <md-content class="md-no-momentum">
 
@@ -50,13 +50,15 @@
     <md-divider></md-divider>
     <br/>
 
-    <md-button class="md-primary md-raised" ng-click="vm.cancel()">
-        {{'button.back' | translate}}
-    </md-button>
-    <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateRole()">
-        {{'button.edit' | translate}}
-    </md-button>
-    <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteRole()">
-        {{'button.delete' | translate}}
-    </md-button>
+    <div class="float-right">
+        <md-button class="md-primary md-raised" ng-click="vm.cancel()">
+            {{'button.back' | translate}}
+        </md-button>
+        <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateRole()">
+            {{'button.edit' | translate}}
+        </md-button>
+        <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteRole()">
+            {{'button.delete' | translate}}
+        </md-button>
+    </div>
 </div>

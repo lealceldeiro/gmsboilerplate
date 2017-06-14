@@ -1,7 +1,7 @@
 <div data-ng-cloak>
 
     <form data-ng-show="vm.entity" role="form" name="editUserForm" novalidate>
-        <div layout="row" layout-padding layout-wrap class="p-b-0">
+        <div layout="row" layout-wrap class="p-b-0">
             <div flex="50">
                 <md-content class="md-no-momentum">
                     <!--name-->
@@ -140,7 +140,7 @@
             </div>
 
             <!--Roles when single Entity-->
-            <div layout="row" flex="100" data-ng-if="vm.canUpdateRoles() && (vm.roles.all.length && vm.entities.length === 1 || vm.singleEntityMode)">
+            <div layout="row" flex="80" data-ng-if="vm.canUpdateRoles() && (vm.roles.all.length && vm.entities.length === 1 || vm.singleEntityMode)">
                 <md-input-container class="md-icon-float md-block" flex="100" >
                     <label>{{'ROLE.roles' | translate}}</label>
                     <md-icon md-svg-icon="hardware:ic_security_24px"></md-icon>
@@ -199,13 +199,15 @@
     <md-divider></md-divider>
     <br/>
 
-    <md-button class="md-primary md-raised"
-               ng-click="vm.save(editUserForm)">
-        {{'button.save' | translate}}
-    </md-button>
-    <md-button class="md-active md-raised"
-               ng-click="vm.cancel()">
-        {{'button.cancel' | translate}}
-    </md-button>
+    <div class="float-right">
+        <md-button class="md-primary md-raised"
+                   ng-click="vm.save(editUserForm)">
+            {{'button.save' | translate}}
+        </md-button>
+        <md-button class="md-active md-raised"
+                   ng-click="vm.cancel()">
+            {{'button.cancel' | translate}}
+        </md-button>
+    </div>
 
 </div>

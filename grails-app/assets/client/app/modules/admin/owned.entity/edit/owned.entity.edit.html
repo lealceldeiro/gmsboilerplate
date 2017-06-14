@@ -1,6 +1,6 @@
 <div data-ng-cloak>
     <form data-ng-show="vm.entity" role="form" name="editEntityForm" novalidate>
-        <div layout="column" layout-padding>
+        <div layout="column">
             <md-content class="md-no-momentum">
 
                 <!--name-->
@@ -71,12 +71,14 @@
     <md-divider></md-divider>
     <br/>
 
-    <md-button class="md-primary md-raised"
-               ng-click="vm.save(editEntityForm)">
-        {{'button.save' | translate}}
-    </md-button>
-    <md-button class="md-active md-raised"
-               ng-click="vm.cancel()">
-        {{'button.cancel' | translate}}
-    </md-button>
+    <div class="float-right">
+        <md-button class="md-primary md-raised"
+                   ng-click="vm.save(editEntityForm)">
+            {{'button.save' | translate}}
+        </md-button>
+        <md-button class="md-active md-raised"
+                   ng-click="vm.cancel()">
+            {{'button.cancel' | translate}}
+        </md-button>
+    </div>
 </div>

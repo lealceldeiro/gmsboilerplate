@@ -1,7 +1,7 @@
 <div data-ng-cloak>
 
     <form data-ng-show="vm.role" role="form" name="editRoleForm" novalidate>
-        <div layout="column" layout-padding>
+        <div layout="column">
             <md-content class="md-no-momentum">
 
                 <!--name-->
@@ -30,7 +30,7 @@
 
 
                 <!--permissions-->
-                <div layout="column" data-ng-if="vm.permissions.all.length">
+                <div layout="column" flex="80" data-ng-if="vm.permissions.all.length">
                     <md-input-container class="md-icon-float md-block">
                         <label>{{'PERMISSIONS.permissions' | translate}}</label>
                         <md-icon md-svg-icon="action:ic_verified_user_24px"></md-icon>
@@ -73,12 +73,15 @@
     <md-divider></md-divider>
     <br/>
 
-    <md-button class="md-primary md-raised"
-               ng-click="vm.save(editRoleForm)">
-        {{'button.save' | translate}}
-    </md-button>
-    <md-button class="md-active md-raised"
-               ng-click="vm.cancel()">
-        {{'button.cancel' | translate}}
-    </md-button>
+    <div class="float-right">
+        <md-button class="md-primary md-raised"
+                   ng-click="vm.save(editRoleForm)">
+            {{'button.save' | translate}}
+        </md-button>
+        <md-button class="md-active md-raised"
+                   ng-click="vm.cancel()">
+            {{'button.cancel' | translate}}
+        </md-button>
+    </div>
+
 </div>

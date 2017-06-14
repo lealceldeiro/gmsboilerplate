@@ -2,7 +2,7 @@
 
 
     <form data-ng-show="vm.entity" role="form" name="viewUserForm">
-        <div layout="row" layout-padding layout-wrap>
+        <div layout="row" layout-wrap>
             <div flex="50" data-ng-hide="vm.entityData.loading">
                 <md-content class="md-no-momentum">
                     <!--name-->
@@ -118,14 +118,16 @@
     <md-divider></md-divider>
     <br/>
 
-    <md-button class="md-primary md-raised" ng-click="vm.cancel()">
-        {{'button.back' | translate}}
-    </md-button>
-    <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateUser() || sCtrl.can.updateProfile()">
-        {{'button.edit' | translate}}
-    </md-button>
-    <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteUser()">
-        {{'button.delete' | translate}}
-    </md-button>
+    <div class="float-right">
+        <md-button class="md-primary md-raised" ng-click="vm.cancel()">
+            {{'button.back' | translate}}
+        </md-button>
+        <md-button class="md-accent md-raised" ng-click="vm.edit()" ng-show="sCtrl.can.updateUser() || sCtrl.can.updateProfile()">
+            {{'button.edit' | translate}}
+        </md-button>
+        <md-button class="md-warn md-raised" ng-click="vm.remove()" ng-show="sCtrl.can.deleteUser()">
+            {{'button.delete' | translate}}
+        </md-button>
+    </div>
 
 </div>
