@@ -170,6 +170,7 @@ grails.assets.includes = [
         "bower_components/MDBootstrap/js/mdb.min.js",
         "bower_components/MDBootstrap/css/bootstrap.min.css",
         "bower_components/MDBootstrap/css/mdb.min.css",
+        "bower_components/MDBootstrap/font/**/*",
         "bower_components/messageformat/messageformat.min.js",
         "bower_components/ng-file-upload-shim/ng-file-upload-shim.min.js",
         "bower_components/ng-file-upload/ng-file-upload.min.js",
