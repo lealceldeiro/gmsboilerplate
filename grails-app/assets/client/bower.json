@@ -31,7 +31,8 @@
     "ng-password-strength": "^0.2.1",
     "angular-moment-picker": "moment-picker#^0.10.1",
     "MDBootstrap": "^4.3.2",
-    "angular-material-sidemenu": "https://github.com/agnjunio/angular-material-sidemenu/archive/master.zip"
+    "angular-material-sidemenu": "https://github.com/agnjunio/angular-material-sidemenu/archive/master.zip",
+    "ng-file-upload-shim": "^12.2.13"
   },
   "resolutions": {
     "angular": "1.5.8"

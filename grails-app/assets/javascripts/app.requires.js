@@ -43,6 +43,10 @@
 // sidemenu
 //= require ../client/bower_components/angular-material-sidemenu/dest/angular-material-sidemenu
 
+// fileUpload
+//= require ../client/bower_components/ng-file-upload-shim/ng-file-upload-shim.min
+//= require ../client/bower_components/ng-file-upload/ng-file-upload.min
+
 // customjs
 //= require ../client/_customjs/bootstrapper
 
