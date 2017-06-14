@@ -14,6 +14,12 @@
   font-style: italic;
   text-align: center; }
 
+/*md-side-menu issue on firefox*/
+.md-sidemenu-wrapper {
+  height: 0; }
+  .md-sidemenu-wrapper.md-active {
+    height: auto; }
+
 .even-class {
   background: #e4e2e2 !important; }
 
@@ -73,11 +79,11 @@
 .h-85 {
   height: 85px; }
 
-.h-85pc {
-  height: 85%; }
+.h-89pc {
+  height: 89%; }
 
-.min-h-85vh {
-  min-height: 85vh; }
+.min-h-89vh {
+  min-height: 89vh; }
 
 .fs-12 {
   font-size: 12px; }
@@ -166,6 +172,18 @@ button.loading-btn {
   right: 0;
   width: 100%;
   z-index: 10000; }
+
+md-card.card1 {
+  margin-top: 4rem !important;
+  margin-left: 2px !important;
+  margin-bottom: 2px !important;
+  margin-right: 2px !important;
+  -webkit-box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.75);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.75); }
+
+md-divider {
+  border-top: 1px solid rgba(68, 156, 71, 0.44); }
 
 /*top*/
 /*left*/

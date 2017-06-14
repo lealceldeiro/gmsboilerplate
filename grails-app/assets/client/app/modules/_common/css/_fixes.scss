@@ -1,0 +1,8 @@
+/*md-side-menu issue on firefox*/
+.md-sidemenu-wrapper {
+  height: 0;
+
+  &.md-active {
+    height: auto;
+  }
+}
