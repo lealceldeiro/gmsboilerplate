@@ -72,6 +72,7 @@ angular
             },
             navBav: {
                 'updateLeftButtons': 'navBar.updateLeftButtons'
-            }
+            },
+            language: {"CHANGED": "CHANGED"}
         }
     );

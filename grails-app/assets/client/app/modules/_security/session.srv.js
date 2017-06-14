@@ -248,6 +248,9 @@ function sessionSrv(localStorageService, $rootScope, systemSrv) {
                 for(var k in lan){
                     if (lan.hasOwnProperty(k)) {
                         has = true;
+                        if (!lan['_b_session']) {
+                            lan['_b_session'] = lan[k];
+                        }
                         break;
                     }
                 }

@@ -10,7 +10,7 @@ angular
     .controller('indexCtrl', indexCtrl);
 
 /*@ngInject*/
-function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navigationSrv) {
+function indexCtrl($scope, indexSrv, sessionSrv, configSrv, navigationSrv, BROADCAST) {
 
     var vm = this;
 
@@ -41,6 +41,10 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
     //update users's logged in/out status
     $scope.$on('TRIGGER_ACTION_AUTH', function () {
         vm.wizard.logged = sessionSrv.isLogged();
+    });
+
+    $scope.$on(BROADCAST.language.CHANGED, function (evt, data) {
+        __updateLanguageInCtrl(data['lan']);
     });
 
     vm.wizard.init();
@@ -75,16 +79,20 @@ function indexCtrl($scope, indexSrv, sessionSrv, configSrv, translatorSrv, navig
     function fnChangeLanguage(lan, doNotPersist) {
         if (lan) {
             configSrv.changeLanguage(lan, doNotPersist);
-            for(var k in vm.wizard.lan){
-                if (vm.wizard.lan.hasOwnProperty(k) && vm.wizard.lan[k]) {
-                    if(vm.wizard.lan[k] === lan.substring(0, 2)){
-                        vm.wizard.lan.current = "LANGUAGE." + k;
-                        vm.wizard.lan.countryFlag = vm.wizard.lan[k];
-                        break;
-                    }
+            __updateLanguageInCtrl(lan);
+        }
+
+    }
+
+    function __updateLanguageInCtrl(lan) {
+        for(var k in vm.wizard.lan){
+            if (vm.wizard.lan.hasOwnProperty(k) && vm.wizard.lan[k]) {
+                if(vm.wizard.lan[k] === lan.substring(0, 2)){
+                    vm.wizard.lan.current = "LANGUAGE." + k;
+                    vm.wizard.lan.countryFlag = vm.wizard.lan[k];
+                    break;
                 }
             }
         }
-
     }
 }

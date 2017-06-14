@@ -9,7 +9,7 @@ angular
     .controller('sessionCtrl', sessionCtrl);
 
 /*@ngInject*/
-function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $translate) {
+function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $translate, $rootScope, BROADCAST) {
 
     var vm = this;
     var keyP = "__SESSIONCTRL__";
@@ -47,6 +47,7 @@ function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $tr
             var lan = sessionSrv.getLanguage();
             if(lan){
                 configSrv.changeLanguage(lan, true);
+                $rootScope.$broadcast(BROADCAST.language.CHANGED, {lan: lan});
             } else {
                 var fnKey = keyP + "fnInit-getConfigLanguage";
                 configSrv.getConfigLanguage(vm.wizard.user.id).then(
@@ -60,6 +61,7 @@ function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $tr
                         }
                         else { it = $translate.preferredLanguage(); }
                         configSrv.changeLanguage(it);
+                        $rootScope.$broadcast(BROADCAST.language.CHANGED, {lan: it});
                     }
                 )
             }
