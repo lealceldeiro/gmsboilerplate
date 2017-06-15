@@ -22,14 +22,18 @@ class SessionController implements ExceptionHandler{
     def reauthenticate(ReauthenticateCommand cmd) {
         if(cmd.validate()){
             Long eid = cmd.e
-            def user = userService.findByUsername(springSecurityService.principal.username as String)
+            String username = springSecurityService.principal.username as String
+            def user = userService.findByUsername(username)
             Long uid = user.id
             def roles = ownedEntityService.getRolesByUserAndOwnedEntity(uid, eid, [offset: 0, max: 0])
 
             if(roles){
                 configurationService.setLastAccessedOwnedEntity(eid, uid)
                 def permissions = permissionService.getPermissionsFromRoles(roles.items as List)
-                //todo: "reauthenticate"? Spring
+
+                //fixme: it's not setting the new authorities
+                springSecurityService.reauthenticate username
+
                 doSuccessWithArgs("general.done.ok", [items: permissions])
             }
             else { doFail("session.user.has.no.role") }
