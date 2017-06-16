@@ -11,7 +11,7 @@ function oeSelectorCtrl(indexSrv, sessionSrv, userSrv, systemSrv, paginationSrv,
                         $timeout, translatorSrv) {
 
     var vm = this;
-    const keyP = 'oeSelectorCtrl__';
+    var keyP = 'oeSelectorCtrl__';
 
     vm.wizard = {
         entities: {

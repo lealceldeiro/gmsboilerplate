@@ -13,7 +13,7 @@ function loginCtrl(indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROU
                    notificationSrv, configSrv) {
 
     var vm = this;
-    const keyP = 'LOGIN__';
+    var keyP = 'LOGIN__';
 
     vm.wizard = {
 
