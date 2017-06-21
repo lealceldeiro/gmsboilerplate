@@ -105,6 +105,7 @@
   "USER.close_session_now": "You must close the current session and do login again in order to see any possible change regarding to permissions. Would you like to close this session now?",
   "USER.permissions_only_in_this_entity": "He/She will have permissions only in this entity",
   "USER.deactivate_current_user": "You are about to deactivate you own user. Are you sure you want to proceed?",
+  "USER.profile_picture": "Profile picture",
 
   "ROLE.roles": "Roles",
   "ROLE.new": "New role",

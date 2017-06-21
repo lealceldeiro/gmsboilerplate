@@ -68,11 +68,8 @@
                             </div>
                         </div>
                     </md-input-container>
-                </md-content>
-            </div>
 
-            <div flex="50">
-                <md-content class="md-no-momentum">
+
                     <!--password-->
                     <md-input-container class="md-icon-float md-block">
                         <label>{{'string.password' | translate}}</label>
@@ -90,9 +87,9 @@
                     </md-input-container>
 
                     <div data-ng-if="vm.entity.password && editUserForm.password.$valid"
-                            ng-password-strength="vm.entity.password" strength="vm.passStrength"
+                         ng-password-strength="vm.entity.password" strength="vm.passStrength"
                          inner-class="progress-bar" inner-class-prefix="progress-bar-"
-                        class="password-strength-ch"
+                         class="password-strength-ch"
                     ></div>
 
                     <!--repeat password-->
@@ -114,6 +111,11 @@
                         </div>
                     </md-input-container>
 
+                </md-content>
+            </div>
+
+            <div flex="50">
+                <md-content class="md-no-momentum">
                     <div layout="row" layout-padding>
                         <div flex="50">
                             <md-checkbox class="ml-m-10" ng-model="vm.entity.enabled" aria-label="{{vm.entity.enabled | humanReadable}}">
@@ -121,10 +123,15 @@
                             </md-checkbox>
                         </div>
                         <div flex="50">
-                            <span>Photo will go here</span>
+                            <img class="img-fluid img img-profile hand-pointer"
+                                 alt="{{'USER.profile_picture' | translate}}"
+                                 data-ngf-pattern="'image/*'"
+                                 data-ngf-accept="'image/*'" data-ngf-max-size="1MB"
+                                 data-ngf-src="vm.entity.profilePicture || 'assets/app/modules/_common/img/social/profile.jpg'"
+                                 data-ngf-select
+                                 data-ng-model="vm.entity.profilePicture">
                         </div>
                     </div>
-
                 </md-content>
             </div>
 

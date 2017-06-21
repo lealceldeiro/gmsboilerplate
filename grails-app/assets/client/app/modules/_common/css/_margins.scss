@@ -1,19 +1,4 @@
-@mixin margin($top, $right, $bottom, $left) {
-    @if($top != null){
-        margin-top: $top !important;
-    }
-    @if($left != null) {
-        margin-left: $left !important;
-    }
-    @if($bottom != null) {
-        margin-bottom: $bottom !important;
-    }
-    @if($right != null) {
-        margin-right: $right !important;
-    }
-}
-
-
+@import "mixings";
 
 /*top*/
 

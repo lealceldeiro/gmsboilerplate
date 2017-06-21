@@ -1,0 +1,102 @@
+/*******************  size   *********************/
+@mixin width ($width) {
+  width: $width;
+}
+
+@mixin height ($height) {
+  height: $height;
+}
+
+@mixin min-height ($height) {
+  min-height: $height;
+}
+
+@mixin max-width($width) {
+  max-width: $width;
+}
+
+@mixin max-height($height) {
+  max-height: $height;
+}
+
+@mixin fs ($size) {
+  font-size: $size;
+}
+
+/*******************  color   *******************/
+@mixin background($color){
+  @if($color != null){
+    background: $color !important;
+  }
+}
+@mixin color($color) {
+  @if($color != null) {
+    color: $color !important;
+  }
+}
+@mixin selected-item($background, $color, $borderColor) {
+  @include background($background);
+  @include color($color);
+  @if($borderColor != null) {
+    border: 1px $borderColor solid !important;
+  }
+}
+@mixin opacity($opacity) {
+  @if($opacity != null) {
+    opacity: $opacity !important;
+  }
+}
+
+@mixin margin($top, $right, $bottom, $left) {
+  @if($top != null){
+    margin-top: $top !important;
+  }
+  @if($left != null) {
+    margin-left: $left !important;
+  }
+  @if($bottom != null) {
+    margin-bottom: $bottom !important;
+  }
+  @if($right != null) {
+    margin-right: $right !important;
+  }
+}
+
+/*******************  margin   *******************/
+@mixin margin($top, $right, $bottom, $left) {
+  @if($top != null){
+    margin-top: $top !important;
+  }
+  @if($left != null) {
+    margin-left: $left !important;
+  }
+  @if($bottom != null) {
+    margin-bottom: $bottom !important;
+  }
+  @if($right != null) {
+    margin-right: $right !important;
+  }
+}
+
+/*******************  padding   *******************/
+@mixin padding($top, $bottom, $right, $left) {
+  @if($top != null) {
+    padding-top: $top !important;
+  }
+  @if($left != null) {
+    padding-left: $left !important;
+  }
+  @if($bottom != null) {
+    padding-bottom: $bottom !important;
+  }
+  @if($right != null) {
+    padding-right: $right !important;
+  }
+}
+
+/*******************  positions   *******************/
+@mixin z-index($value) {
+  @if($value != null) {
+    z-index: $value !important;
+  }
+}

@@ -105,6 +105,7 @@
   "USER.close_session_now": "Debes cerrar la sesión e iniciarla de nuevo para que los posibles cambios respecto a la seguridad tengan efecto. ¿Deseas cerrar la sesión ahora?",
   "USER.permissions_only_in_this_entity": "Tendrá permisos solo en esta entidad",
   "USER.deactivate_current_user": "Vas a desactivar tu usuario. ¿Confirmas que deseas continuar?",
+  "USER.profile_picture": "Imagen de perfil",
 
   "ROLE.roles": "Roles",
   "ROLE.new": "Nuevo rol",

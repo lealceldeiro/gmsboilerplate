@@ -234,7 +234,8 @@
                 'ngMessages',
                 'pascalprecht.translate',                           //angular-translate
                 'ngPasswordStrength',
-                'ngMaterialSidemenu'                                //material side menu
+                'ngMaterialSidemenu',                               //material side menu
+                'ngFileUpload'
 
             ]
         )

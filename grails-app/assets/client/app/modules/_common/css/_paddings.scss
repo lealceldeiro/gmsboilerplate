@@ -1,17 +1,4 @@
-@mixin padding($top, $bottom, $right, $left) {
-  @if($top != null) {
-    padding-top: $top !important;
-  }
-  @if($left != null) {
-    padding-left: $left !important;
-  }
-  @if($bottom != null) {
-    padding-bottom: $bottom !important;
-  }
-  @if($right != null) {
-    padding-right: $right !important;
-  }
-}
+@import "mixings";
 
 
 /*top*/
