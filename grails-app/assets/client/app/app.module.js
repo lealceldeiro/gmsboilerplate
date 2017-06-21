@@ -48,10 +48,13 @@
     //region language-loading...
     env.baseUrl = document.getElementById('appBaseUrl').href;
     var languages = ['en', 'es'];
+    var loaded = 0;
     for (var lp = 0; lp < languages.length; lp++) {
         (function (idx) {
             $.getJSON(env.baseUrl + "assets/app/i18n/" + languages[idx] + ".json", function (translations) {
                 lan[languages[idx]] = translations;
+                loaded++;
+                _tryInitApp();
             });
         })(lp);
     }
@@ -239,5 +242,13 @@
         .constant('lan', lan)           // Register languages strings as constant object
         .config(config)
         .run(runConfig);
+
+    function _tryInitApp() {
+        if (loaded === languages.length) {
+            angular.element(function() {
+                angular.bootstrap(document, ['gmsBoilerplate']);
+            });
+        }
+    }
 
 }());

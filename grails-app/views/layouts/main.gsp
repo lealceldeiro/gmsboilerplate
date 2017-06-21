@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="ie6" data-ng-app="gmsBoilerplate" data-ng-controller="indexCtrl as idxCtrl"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="ie7" data-ng-app="gmsBoilerplate" data-ng-controller="indexCtrl as idxCtrl"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="ie8" data-ng-app="gmsBoilerplate" data-ng-controller="indexCtrl as idxCtrl"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="ie9" data-ng-app="gmsBoilerplate" data-ng-controller="indexCtrl as idxCtrl"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" data-ng-app="gmsBoilerplate" data-ng-controller="indexCtrl as idxCtrl"><!--<![endif]-->
+<!--[if lt IE 7 ]> <html lang="en" class="ie6" data-ng-controller="indexCtrl as idxCtrl"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7" data-ng-controller="indexCtrl as idxCtrl"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8" data-ng-controller="indexCtrl as idxCtrl"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9" data-ng-controller="indexCtrl as idxCtrl"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" data-ng-controller="indexCtrl as idxCtrl"><!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
