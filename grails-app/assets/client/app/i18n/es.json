@@ -139,7 +139,7 @@
   "LOGIN.password": "@:string.password",
   "LOGIN.password_required": "@:string.password_required",
 
-  "REGISTER.email_sent": "¡Éxito! Se ha enviado un email a '{email}' con la información necesaria para terminar el registro",
+  "REGISTER.email_sent": "¡Éxito! Se ha enviado un email a <strong>{email}</strong> con la información necesaria para terminar el registro",
   "REGISTER.almost_finished": "Casi hemos terminado",
 
   "REGISTER.verify_email": "Verficación de email",
