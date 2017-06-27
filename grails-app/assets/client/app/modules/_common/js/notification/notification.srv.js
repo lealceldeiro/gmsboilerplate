@@ -31,7 +31,8 @@ function notificationSrv(toastSrv, $translate) {
             "select_element_required": "select_element_required",
             "unauthorized": "unauthorized",
             "user_and_password_incorrect": "user_and_password_incorrect",
-            "no_response_from_server": "no_response_from_server"
+            "no_response_from_server": "no_response_from_server",
+            "server_error": "server_error"
         },
 
         showNotification: fnShow

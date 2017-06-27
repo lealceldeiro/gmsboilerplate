@@ -8,6 +8,7 @@
   "user_and_password_incorrect": "El usuario o contraseña proporcionados no son correctos :(",
 
   "no_response_from_server": "Conexión con el servidor perdida...",
+  "server_error": "Se ha producido un error interno en el servidor",
 
   "config.error.browser_not_supported.title": "Navegador no soportado",
   "config.error.browser_not_supported.message": "Usted está usando un navegador que no soporta nuestra tecnología. Por favor, actualice a un navegador más moderno.",

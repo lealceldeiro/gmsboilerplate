@@ -12,6 +12,7 @@ angular
 /*@ngInject*/
 function interceptor(sessionSrv, systemSrv, notificationSrv, $rootScope, BROADCAST) {
 
+    var SERVER_ERROR = 500;
     var FORBIDDEN = 403;
     var noConnNotified = false;
 
@@ -53,6 +54,9 @@ function interceptor(sessionSrv, systemSrv, notificationSrv, $rootScope, BROADCA
         else if(!noConnNotified && rejection.status === -1 && !rejection.data && !rejection.statusText) {
             noConnNotified = true;
             notificationSrv.showNotification(notificationSrv.type.ERROR, notificationSrv.utilText.no_response_from_server);
+        }
+        else if (rejection.status === SERVER_ERROR) {
+            notificationSrv.showNotification(notificationSrv.type.ERROR, notificationSrv.utilText.server_error);
         }
     }
 
