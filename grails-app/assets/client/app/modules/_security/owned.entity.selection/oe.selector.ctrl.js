@@ -40,14 +40,16 @@ function oeSelectorCtrl(indexSrv, sessionSrv, userSrv, systemSrv, paginationSrv,
 
         oeSelectorSrv.selectNewSessionEntity(item.id).then(function (data) {
             var fnKey = keyP + "fnSelect";
-            var e = systemSrv.eval(data, fnKey, aux['text'], true);
+            var e = systemSrv.evalAuth(data, fnKey, aux['text'], true);
             if (e) {
                 sessionSrv.setCurrentOwnedEntity(item);
-                sessionSrv.setPermissions(systemSrv.getItems(fnKey));
+                sessionSrv.setPermissions(systemSrv.gtAuthPermissions());
+                sessionSrv.setSecurityToken(systemSrv.getAuthToken());
                 $timeout(function () {
                     $window.location.reload();
                 });
             }
+            else { vm.wizard.currentIdInProgress = null; }
         })
     }
 

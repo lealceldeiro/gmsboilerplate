@@ -148,18 +148,19 @@ function systemSrv(notificationSrv, __env) {
      * by the user if the result is unsuccessful
      * @returns {boolean} true if success, false otherwise
      */
-    function fnEvaluateAuthenticationData(data, storeKey, notifyOnSuccess, notifyOnUnSuccess, successCallback, successCallbackText,
-                                          unSuccessCallback, unSuccessCallbackText) {
+    function fnEvaluateAuthenticationData(data, storeKey, notifyOnSuccess, notifyOnUnSuccess, successCallback,
+                                          successCallbackText, unSuccessCallback, unSuccessCallbackText) {
         if (data) {
             if (data[self.service.item_token_resp]) {
                 self.service.userAuthResponse = data[self.service.auth_user_resp];
                 self.service.itemToken = data[self.service.item_token_resp];
                 self.service.itemRefreshToken = data[self.service.item_refresh_token_req_resp];
                 self.service.authPermissions = data[self.service.auth_permissions_resp];
+                self.service.apiMessage[storeKey] = (notifyOnSuccess && typeof notifyOnSuccess === "string") ? notifyOnSuccess :
+                    data[self.service.success_message_resp] || notificationSrv.utilText.successful_operation;
                 if (notifyOnSuccess) {
-                    notificationSrv.showNotification(notificationSrv.type.SUCCESS, notificationSrv.utilText.success_label + ": " +
-                        self.service.apiMessage[storeKey], successCallback ? [successCallback] : [],
-                        successCallbackText ? [successCallbackText] : []);
+                    notificationSrv.showNotification(notificationSrv.type.SUCCESS, self.service.apiMessage[storeKey],
+                        successCallback ? [successCallback] : [], successCallbackText ? [successCallbackText] : []);
                 }
 
                 return true

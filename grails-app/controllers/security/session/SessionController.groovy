@@ -9,11 +9,16 @@ import responseHandlers.ExceptionHandler
 @Secured("isFullyAuthenticated()")
 class SessionController implements ExceptionHandler{
 
+    def grailsApplication
+
     def ownedEntityService
     def configurationService
-    def springSecurityService
     def userService
     def permissionService
+
+    def springSecurityService
+    def tokenGenerator
+    def tokenStorageService
 
     static allowedMethods = [
            reauthenticate   : HttpMethod.POST.name()
@@ -29,12 +34,18 @@ class SessionController implements ExceptionHandler{
 
             if(roles){
                 configurationService.setLastAccessedOwnedEntity(eid, uid)
-                def permissions = permissionService.getPermissionsFromRoles(roles.items as List)
+                Set permissions = permissionService.getPermissionsFromRoles(roles.items as List)
 
-                //fixme: it's not setting the new authorities
-                springSecurityService.reauthenticate username
+                String authoritiesVar = grailsApplication.config.grails.plugin.springsecurity.rest.token.rendering.authoritiesPropertyName
 
-                doSuccessWithArgs("general.done.ok", [items: permissions])
+                springSecurityService.reauthenticate(username)
+                String tokenValue = tokenGenerator.generateAccessToken(springSecurityService.principal).accessToken
+                tokenStorageService.storeToken(tokenValue, springSecurityService.principal)
+
+                Map args = ['access_token': tokenValue]
+                args.putAt(authoritiesVar, permissions)
+
+                doSuccessWithArgs("general.done.ok", args)
             }
             else { doFail("session.user.has.no.role") }
         }
