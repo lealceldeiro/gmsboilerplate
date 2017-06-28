@@ -23,7 +23,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
     vm.wizard = {
         rolesTouched: false,
         singleEntityMode: true,
-        entity: {enabled: true},
+        entity: {enabled: true, profilePicture: null},
 
         entityData: null,
 
@@ -224,6 +224,18 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
                 blockSrv.unBlock();
                 var e = systemSrv.eval(data, fnKey, false, true);
                 if (e) {
+
+                    //update profile picture
+                    if (vm.wizard.entity.profilePicture) {
+                        var fnKey2 = keyP + "updateProfilePicture";
+                        userSrv.updateProfilePicture(sessionSrv.currentUser().id, vm.wizard.entity.profilePicture).then(
+                            function (data) {
+                                systemSrv.eval(data, fnKey2, false, true);
+                            }
+                        )
+                    }
+
+
                     if (doNotDoLogout !== true) {
                         _doLogout();
                     } else {

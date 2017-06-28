@@ -2,7 +2,4 @@ import grails.plugin.springsecurity.rest.token.generation.SecureRandomTokenGener
 
 // Place your Spring DSL code here
 beans = {
-    /*credentialsExtractor(DefaultJsonPayloadCredentialsExtractor) {
-        userService = ref("userService")
-    }*/
 }

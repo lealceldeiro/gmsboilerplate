@@ -4,6 +4,7 @@ import configuration.ConfigurationService
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import subscriber.BEmailVerificationToken
+import file.EFile
 
 @EqualsAndHashCode(includes = 'username')
 @ToString(includes = 'username', includeNames = true, includePackage = false)
@@ -18,6 +19,8 @@ class EUser implements Serializable {
     String password
     Boolean enabled = true
     Boolean emailVerified = true
+
+    EFile profilePicture
 
     Boolean accountExpired = false
     Boolean accountLocked = false
@@ -37,7 +40,7 @@ class EUser implements Serializable {
         password nullable: false, blank: false
         enabled nullable: true
         emailVerified nullable: true
-        emailVerificationToken nullable: true
+        profilePicture nullable: true, unique: false
         emailVerificationToken unique: true, nullable: true
     }
 

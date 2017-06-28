@@ -103,6 +103,7 @@
 //= require ../client/app/modules/_common/js/util/string.srv
 //= require ../client/app/modules/_common/js/util/value.srv
 //= require ../client/app/modules/_common/js/util/base.srv
+//= require ../client/app/modules/_common/js/util/fileManager.srv
 
 //= require ../client/app/modules/_common/js/collection/search.srv
 //= require ../client/app/modules/_common/js/collection/data.srv

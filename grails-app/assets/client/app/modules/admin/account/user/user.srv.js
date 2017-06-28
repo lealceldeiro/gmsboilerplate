@@ -9,7 +9,7 @@ angular
     .service('userSrv', userSrv);
 
 /*@ngInject*/
-function userSrv(systemSrv, $http, baseSrv, ownedEntitySrv) {
+function userSrv(systemSrv, $http, baseSrv, ownedEntitySrv, fileManagerSrv) {
 
     var self = this;
     var url = systemSrv.APIAbsoluteUrl + 'user/';
@@ -26,6 +26,7 @@ function userSrv(systemSrv, $http, baseSrv, ownedEntitySrv) {
         remove: fnRemove,
         save: fnSave,
         saveProfile: fnSaveProfile,
+        updateProfilePicture: fnUpdateProfilePicture,
         activate: fnActivate,
 
         entitiesByUser: fnEntitiesByUser
@@ -93,6 +94,10 @@ function userSrv(systemSrv, $http, baseSrv, ownedEntitySrv) {
         }
 
         return baseSrv.resolveDeferred(def);
+    }
+
+    function fnUpdateProfilePicture(userId, file, filename) {
+        return fileManagerSrv.sendFile(userId, file, url + 'profile/picture', filename)
     }
 
     function fnSaveProfile(params, id) {

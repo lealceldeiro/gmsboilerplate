@@ -1,12 +1,16 @@
 package security
 
 import command.SearchCommand
+import command.file.FileUploadCommand
 import command.security.user.UserCommand
 import exceptions.GenericException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
 import grails.transaction.Transactional
+import org.apache.commons.fileupload.FileItem
+import org.apache.commons.fileupload.disk.DiskFileItem
 import subscriber.BEmailVerificationToken
+import file.EFile
 
 @Transactional
 class UserService {
@@ -20,6 +24,8 @@ class UserService {
     def emailSenderService
 
     def tokenGeneratorService
+
+    def fileManagerService
 
     //region CRUD
     /**
@@ -184,6 +190,26 @@ class UserService {
         if(error) { throw new GenericException("general.exception.error_on_resources") }
 
         return aux
+    }
+
+    def updateProfilePicture(FileUploadCommand cmd){
+        Boolean err = false
+        if(cmd.validate() && cmd.isValid()) {
+            EUser user = EUser.get(cmd.userId)
+            if(user) {
+                if(cmd.files) {
+                    for(int i = 0; i < cmd.files.size(); i++) {
+                        if(!fileManagerService.saveFile(cmd.files.get(i), user, EFile.PROFILE_PICTURE, cmd.fileNames?.get(i))){
+                            err = true
+                        }
+                    }
+                    return !err
+                }
+                return false
+            }
+            else throw new NotFoundException("general.not_found" ,"security.user.userCamel", true)
+        }
+        else { throw new ValidationsException()}
     }
 
     private static List<BRole> getNotPresent(List<Long> roleIds, List<BRole> oldRoles) {

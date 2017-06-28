@@ -1,6 +1,7 @@
 package security
 
 import command.SearchCommand
+import command.file.FileUploadCommand
 import command.security.user.SearchUserCommand
 import command.security.user.UserCommand
 import exceptions.ValidationsException
@@ -21,6 +22,8 @@ class UserController implements ExceptionHandler{
 
     def grailsLinkGenerator
 
+    def fileUploadService
+
     static allowedMethods = [
             search                  : HttpMethod.GET.name(),
             searchAll               : HttpMethod.GET.name(),
@@ -28,6 +31,7 @@ class UserController implements ExceptionHandler{
             create                  : HttpMethod.PUT.name(),
             update                  : HttpMethod.POST.name(),
             updateProfile           : HttpMethod.POST.name(),
+            updateProfilePicture    : HttpMethod.POST.name(),
             activate                : HttpMethod.POST.name(),
             show                    : HttpMethod.GET.name(),
             delete                  : HttpMethod.DELETE.name(),
@@ -142,6 +146,20 @@ class UserController implements ExceptionHandler{
         }
     }
 
+    @Secured("hasAnyRole('UPDATE__USER', 'UPDATE__PROFILE')")
+    def updateProfilePicture(){
+        def items = fileUploadService.getRequestItems(request)
+        def files = fileUploadService.getRequestFileItems(items)
+        Map params = fileUploadService.getRequestFormItemsAsMap(items)
+        FileUploadCommand cmd = new FileUploadCommand()
+        bindData(cmd, params)
+        bindData(cmd, [files: files])
+
+        def r = userService.updateProfilePicture(cmd)
+        if(r) { doSuccess("general.done.ok") }
+        else { doFail("general.done.KO") }
+    }
+
     /**
      * Return a user's info
      * @param id User's identifier
@@ -189,7 +207,6 @@ class UserController implements ExceptionHandler{
         if(e) { doSuccessWithArgs("general.done.ok", [id: e.id]) }
         else doFail "general.done.KO"
     }
-
 
     /**
      * Return a user's info

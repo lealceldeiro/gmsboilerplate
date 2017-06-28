@@ -7,7 +7,7 @@ angular
     .service('roleSrv', roleSrv);
 
 /*@ngInject*/
-function roleSrv(systemSrv, $http, valueSrv, baseSrv) {
+function roleSrv(systemSrv, $http, baseSrv) {
 
     var self = this;
     var rolesUrl = systemSrv.APIAbsoluteUrl + 'role/';
@@ -87,10 +87,7 @@ function roleSrv(systemSrv, $http, valueSrv, baseSrv) {
     }
 
     function fnPermissionsByUser(id, offset, max) {
-        var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
-        if (valueSrv.nNnN(max)) {
-            params += params === "" ? "?max=" + max : "&max=" + max;
-        }
+        var params = baseSrv.getParams(offset, max);
 
         var def = $http.get(rolesUrl + id + '/permissions/' + params);
         return baseSrv.resolveDeferred(def);

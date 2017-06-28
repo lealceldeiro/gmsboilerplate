@@ -9,7 +9,7 @@ angular
     .service('ownedEntitySrv', ownedEntitySrv);
 
 /*@ngInject*/
-function ownedEntitySrv(systemSrv, $http, valueSrv, baseSrv) {
+function ownedEntitySrv(systemSrv, $http, baseSrv) {
 
     var self = this;
     var url = systemSrv.APIAbsoluteUrl + 'entity/';
@@ -82,10 +82,7 @@ function ownedEntitySrv(systemSrv, $http, valueSrv, baseSrv) {
     }
 
     function fnUsersByEntity(id, offset, max) {
-        var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
-        if (valueSrv.nNnN(max)) {
-            params += params === "" ? "?max=" + max : "&max=" + max;
-        }
+        var params = baseSrv.getParams(offset, max);
 
         var def = $http.get(url + "users/" + id + params);
         return baseSrv.resolveDeferred(def);
