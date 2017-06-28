@@ -141,6 +141,11 @@
                     else {_doLogout(event, route);}
                 }
 
+                else if(sessionSrv.isLogged()){
+                    event.preventDefault();
+                    navigationSrv.goTo('/main');
+                }
+
                 if (route) {
                     params = next['params'];
 
