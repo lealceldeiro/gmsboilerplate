@@ -6,11 +6,9 @@ import command.security.user.UserCommand
 import exceptions.GenericException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
-import grails.transaction.Transactional
-import org.apache.commons.fileupload.FileItem
-import org.apache.commons.fileupload.disk.DiskFileItem
-import subscriber.BEmailVerificationToken
 import file.EFile
+import grails.transaction.Transactional
+import subscriber.BEmailVerificationToken
 
 @Transactional
 class UserService {
@@ -197,6 +195,11 @@ class UserService {
         if(cmd.validate() && cmd.isValid()) {
             EUser user = EUser.get(cmd.userId)
             if(user) {
+                if(user.profilePicture != null) {
+                    EFile deletePicture = user.profilePicture
+                    user.profilePicture = null
+                    fileManagerService.deleteFile(deletePicture)
+                }
                 if(cmd.files) {
                     for(int i = 0; i < cmd.files.size(); i++) {
                         if(!fileManagerService.saveFile(cmd.files.get(i), user, EFile.PROFILE_PICTURE, cmd.fileNames?.get(i))){
@@ -249,6 +252,14 @@ class UserService {
         if(e.isPresent()){
             def i = e.value
             if(i){ return [username: i.username, email: i.email, name: i.name, enabled: i.enabled] }
+        }
+        else throw new NotFoundException("general.not_found" ,"security.user.userCamel", true)
+    }
+
+    EUser getUser (Long id){
+        EUser e = EUser.get(id)
+        if(e){
+            return e
         }
         else throw new NotFoundException("general.not_found" ,"security.user.userCamel", true)
     }

@@ -77,6 +77,16 @@ function userViewCtrl(ROUTE, indexSrv, userSrv, navigationSrv, notificationSrv, 
             }
         );
 
+        var keyPic = keyP + "getProfilePicture";
+        userSrv.getProfilePicture(id).then(
+            function(data) {
+                var e = systemSrv.eval(data, keyPic, false, true);
+                if (e) {
+                    vm.wizard.profilePicture = systemSrv.getItemUrl(keyPic);
+                }
+            }
+        );
+
         if (!vm.wizard.isProfile) {
             var fnKey2 = keyP + "fnLoadData-entitiesByUser";
             userSrv.entitiesByUser(id, 0, 0).then(function (data) {

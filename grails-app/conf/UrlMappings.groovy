@@ -9,6 +9,7 @@ class UrlMappings {
         "/api/user/$id"                         (controller: "user")                            {action = [GET: "show", POST: "update", DELETE: "delete"]}
         "/api/user/profile/$id"                 (controller: "user", action: "updateProfile")
         "/api/user/profile/picture"             (controller: "user", action: "updateProfilePicture")
+        "/api/user/profile/picture/$id"         (controller: "user", action: "getProfilePicture")
         "/api/user/$id/activate/$value"         (controller: "user", action: "activate")
         "/api/user/get"                         (controller: "user", action: "getBy")
         "/api/user/taken"                       (controller: "user", action: "isTaken")

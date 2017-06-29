@@ -23,7 +23,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
     vm.wizard = {
         rolesTouched: false,
         singleEntityMode: true,
-        entity: {enabled: true, profilePicture: null},
+        entity: {enabled: true},
 
         entityData: null,
 
@@ -96,6 +96,16 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
                     vm.wizard.entity = systemSrv.getItem(fnKey);
                 }
                 blockSrv.setIsLoading(vm.wizard.entityData);
+            }
+        );
+
+        var keyPic = keyP + "getProfilePicture";
+        userSrv.getProfilePicture(id).then(
+            function(data) {
+                var e = systemSrv.eval(data, keyPic, false, true);
+                if (e) {
+                    vm.wizard.profilePicture = systemSrv.getItemUrl(keyPic);
+                }
             }
         );
     }
@@ -226,9 +236,9 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
                 if (e) {
 
                     //update profile picture
-                    if (vm.wizard.entity.profilePicture) {
+                    if (vm.wizard.profilePicture) {
                         var fnKey2 = keyP + "updateProfilePicture";
-                        userSrv.updateProfilePicture(sessionSrv.currentUser().id, vm.wizard.entity.profilePicture).then(
+                        userSrv.updateProfilePicture(sessionSrv.currentUser().id, vm.wizard.profilePicture).then(
                             function (data) {
                                 systemSrv.eval(data, fnKey2, false, true);
                             }

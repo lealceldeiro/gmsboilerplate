@@ -35,6 +35,7 @@ function systemSrv(notificationSrv, __env) {
         total_count_resp:               'total',
         items_resp:                     'items',
         item_resp:                      'item',
+        itemUlr_resp:                   'url',
         item_token_resp:                'access_token',
         auth_user_resp:                 'username',
         auth_permissions_resp:          'permissions',
@@ -46,6 +47,7 @@ function systemSrv(notificationSrv, __env) {
         apiTotalCount: {},
         apiItems: {},
         apiItem: {},
+        apiItemUrl: {},
         userAuthResponse: {},
         itemToken: {},
         itemRefreshToken: {},
@@ -58,6 +60,7 @@ function systemSrv(notificationSrv, __env) {
         getTotal: fnGetTotalCount,
         getItems: fnGetItems,
         getItem: fnGetItem,
+        getItemUrl: fnGetItemUrl,
 
         getAuthToken: fnGetAuthToken,
         getAuthRefreshToken: fnGetAuthRefreshToken,
@@ -97,6 +100,7 @@ function systemSrv(notificationSrv, __env) {
             self.service.apiItems[storeKey] = data[self.service.items_resp];
             self.service.apiTotalCount[storeKey] = data[self.service.total_count_resp];
             self.service.apiItem[storeKey] = data[self.service.item_resp];
+            self.service.apiItemUrl[storeKey] = data[self.service.itemUlr_resp];
             if (data[self.service.success_resp]) {
                 self.service.apiMessage[storeKey] = (notifyOnSuccess && typeof notifyOnSuccess === "string") ? notifyOnSuccess :
                     data[self.service.success_message_resp] || notificationSrv.utilText.successful_operation;
@@ -204,6 +208,11 @@ function systemSrv(notificationSrv, __env) {
     function fnGetItem(key) {
         validate(key);
         return self.service.apiItem[key]
+    }
+
+    function fnGetItemUrl(key) {
+        validate(key);
+        return self.service.apiItemUrl[key]
     }
 
 

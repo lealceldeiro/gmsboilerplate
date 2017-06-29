@@ -27,6 +27,7 @@ function userSrv(systemSrv, $http, baseSrv, ownedEntitySrv, fileManagerSrv) {
         save: fnSave,
         saveProfile: fnSaveProfile,
         updateProfilePicture: fnUpdateProfilePicture,
+        getProfilePicture: fnGetProfilePicture,
         activate: fnActivate,
 
         entitiesByUser: fnEntitiesByUser
@@ -98,6 +99,10 @@ function userSrv(systemSrv, $http, baseSrv, ownedEntitySrv, fileManagerSrv) {
 
     function fnUpdateProfilePicture(userId, file, filename) {
         return fileManagerSrv.sendFile(userId, file, url + 'profile/picture', filename)
+    }
+
+    function fnGetProfilePicture(userId) {
+        return baseSrv.resolveFileRequestDeferred($http.get(url + 'profile/picture/' + userId));
     }
 
     function fnSaveProfile(params, id) {

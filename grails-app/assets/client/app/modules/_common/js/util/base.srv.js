@@ -9,12 +9,15 @@ angular
     .service('baseSrv', baseSrv);
 
 /*@ngInject*/
-function baseSrv(valueSrv) {
+function baseSrv(valueSrv, systemSrv) {
 
     var self = this;
 
+    var STATUS_OK = 200;
+
     self.service = {
         resolveDeferred: fnResolveDeferred,
+        resolveFileRequestDeferred: fnResolveFileRequestDeferred,
 
         getParams: fnGetParams
     };
@@ -26,6 +29,26 @@ function baseSrv(valueSrv) {
             return deferred.then(
                 function (res) {
                     return res ? res.data : null;
+                },
+                function (resOnErr) {
+                    return resOnErr ? resOnErr.data : null;
+                }
+            )
+        }
+    }
+
+    function fnResolveFileRequestDeferred (deferred){
+        if (deferred.then) {
+            var r = {};
+            return deferred.then(
+                function (res) {
+                    //since this is a file sent in the response, we have to build the standard response here
+                    if (res && res.status === STATUS_OK) {
+                        r[systemSrv.success_resp] = true;
+                        r[systemSrv.item_resp] = res.data;
+                        r[systemSrv.itemUlr_resp] = res.config.url;
+                        return r;
+                    }
                 },
                 function (resOnErr) {
                     return resOnErr ? resOnErr.data : null;
@@ -46,5 +69,3 @@ function baseSrv(valueSrv) {
         return params;
     }
 }
-
-baseSrv.$inject = ['valueSrv'];

@@ -1,4 +1,4 @@
-package subscriber
+package gmsutil
 
 import grails.transaction.Transactional
 

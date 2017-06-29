@@ -5,12 +5,14 @@ import command.file.FileUploadCommand
 import command.security.user.SearchUserCommand
 import command.security.user.UserCommand
 import exceptions.ValidationsException
+import file.EFileDownload
+import file.FileManagerService
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.http.HttpMethod
 import responseHandlers.ExceptionHandler
 
 @Secured("hasRole('MANAGE__USER')")
-class UserController implements ExceptionHandler{
+class UserController implements ExceptionHandler, EFileDownload{
 
     def userService
 
@@ -24,6 +26,8 @@ class UserController implements ExceptionHandler{
 
     def fileUploadService
 
+    def fileManagerService
+
     static allowedMethods = [
             search                  : HttpMethod.GET.name(),
             searchAll               : HttpMethod.GET.name(),
@@ -32,6 +36,7 @@ class UserController implements ExceptionHandler{
             update                  : HttpMethod.POST.name(),
             updateProfile           : HttpMethod.POST.name(),
             updateProfilePicture    : HttpMethod.POST.name(),
+            getProfilePicture       : HttpMethod.GET.name(),
             activate                : HttpMethod.POST.name(),
             show                    : HttpMethod.GET.name(),
             delete                  : HttpMethod.DELETE.name(),
@@ -173,6 +178,16 @@ class UserController implements ExceptionHandler{
         else { doFail("general.done.KO") }
     }
 
+    @Secured("permitAll()")
+    def getProfilePicture(Long id){
+        def u = userService.getUser(id)
+        if(u){
+            def profilePicture = u.profilePicture
+            downloadFile(profilePicture, "inline")
+        }
+        else { doFail("general.done.KO") }
+    }
+
     /**
      * Deletes a User
      * @param id Users's identifier
@@ -258,5 +273,10 @@ class UserController implements ExceptionHandler{
             } else doFail("subscription.error.generating.email")
         }
         else { doFail("REGISTRATION.not.allowed")}
+    }
+
+
+    FileManagerService getEFileManager() {
+        return fileManagerService
     }
 }

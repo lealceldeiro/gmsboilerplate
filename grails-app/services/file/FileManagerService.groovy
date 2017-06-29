@@ -1,5 +1,6 @@
 package file
 
+import exceptions.NotFoundException
 import exceptions.ValidationsException
 import grails.transaction.Transactional
 import groovy.transform.Synchronized
@@ -17,13 +18,15 @@ class FileManagerService {
         if (file) {
             byte[] bytes = file.get()
             EFile eFile = new EFile(
-                    name: fileName ?: file.name,
+                    name: fileName ?: user.id + '-' + file.name.substring(0, file.name.lastIndexOf('.')),
                     extension: FilenameUtils.getExtension(fileName ?: file.name),
                     size: bytes.size(),
                     userOwner: user,
                     type: fileType
             )
-            if (eFile.save()) {
+            if (eFile.save(flush: true, failOnError: true)) {
+                eFile.name = eFile.id + '-' + eFile.name
+                eFile.save()
                 EFileContent fileContent = new EFileContent(
                         file: eFile,
                         content: bytes
@@ -36,4 +39,28 @@ class FileManagerService {
         else throw new ValidationsException()
         return null
     }
+
+    @Synchronized("lock")
+    byte[] getFile(EFile file) {
+        if (file) {
+            EFileContent fileContent = EFileContent.findByFile(file)
+            if (!fileContent) {
+                throw new NotFoundException("general.not_found" ,"fileCamel", true)
+            }
+            return fileContent.content
+        } else throw new NotFoundException("general.not_found" ,"fileCamel", true)
+    }
+
+    @Synchronized("lock")
+    Boolean deleteFile(EFile file) {
+        if(file) {
+            EFileContent fileContent = EFileContent.findByFile(file)
+            if (!fileContent) {
+                throw new NotFoundException("general.not_found" ,"fileCamel", true)
+            }
+            fileContent.delete()
+            file.delete()
+        }
+    }
+
 }
