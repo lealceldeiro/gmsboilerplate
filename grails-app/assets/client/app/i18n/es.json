@@ -140,6 +140,7 @@
   "LOGIN.user_email_required": "El usuario o email es obligatorio",
   "LOGIN.password": "@:string.password",
   "LOGIN.password_required": "@:string.password_required",
+  "LOGIN.username_or_password_incorrect": "Usuario o contraseña incorrectos",
 
   "REGISTER.email_sent": "¡Éxito! Se ha enviado un email a <strong>{email}</strong> con la información necesaria para terminar el registro",
   "REGISTER.almost_finished": "Casi hemos terminado",

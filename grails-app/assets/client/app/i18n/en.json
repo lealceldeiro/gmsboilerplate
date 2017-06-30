@@ -140,6 +140,7 @@
   "LOGIN.user_email_required": "Either the user or email address is required",
   "LOGIN.password": "@:string.password",
   "LOGIN.password_required": "@:string.password_required",
+  "LOGIN.username_or_password_incorrect": "Wrong username or password ",
 
   "REGISTER.email_sent": "Success! An email has been sent to <strong>{email}</strong> with the required information in order to finish the registration",
   "REGISTER.almost_finished": "We're almost done",

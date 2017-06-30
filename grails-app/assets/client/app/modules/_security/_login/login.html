@@ -1,11 +1,11 @@
-<div class="row mt-5">
+<div class="row mt-5 animated" data-ng-class="{'shake': vm.loginFailedShake}">
     <div class="card col-md-6 mlr-auto">
         <form role="form" name="loginForm" novalidate>
 
             <div class="card-block">
                 <!--Header-->
-                <div class="form-header green p-0">
-                    <md-toolbar>
+                <div class="form-header p-0">
+                    <md-toolbar ng-class="{'red': vm.loginFailedColor}">
                         <div class="md-toolbar-tools" layout-align="center center">
                             <div layout-align="center center">
                                 <div layout="row" layout-align="center center" flex="100">
@@ -46,6 +46,7 @@
 
                 <div class="text-center">
                     <md-button class="md-primary md-raised" aria-label="{{'button.accept' | translate}}"
+                               ng-class="{'red': vm.loginFailedColor}"
                                ng-click="vm.login(loginForm)">
                         &nbsp;
                         {{'button.login' | translate}}
@@ -58,8 +59,8 @@
             <div class="modal-footer">
                 <div class="options">
                     <p data-ng-if="idxCtrl.canRegister">{{'string.not_a_member' | translate}}&nbsp;<a href="" data-ng-click="idxCtrl.go('/signup')">{{'button.register' | translate}}</a></p>
-                    <p>{{'string.forgot_the' | translate}} <a href="">{{'string._password' | translate}}</a></p>
-                </div>
+                    <p class="animated" data-ng-class="{'fade': vm.loginFailedForgotPass}">{{'string.forgot_the' | translate}} <a href="">{{'string._password' | translate}}</a></p>
+                </div><!--skew-transform-->
             </div>
         </form>
     </div>

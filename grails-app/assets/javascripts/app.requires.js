@@ -8,6 +8,8 @@
 // AngularJS
 //= require ../client/bower_components/angular/angular
 
+//= require ../client/bower_components/angular-animate/angular-animate.min
+
 // angular-translate
 //= require ../client/bower_components/angular-translate/angular-translate.min
 //= require ../client/bower_components/messageformat/messageformat.min
@@ -20,7 +22,6 @@
 
 // ngMaterial
 //= require ../client/bower_components/angular-aria/angular-aria.min
-//= require ../client/bower_components/angular-animate/angular-animate.min
 //= require ../client/bower_components/angular-messages/angular-messages.min
 //= require ../client/bower_components/angular-material/angular-material.min
 

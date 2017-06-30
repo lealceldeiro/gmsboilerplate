@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function loginCtrl(indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROUTE, blockSrv, userSrv, $rootScope,
-                   notificationSrv, configSrv) {
+                   notificationSrv, configSrv, translatorSrv, $timeout) {
 
     var vm = this;
     var keyP = 'LOGIN__';
@@ -42,9 +42,12 @@ function loginCtrl(indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROU
         if (form) {
             form.$setSubmitted();
             if (form.$valid) {
+                vm.wizard.loginFailedShake = false;
                 blockSrv.block();
 
                 //do login
+                notificationSrv.mutedNotifications = true;
+                notificationSrv.doNotDoUNAUTHORIZED_BACKWARD = true;
                 loginSrv.login(vm.wizard.emailOrUsername, vm.wizard.password).then(
                     function (data) {
                         var e = systemSrv.evalAuth(data, '_LOGIN_', false, false);
@@ -103,11 +106,36 @@ function loginCtrl(indexSrv, sessionSrv, navigationSrv, systemSrv, loginSrv, ROU
                             sessionSrv.setSecurityRefreshToken(systemSrv.getAuthRefreshToken());
                         }
                         else {
+
+                            _visualizeIncorrectLogin(3500);
+
+                            var aux = {};
+                            translatorSrv.setText('LOGIN.username_or_password_incorrect', aux, 'text').then(
+                                function () {
+                                    notificationSrv.showNotification(notificationSrv.type, aux['text'])
+                                }
+                            );
                             blockSrv.unBlock();
                         }
+                        notificationSrv.mutedNotifications = false;
+                        notificationSrv.doNotDoUNAUTHORIZED_BACKWARD = false;
                     }
                 );
             }
+        }
+    }
+
+    function _visualizeIncorrectLogin(init) {
+        if (init) {
+            vm.wizard.loginFailedForgotPass = false;
+            vm.wizard.loginFailedShake = true;
+            vm.wizard.loginFailedColor = true;
+            for(var i = init; i < init + 1300; i+=500) {
+                (function (val) {
+                    $timeout(function () { vm.wizard.loginFailedForgotPass = !vm.wizard.loginFailedForgotPass; }, val);
+                })(i);
+            }
+            $timeout(function () { vm.wizard.loginFailedForgotPass = false; }, i);
         }
     }
 

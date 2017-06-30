@@ -201,6 +201,7 @@
          view, since it wasn't resolved due to the forbidden backend response*/
         $rootScope.$on('UNAUTHORIZED_BACKWARD', function () {
             if (navigationSrv.prevRoute) {
+                navigationSrv.prevRoute !== '/'
                 if (params && typeof params['id']  !== 'undefined' && params['id'] !== null
                     && navigationSrv.prevRoute.indexOf(':id') !== -1) {
                     navigationSrv.goTo(navigationSrv.prevRoute, ':id', params['id']);
@@ -240,7 +241,8 @@
                 'pascalprecht.translate',                           //angular-translate
                 'ngPasswordStrength',
                 'ngMaterialSidemenu',                               //material side menu
-                'ngFileUpload'
+                'ngFileUpload',
+                'ngAnimate'
 
             ]
         )

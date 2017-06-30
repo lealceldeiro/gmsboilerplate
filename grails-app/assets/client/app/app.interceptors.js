@@ -42,8 +42,12 @@ function interceptor(sessionSrv, systemSrv, notificationSrv, $rootScope, BROADCA
                 $rootScope.$broadcast(BROADCAST.auth.REFRESH_TOKEN);
             }
             else {
-                notificationSrv.showNotification(notificationSrv.type.ERROR, notificationSrv.utilText.unauthorized);
-                $rootScope.$broadcast(BROADCAST.auth.UNAUTHORIZED_BACKWARD);
+                if (!notificationSrv.mutedNotifications) {
+                    notificationSrv.showNotification(notificationSrv.type.ERROR, notificationSrv.utilText.unauthorized);
+                }
+                if (!notificationSrv.doNotDoUNAUTHORIZED_BACKWARD) {
+                    $rootScope.$broadcast(BROADCAST.auth.UNAUTHORIZED_BACKWARD);
+                }
             }
 
         }
