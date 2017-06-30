@@ -38,7 +38,7 @@
 
 // password strength meter
 //= require ../client/bower_components/lodash/lodash.min
-//= require ../client/bower_components/ng-password-strength/dist/scripts/ng-password-strength.min
+//= require ../client/bower_components/ng-password-strength/dist/scripts/ng-password-strength
 
 // sidemenu
 //= require ../client/bower_components/angular-material-sidemenu/dest/angular-material-sidemenu

@@ -99,7 +99,10 @@
 
                 <div data-ng-if="vm.password && registerForm.password.$valid"
                      ng-password-strength="vm.password" strength="vm.passStrength"
-                     inner-class="progress-bar" inner-class-prefix="progress-bar-"
+                     inner-class="progress-bar"
+                     inner-low-strength-class="bg-danger"
+                     inner-middle-strength-class="bg-warning"
+                     inner-high-strength-class="bg-success"
                      class="password-strength-ch"
                 ></div>
 
