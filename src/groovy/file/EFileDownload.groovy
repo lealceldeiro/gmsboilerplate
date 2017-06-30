@@ -21,11 +21,13 @@ trait EFileDownload extends FileDownload{
      * @return EFile instance for being downloaded
      */
     def downloadFile(EFile eFile, String mode) {
-        byte[] bytes =  getEFileManager().getFile(eFile)
-        File tempFile = File.createTempFile(eFile.name, '.' + eFile.extension, null)
-        FileOutputStream fos = new FileOutputStream(tempFile)
-        fos.write(bytes)
-        serveFile(tempFile, mode)
+        if(eFile) {
+            byte[] bytes = getEFileManager().getFile(eFile)
+            File tempFile = File.createTempFile(eFile.name, '.' + eFile.extension, null)
+            FileOutputStream fos = new FileOutputStream(tempFile)
+            fos.write(bytes)
+            serveFile(tempFile, mode)
+        }
     }
 
     /**
@@ -36,10 +38,12 @@ trait EFileDownload extends FileDownload{
      * @return EFile instance for being downloaded
      */
     def downloadFile(EFile eFile, String mode, String filePath) {
-        byte[] bytes =  getEFileManager().getFile(eFile)
-        File tempFile = new File(filePath)
-        FileOutputStream fos = new FileOutputStream(tempFile)
-        fos.write(bytes)
-        serveFile(tempFile, mode)
+        if(eFile) {
+            byte[] bytes = getEFileManager().getFile(eFile)
+            File tempFile = new File(filePath)
+            FileOutputStream fos = new FileOutputStream(tempFile)
+            fos.write(bytes)
+            serveFile(tempFile, mode)
+        }
     }
 }

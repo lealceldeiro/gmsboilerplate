@@ -99,15 +99,19 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
             }
         );
 
-        var keyPic = keyP + "getProfilePicture";
-        userSrv.getProfilePicture(id).then(
-            function(data) {
-                var e = systemSrv.eval(data, keyPic, false, true);
-                if (e) {
-                    vm.wizard.profilePicture = systemSrv.getItemUrl(keyPic);
+        $timeout(function () {
+            var keyPic = keyP + "getProfilePicture";
+            userSrv.getProfilePicture(id).then(
+                function(data) {
+                    var e = systemSrv.eval(data, keyPic, false, true);
+                    if (e) {
+                        vm.wizard.profilePicture = systemSrv.getItemUrl(keyPic);
+                        vm.wizard.cachedProfilePic = systemSrv.getItemUrl(keyPic);
+                    }
                 }
-            }
-        );
+            );
+        }, 950);
+
     }
 
     function _loadEntitiesInfo() {
@@ -236,7 +240,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
                 if (e) {
 
                     //update profile picture
-                    if (vm.wizard.profilePicture) {
+                    if (vm.wizard.profilePicture && typeof vm.wizard.profilePicture !== "string") {
                         var fnKey2 = keyP + "updateProfilePicture";
                         userSrv.updateProfilePicture(sessionSrv.currentUser().id, vm.wizard.profilePicture).then(
                             function (data) {

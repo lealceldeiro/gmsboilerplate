@@ -129,8 +129,8 @@
                                  alt="{{'USER.profile_picture' | translate}}"
                                  data-ngf-pattern="'image/*'"
                                  data-ngf-accept="'image/*'" data-ngf-max-size="1MB"
-                                 data-ngf-src="vm.profilePicture || 'assets/app/modules/_common/img/social/profile.jpg'"
-                                 data-ngf-select
+                                 data-ngf-src="vm.profilePicture || vm.cachedProfilePic || 'assets/app/modules/_common/img/social/profile.jpg'"
+                                 data-ngf-select="vm.onSelectProfilePic($file)"
                                  data-ng-model="vm.profilePicture">
                             <!--./profile image-->
                         </div>

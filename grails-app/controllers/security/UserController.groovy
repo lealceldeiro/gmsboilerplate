@@ -181,7 +181,8 @@ class UserController implements ExceptionHandler, EFileDownload{
     @Secured("permitAll()")
     def getProfilePicture(Long id){
         def u = userService.getUser(id)
-        if(u){
+        if(u && u.profilePicture){
+            //todo: make profiles pictures (several, not just one)
             def profilePicture = u.profilePicture
             downloadFile(profilePicture, "inline")
         }
