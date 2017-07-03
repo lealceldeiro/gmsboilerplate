@@ -44,10 +44,15 @@ function baseSrv(valueSrv, systemSrv) {
                 function (res) {
                     //since this is a file sent in the response, we have to build the standard response here
                     if (res && res.status === STATUS_OK) {
-                        r[systemSrv.success_resp] = true;
-                        r[systemSrv.item_resp] = res.data;
-                        r[systemSrv.itemUlr_resp] = res.config.url;
-                        return r;
+                        if (res.data[systemSrv.success_resp] === false){
+                            return res ? res.data : null;
+                        }
+                        else {
+                            r[systemSrv.success_resp] = true;
+                            r[systemSrv.item_resp] = res.data;
+                            r[systemSrv.itemUlr_resp] = res.config.url;
+                            return r;
+                        }
                     }
                 },
                 function (resOnErr) {

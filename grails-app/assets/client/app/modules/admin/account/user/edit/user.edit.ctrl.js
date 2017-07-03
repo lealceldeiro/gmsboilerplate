@@ -103,7 +103,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
             var keyPic = keyP + "getProfilePicture";
             userSrv.getProfilePicture(id).then(
                 function(data) {
-                    var e = systemSrv.eval(data, keyPic, false, true);
+                    var e = systemSrv.eval(data, keyPic, false, false);
                     if (e) {
                         vm.wizard.profilePicture = systemSrv.getItemUrl(keyPic);
                         vm.wizard.cachedProfilePic = systemSrv.getItemUrl(keyPic);
