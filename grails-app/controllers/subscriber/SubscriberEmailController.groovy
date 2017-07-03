@@ -60,6 +60,7 @@ class SubscriberEmailController implements ExceptionHandler{
             if(email != null && email != ""){
                 final def r = userService.requestNewVerificationEmail(email, subject, emailText, subButtonText, confirmBaseUrl)
                 if(r){
+                    //todo: log action
                     String p0 = g.message(code:"article.the_male_singular"), p1 = g.message(code:"security.user.user")
                     doSuccessWithArgs(g.message(code: "general.action.CREATE.success", args: [p0, p1, "o"]) as String, [id: r.id])
                 }

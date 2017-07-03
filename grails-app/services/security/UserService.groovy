@@ -3,6 +3,7 @@ package security
 import command.SearchCommand
 import command.file.FileUploadCommand
 import command.security.user.UserCommand
+import exceptions.EmailAlreadyVerifiedException
 import exceptions.GenericException
 import exceptions.NotFoundException
 import exceptions.ValidationsException
@@ -390,13 +391,16 @@ class UserService {
                                     String emailVerificationBtnText, String confirmBaseUrl) {
         EUser u = EUser.findByEmail(email)
         if(u) {
-            BEmailVerificationToken evt = u.emailVerificationToken
-            if(evt){
-                u.emailVerificationToken = null
-                u.save flush: true
-                evt.delete()
+            if(!u.emailVerified) {
+                BEmailVerificationToken evt = u.emailVerificationToken
+                if (evt) {
+                    u.emailVerificationToken = null
+                    u.save flush: true
+                    evt.delete(flush: true)
+                }
+                return sendSubscription(u, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, confirmBaseUrl)
             }
-            return sendSubscription(u, emailVerificationSubject, emailVerificationText, emailVerificationBtnText, confirmBaseUrl)
+            else throw new EmailAlreadyVerifiedException()
         }
         else { throw new NotFoundException("subscription.email.not.found") }
     }

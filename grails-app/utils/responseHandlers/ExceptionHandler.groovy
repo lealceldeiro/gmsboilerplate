@@ -2,6 +2,7 @@ package responseHandlers
 
 import exceptions.CannotDeleteDueToAssociationException
 import exceptions.CannotDeleteSystemElementException
+import exceptions.EmailAlreadyVerifiedException
 import exceptions.GenericException
 import exceptions.NotAssignedToException
 import exceptions.NotFoundException
@@ -60,6 +61,15 @@ trait ExceptionHandler implements ResponseHandler{
     def handleValidationsException(ValidationsException ex) {
         response.status = HttpStatus.OK.value()
         String err = g.message(code:"general.exception.information.incorrect")
+        if(ex.i18nMainMessage) {
+            err = g.message(code: ex.i18nMainMessage) as String
+        }
+        doFail(err)
+    }
+
+    def handleEmailAlreadyVerifiedException(EmailAlreadyVerifiedException ex) {
+        response.status = HttpStatus.OK.value()
+        String err = g.message(code:"subscription.confirmation.failed.email.used.body")
         if(ex.i18nMainMessage) {
             err = g.message(code: ex.i18nMainMessage) as String
         }

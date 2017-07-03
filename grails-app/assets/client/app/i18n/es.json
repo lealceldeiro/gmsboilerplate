@@ -59,6 +59,7 @@
   "string.valid_user_description": "Por cuestiones de seguridad los usuarios introducidos deben cumplir con las condiciones siguientes: <br /><br /> - Solamente un caracter especial (._-) permitido y no puede ser a los extremos <br /> - El primer caracter no puede ser un número <br />- Todos los demás caracteres permitidos son letras y números <br /> - La longitud total debe ser entre 3 y 20 caracteres <br /><br /> Ejemplo: <span class='gms-blue'>niceBoy.cuban</span>",
   "string.user_taken": "Este usuario ya está en uso",
   "string.email_taken": "Este email ya está en uso",
+  "string.re_request_email": "¿Solicitar email de verificación nuevamente?",
   "string.email_does_n_exist": "Email desconocido",
   "string.want_to_subscribe": "¿Suscribirse ahora?",
   "string.not_a_member": "¿No eres miembro?",

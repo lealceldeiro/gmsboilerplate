@@ -46,4 +46,5 @@ web-app/js
 
 wrapper/
 
-grails-app/assets/client/bower_components
+grails-app/assets/client/bower_components/*
+!/grails-app/assets/client/bower_components/ng-password-strength/dist/scripts/ng-password-strength.js

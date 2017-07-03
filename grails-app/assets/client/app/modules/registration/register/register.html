@@ -78,6 +78,10 @@
                     <div ng-messages="registerForm.emailTaken.$error" md-auto-hide="false">
                         <div ng-message="required">
                             {{'string.email_taken' | translate}}
+                            &nbsp;
+                            <a href="" data-ng-click="idxCtrl.go('/email/request')">
+                                {{'string.re_request_email' | translate}}
+                            </a>
                         </div>
                     </div>
                 </md-input-container>
