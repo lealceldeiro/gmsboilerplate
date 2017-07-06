@@ -154,6 +154,8 @@
 
   "MAIN.main": "Main",
 
-  "HOME.home": "Home"
+  "HOME.home": "Home",
+
+  "PP.could_not_save": "Error while saving profile picture"
 
 }

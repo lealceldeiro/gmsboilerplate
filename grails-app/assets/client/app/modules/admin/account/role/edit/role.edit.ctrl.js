@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function roleEditCtrl(indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, blockSrv,
-                      permissionSrv, dialogSrv, $filter, translatorSrv, $timeout, searchSrv, $scope) {
+                      permissionSrv, dialogSrv, $filter, translatorSrv, $timeout, searchSrv, $scope, formSrv) {
 
     var vm = this;
     var keyP = 'ADMIN_ROLE_EDIT';
@@ -46,6 +46,7 @@ function roleEditCtrl(indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notifi
         if (navigationSrv.currentPath() === ROUTE.ADMIN_ROLE_NEW) {
             fnLoadPermissionsList();
             indexSrv.setTitle('ROLE.new');
+            vm.NEW_MODE = true;
         }
         else {
             vm.wizard.role = null;
@@ -79,8 +80,8 @@ function roleEditCtrl(indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notifi
     }
 
     function fnSave(form) {
-        if (form) {
-            form.$setSubmitted();
+        if (formSrv.readyToSave(form)) {
+            formSrv.setAllSubmitted(form, true, true);
             if (form.$valid) {
                 blockSrv.block();
                 var params = {
@@ -99,8 +100,12 @@ function roleEditCtrl(indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notifi
                         blockSrv.unBlock();
                         var e = systemSrv.eval(data, fnKey, true, true);
                         if (e) {
-                            //success, go back to list
-                            fnCancel();
+                            if (vm.NEW_MODE) {
+                                //success, clear fields
+                                vm.wizard.role = {enabled: true};
+                                vm.wizard.permissions.selected = [];
+                                formSrv.setAllPristine(form);
+                            }
                         }
                     }
                 )

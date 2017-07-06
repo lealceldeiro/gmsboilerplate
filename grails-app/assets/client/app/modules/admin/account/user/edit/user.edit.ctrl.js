@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, roleSrv, blockSrv, sessionSrv,
-                      $timeout, ownedEntitySrv, dialogSrv, searchSrv, configSrv, translatorSrv) {
+                      $timeout, ownedEntitySrv, dialogSrv, searchSrv, configSrv, translatorSrv, formSrv) {
 
     var vm = this;
     var keyP = 'ADMIN_USER_EDIT';
@@ -68,6 +68,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
         _loadRoles();
         if (navigationSrv.currentPath() === ROUTE.ADMIN_USER_NEW) {
             indexSrv.setTitle('USER.new');
+            vm.NEW_MODE = true;
         }
         else {
             vm.wizard.entity = null;
@@ -77,7 +78,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
                 _loadData(p.id);
                 indexSrv.setTitle('USER.edit');
             }
-            else{
+            else {
                 notificationSrv.showNotification(notificationSrv.type.WARNING, notificationSrv.utilText.select_element_required);
                 navigationSrv.goTo(ROUTE.ADMIN_USERS);
             }
@@ -170,8 +171,10 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
             fnSaveRolesAndSelectEntity(); //save data for last entity clicked
         }
 
-        if (form) {
-            form.$setSubmitted();
+        if (formSrv.readyToSave(form)) {
+            vm.saveForm = form;//save form reference, for setting it pristine later when saved successfully
+
+            formSrv.setAllSubmitted(form, true, true);
             if (form.$valid && !vm.wizard.passwordMatch.notMatch && !vm.wizard.userTaken && !vm.wizard.emailTaken) {
                 if (typeof vm.id !== 'undefined' && vm.id !== null && !vm.wizard.entity.enabled) {
                     var u = sessionSrv.currentUser();
@@ -199,6 +202,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
     }
 
     function _doSave(doNotDoLogout) {
+        vm.errorSaveProfilePic = false;
         var params = {
             username: vm.wizard.entity.username,
             name: vm.wizard.entity.name,
@@ -236,38 +240,55 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
         def.then(
             function (data) {
                 blockSrv.unBlock();
-                var e = systemSrv.eval(data, fnKey, false, true);
+                var e = systemSrv.eval(data, fnKey, true, true);
                 if (e) {
-
+                    vm.tempId = data.id;
                     //update profile picture
                     if (vm.wizard.profilePicture && typeof vm.wizard.profilePicture !== "string") {
                         var fnKey2 = keyP + "updateProfilePicture";
-                        userSrv.updateProfilePicture(sessionSrv.currentUser().id, vm.wizard.profilePicture).then(
+                        userSrv.updateProfilePicture(vm.tempId, vm.wizard.profilePicture).then(
                             function (data) {
-                                systemSrv.eval(data, fnKey2, false, true);
+                                var e = systemSrv.eval(data, fnKey2, false, false);
+                                if (e) {
+                                    if (vm.NEW_MODE) {
+                                        vm.wizard.profilePicture = null;
+                                    }
+                                    __endSavingData(doNotDoLogout)
+                                }
+                                else {
+                                    //set id, so "edit user" will be called instead of "new user" if user press "save" again
+                                    vm.id = vm.tempId;
+                                    $timeout(function () { vm.wizard.errorSaveProfilePic = true; }); //wait for the notification
+                                    notificationSrv.showNotification(notificationSrv.type.error, "PP.could_not_save");
+                                }
                             }
                         )
                     }
-
-
-                    if (doNotDoLogout !== true) {
-                        _doLogout();
-                    } else {
-                        if (sessionSrv.currentUser().id == vm.id && vm.wizard.rolesTouched) {
-                            var aux = {};
-                            translatorSrv.setText('button.close_session_now', aux, 'closeButtonText');
-                            translatorSrv.setText('string.headline.information', aux, 'headline');
-                            translatorSrv.setText('USER.close_session_now', aux, 'messageText');
-                            $timeout(function () {
-                                var buttons = [{text: aux['closeButtonText'], function: _doLogout, primary: true}];
-                                dialogSrv.showDialog(dialogSrv.type.SUCCESS, aux['headline'], aux['messageText'], buttons);
-                            });
-                        }
-                        else {fnCancel();}
-                    }
+                    else { __endSavingData(doNotDoLogout); }
                 }
             }
         )
+    }
+
+    function __endSavingData(doNotDoLogout) {
+        if (vm.NEW_MODE) {
+            vm.wizard.entity = {enabled: true};
+            vm.wizard.roles.selected = [];
+            formSrv.setAllPristine(vm.saveForm);
+        }
+
+        if (doNotDoLogout !== true) { _doLogout(); }
+        else if (sessionSrv.currentUser().id == vm.id && vm.wizard.rolesTouched) {
+            var aux = {};
+            translatorSrv.setText('button.close_session_now', aux, 'closeButtonText');
+            translatorSrv.setText('string.headline.information', aux, 'headline');
+            translatorSrv.setText('USER.close_session_now', aux, 'messageText');
+            $timeout(function () {
+                var buttons = [{text: aux['closeButtonText'], function: _doLogout, primary: true}];
+                dialogSrv.showDialog(dialogSrv.type.SUCCESS, aux['headline'], aux['messageText'], buttons);
+            });
+
+        }
     }
 
     function _doLogout() {

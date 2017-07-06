@@ -10,7 +10,7 @@
                         <md-icon md-svg-icon="social:ic_person_outline_24px"></md-icon>
                         <input ng-model="vm.entity.name" type="text" name="name" required/>
 
-                        <div ng-messages="editUserForm.name.$error" md-auto-hide="false">
+                        <div ng-messages="editUserForm.name.$error">
                             <div ng-message="required">
                                 {{'string.name_required' | translate}}
                             </div>
@@ -26,7 +26,7 @@
                                data-ng-change="vm.checkUsername()"
                                data-ng-pattern="/(?=^.{3,20}$)^[a-zA-Z][a-zA-Z0-9]*[._-]?[a-zA-Z0-9]+$/"/>
 
-                        <div ng-messages="editUserForm.username.$error" md-auto-hide="false">
+                        <div ng-messages="editUserForm.username.$error">
                             <div ng-message="required">
                                 {{'string.user_required' | translate}}
                             </div>
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="userTaken" data-ng-if="vm.userTaken" ng-model="vm.ctrlUserTaken" required>
-                        <div ng-messages="editUserForm.userTaken.$error" md-auto-hide="false">
+                        <div ng-messages="editUserForm.userTaken.$error">
                             <div ng-message="required">
                                 {{'string.user_taken' | translate}}
                             </div>
@@ -53,7 +53,7 @@
                                data-ng-model-options="{debounce: 500}"
                                data-ng-change="vm.checkEmail()"/>
 
-                        <div ng-messages="editUserForm.email.$error" md-auto-hide="false">
+                        <div ng-messages="editUserForm.email.$error">
                             <div ng-message="required">
                                 {{'string.email_required' | translate}}
                             </div>
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="emailTaken" data-ng-if="vm.emailTaken" ng-model="vm.ctrlEmailTaken" required>
-                        <div ng-messages="editUserForm.emailTaken.$error" md-auto-hide="false">
+                        <div ng-messages="editUserForm.emailTaken.$error">
                             <div ng-message="required">
                                 {{'string.email_taken' | translate}}
                             </div>
@@ -79,7 +79,7 @@
                                data-ng-change="vm.checkPasswordMatch()"
                         />
 
-                        <div ng-messages="editUserForm.password.$error" md-auto-hide="false">
+                        <div ng-messages="editUserForm.password.$error">
                             <div ng-message="required">
                                 {{'string.password_required' | translate}}
                             </div>
@@ -102,7 +102,7 @@
                         <input ng-model="vm.entity.password2" type="password" name="password2"
                                data-ng-required="vm.isPasswordRequired() || vm.entity.password"
                                data-ng-change="vm.checkPasswordMatch()"/>
-                        <div ng-messages="editUserForm.password2.$error" md-auto-hide="false">
+                        <div ng-messages="editUserForm.password2.$error">
                             <div ng-message="required">
                                 {{'string.password_repeat_required' | translate}}
                             </div>
@@ -134,7 +134,9 @@
                                  data-ngf-accept="'image/*'" data-ngf-max-size="1MB"
                                  data-ngf-src="vm.profilePicture || vm.cachedProfilePic || 'assets/app/modules/_common/img/social/profile.jpg'"
                                  data-ngf-select="vm.onSelectProfilePic($file)"
-                                 data-ng-model="vm.profilePicture">
+                                 data-ng-model="vm.profilePicture"
+                                 data-ng-class="{'error': vm.errorSaveProfilePic}"
+                            >
                             <!--./profile image-->
                         </div>
                     </div>
@@ -219,7 +221,7 @@
         </md-button>
         <md-button class="md-active md-raised"
                    ng-click="vm.cancel()">
-            {{'button.cancel' | translate}}
+            {{'button.back' | translate}}
         </md-button>
     </div>
 

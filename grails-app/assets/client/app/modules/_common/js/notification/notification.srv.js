@@ -50,16 +50,16 @@ function notificationSrv(toastSrv, $translate) {
      * the strings in the array "actionNames"
      */
     function fnShow(type, message, actions, actionNames, primaryActionName) {
-        if (self.service.utilText.hasOwnProperty(message)) {
+        //if (self.service.utilText.hasOwnProperty(message)) {
             $translate(message).then(function (text) {
                 _showMsg(type, text, actions, actionNames, primaryActionName)
             }, function (textID) {
                 _showMsg(type, textID, actions, actionNames, primaryActionName)
             });
-        }
-        else {
-            _showMsg(type, message, actions, actionNames, primaryActionName)
-        }
+        //}
+        //else {
+        //    _showMsg(type, message, actions, actionNames, primaryActionName)
+        //}
     }
 
     function _showMsg(type, message, actions, actionNames, primaryActionName){

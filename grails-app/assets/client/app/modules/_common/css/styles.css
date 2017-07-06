@@ -20,6 +20,12 @@
   .md-sidemenu-wrapper.md-active {
     height: auto; }
 
+/*fixes ng-messages|angular-material|ng-animate issue (see: https://github.com/angular/material/issues/9543) */
+/* TODO: fix for ng-messages issue
+.ng-untouched ~ .md-input-messages-animation {  //ng-message after an input
+  height: 0;
+  opacity: 0;
+}*/
 /*******************  size   *********************/
 /*******************  color   *******************/
 /*******************  margin   *******************/
@@ -27,7 +33,6 @@
 /*******************  positions   *******************/
 .img.img-profile {
   max-height: 150px; }
-
 .img.img-profile:not(.no-hover):hover {
   -webkit-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
@@ -154,7 +159,6 @@ md-icon.s12 {
   width: 12px;
   min-height: 12px;
   min-width: 12px; }
-
 md-icon.flag-icon {
   height: 20px;
   width: 20px;
@@ -179,10 +183,8 @@ hr {
 
 button.text-white md-icon svg {
   fill: white; }
-
 button.highlight-over:hover md-icon svg {
   fill: rgba(255, 255, 255, 0.75); }
-
 button.loading-btn {
   -webkit-animation: spin 1s linear infinite reverse;
   /* Chrome, Opera 15+, Safari 5+ */
@@ -212,6 +214,9 @@ md-card.card1 {
 
 md-divider {
   border-top: 1px solid rgba(68, 156, 71, 0.44); }
+
+img.error {
+  border: 1px solid #dd2c00; }
 
 /*******************  size   *********************/
 /*******************  color   *******************/

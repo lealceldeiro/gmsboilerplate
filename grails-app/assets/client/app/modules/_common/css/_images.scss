@@ -1,11 +1,12 @@
 @import "mixings";
 
-.img.img-profile {
-  @include max-height(150px);
-}
-
-.img.img-profile:not(.no-hover):hover {
-  -webkit-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+.img {
+  &.img-profile {
+    @include max-height(150px);
+  }
+  &.img-profile:not(.no-hover):hover {
+    -webkit-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+  }
 }

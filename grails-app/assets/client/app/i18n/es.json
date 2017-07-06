@@ -154,6 +154,8 @@
 
   "MAIN.main": "Principal",
 
-  "HOME.home": "Inicio"
+  "HOME.home": "Inicio",
+
+  "PP.could_not_save": "Error guardando la imagen de perfil"
 
 }

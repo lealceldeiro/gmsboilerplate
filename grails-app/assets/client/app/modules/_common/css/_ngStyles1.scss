@@ -1,6 +1,7 @@
 @import "colors";
 @import "margins";
 @import "sizes";
+@import "vars";
 
 md-content { @include margin(null, 8px, null, 8px) }
 
@@ -40,24 +41,24 @@ div.repeated-item {
     margin-bottom: 39px;
 }
 
-md-icon.s12 {
+md-icon {
+  &.s12 {
     height: 12px;
     width: 12px;
     min-height: 12px;
     min-width: 12px;
-}
-
-md-icon.flag-icon {
-  height: 20px;
-  width: 20px;
-  min-width: 20px;
-  min-height: 20px;
-  margin-top: -2px;
-
-  svg {
-    border-radius: 20%;
   }
+  &.flag-icon {
+    height: 20px;
+    width: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    margin-top: -2px;
 
+      svg {
+        border-radius: 20%;
+      }
+  }
 }
 
 .sidenav1 {
@@ -71,17 +72,19 @@ md-backdrop.md-sidenav-backdrop {
 
 hr { @include margin(0,0,0,0) }
 
-button.text-white md-icon svg {
+button {
+  &.text-white md-icon svg {
     fill: white;
-}
+  }
 
-button.highlight-over:hover md-icon svg {
+  &.highlight-over:hover md-icon svg {
     fill:  rgba(255,255,255,.75);;
-}
+  }
 
-button.loading-btn {
-  -webkit-animation: spin 1s linear infinite reverse; /* Chrome, Opera 15+, Safari 5+ */
-  animation: spin 1s linear infinite reverse; /* Chrome, Firefox 16+, IE 10+, Opera */
+  &.loading-btn {
+    -webkit-animation: spin 1s linear infinite reverse; /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 1s linear infinite reverse; /* Chrome, Firefox 16+, IE 10+, Opera */
+  }
 }
 
 .vertical-divider {
@@ -106,5 +109,9 @@ md-card.card1 {
 }
 
 md-divider {
-  border-top: 1px solid rgba(68, 156, 71, 0.44);
+  border-top: 1px solid $color_green_1;
+}
+
+img.error {
+  border: 1px solid $color_error;
 }

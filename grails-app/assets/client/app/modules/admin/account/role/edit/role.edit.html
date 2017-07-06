@@ -9,7 +9,7 @@
                     <label>{{'string.name' | translate}}</label>
                     <md-icon md-svg-icon="hardware:ic_security_24px"></md-icon>
                     <input ng-model="vm.role.label" type="text" required name="label" />
-                    <div ng-messages="editRoleForm.label.$error" md-auto-hide="false">
+                    <div ng-messages="editRoleForm.label.$error">
                         <div ng-message="required">
                             {{'string.name_required' | translate}}
                         </div>
@@ -21,7 +21,7 @@
                     <label>{{'string.description' | translate}}</label>
                     <md-icon md-svg-icon="action:ic_description_24px"></md-icon>
                     <textarea ng-model="vm.role.description" required name="description"></textarea>
-                    <div ng-messages="editRoleForm.description.$error" md-auto-hide="false">
+                    <div ng-messages="editRoleForm.description.$error">
                         <div ng-message="required">
                             {{'string.description_required' | translate}}
                         </div>
@@ -39,7 +39,7 @@
                                 <md-option ng-value="item" ng-repeat="item in vm.permissions.all | filter: {category: cat}">{{item.label}}</md-option>
                             </md-optgroup>
                         </md-select>
-                        <div ng-messages="editRoleForm.permissions.$error" md-auto-hide="false">
+                        <div ng-messages="editRoleForm.permissions.$error">
                             <div ng-message="required">
                                 {{'PERMISSIONS.select_permissions_required' | translate}}
                             </div>
@@ -80,7 +80,7 @@
         </md-button>
         <md-button class="md-active md-raised"
                    ng-click="vm.cancel()">
-            {{'button.cancel' | translate}}
+            {{'button.back' | translate}}
         </md-button>
     </div>
 

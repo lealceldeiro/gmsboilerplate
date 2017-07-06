@@ -9,7 +9,7 @@
                     <md-icon md-svg-icon="action:ic_dashboard_24px"></md-icon>
                     <input ng-model="vm.entity.name" type="text" name="name" required data-ng-readonly="vm.entity.id && vm.entity.name == 'HOME'"/>
 
-                    <div ng-messages="editEntityForm.name.$error" md-auto-hide="false">
+                    <div ng-messages="editEntityForm.name.$error">
                         <div ng-message="required">
                             {{'string.name_required' | translate}}
                         </div>
@@ -52,7 +52,7 @@
                     <md-icon md-svg-icon="action:ic_description_24px"></md-icon>
                     <textarea ng-model="vm.entity.description" name="description" required></textarea>
 
-                    <div ng-messages="editEntityForm.description.$error" md-auto-hide="false">
+                    <div ng-messages="editEntityForm.description.$error">
                         <div ng-message="required">
                             {{'string.description_required' | translate}}
                         </div>
@@ -78,7 +78,7 @@
         </md-button>
         <md-button class="md-active md-raised"
                    ng-click="vm.cancel()">
-            {{'button.cancel' | translate}}
+            {{'button.back' | translate}}
         </md-button>
     </div>
 </div>

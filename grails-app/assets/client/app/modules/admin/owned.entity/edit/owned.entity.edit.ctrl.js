@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, systemSrv, notificationSrv, blockSrv,
-                             dialogSrv) {
+                             dialogSrv, formSrv) {
 
     var vm = this;
     var keyP = 'ADMIN_OWNED_ENTITY_EDIT';
@@ -36,6 +36,7 @@ function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, sys
     function fnInit() {
         if (navigationSrv.currentPath() === ROUTE.ADMIN_OWNED_ENTITY_NEW) {
             indexSrv.setTitle('ENTITY.new');
+            vm.NEW_MODE = true;
         }
         else {
             vm.wizard.entity = null;
@@ -68,8 +69,8 @@ function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, sys
     }
 
     function fnSave(form) {
-        if (form) {
-            form.$setSubmitted();
+        if (formSrv.readyToSave(form)) {
+            formSrv.setAllSubmitted(form, true, true);
             if (form.$valid && !vm.wizard.userTaken) {
                 blockSrv.block();
                 var params = {
@@ -83,8 +84,11 @@ function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, sys
                         blockSrv.unBlock();
                         var e = systemSrv.eval(data, fnKey, true, true);
                         if (e) {
-                            //success, go back to list
-                            fnCancel();
+                            if (vm.NEW_MODE) {
+                                //success, clear fields
+                                vm.wizard.entity = {};
+                                formSrv.setAllPristine(form);
+                            }
                         }
                     }
                 )
