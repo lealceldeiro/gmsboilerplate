@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notificationSrv, roleSrv, blockSrv, sessionSrv,
-                      $timeout, ownedEntitySrv, dialogSrv, searchSrv, configSrv, translatorSrv, formSrv) {
+                      $timeout, ownedEntitySrv, dialogSrv, searchSrv, configSrv, translatorSrv, formSrv, $scope) {
 
     var vm = this;
     var keyP = 'ADMIN_USER_EDIT';
@@ -274,7 +274,7 @@ function userEditCtrl(indexSrv, userSrv, navigationSrv, ROUTE, systemSrv, notifi
         if (vm.NEW_MODE) {
             vm.wizard.entity = {enabled: true};
             vm.wizard.roles.selected = [];
-            formSrv.setAllPristine(vm.saveForm);
+            formSrv.setAllPristine(vm.saveForm, $scope);
         }
 
         if (doNotDoLogout !== true) { _doLogout(); }

@@ -104,7 +104,7 @@ function roleEditCtrl(indexSrv, roleSrv, navigationSrv, ROUTE, systemSrv, notifi
                                 //success, clear fields
                                 vm.wizard.role = {enabled: true};
                                 vm.wizard.permissions.selected = [];
-                                formSrv.setAllPristine(form);
+                                formSrv.setAllPristine(form, $scope);
                             }
                         }
                     }

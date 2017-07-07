@@ -8,8 +8,7 @@
 }
 
 /*fixes ng-messages|angular-material|ng-animate issue (see: https://github.com/angular/material/issues/9543) */
-/* TODO: fix for ng-messages issue
-.ng-untouched ~ .md-input-messages-animation {  //ng-message after an input
+ .ng-untouched ~ .md-input-messages-animation {  //ng-message after an input
   height: 0;
   opacity: 0;
-}*/
+}

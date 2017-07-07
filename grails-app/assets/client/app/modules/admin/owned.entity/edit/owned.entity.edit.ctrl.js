@@ -10,7 +10,7 @@ angular
 
 /*@ngInject*/
 function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, systemSrv, notificationSrv, blockSrv,
-                             dialogSrv, formSrv) {
+                             dialogSrv, formSrv, $scope) {
 
     var vm = this;
     var keyP = 'ADMIN_OWNED_ENTITY_EDIT';
@@ -87,7 +87,7 @@ function ownedEntityEditCtrl(indexSrv, ownedEntitySrv, navigationSrv, ROUTE, sys
                             if (vm.NEW_MODE) {
                                 //success, clear fields
                                 vm.wizard.entity = {};
-                                formSrv.setAllPristine(form);
+                                formSrv.setAllPristine(form, $scope);
                             }
                         }
                     }

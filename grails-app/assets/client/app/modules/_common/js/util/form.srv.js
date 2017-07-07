@@ -10,6 +10,8 @@ angular
 function formSrv($timeout) {
     var self = this;
 
+    var scopes = {};
+
     self.service = {
         setAllPristine: fnSetAllPristine,
         setAllSubmitted: fnSetAllSubmitted,
@@ -23,9 +25,11 @@ function formSrv($timeout) {
      * Sets a formElement and its sub-components recursively $pristine and $untouched (AngularJS' $pristine and AngularJS'
      * $untouched). Optionally it reset the error object present in these components.
      * @param formElement to be set as $pristine and $untouched
+     * @param scope [optional] controller's scope in order to apply possible fixes. A scpe.$apply will be executed after
+     * the fix is being applies, because DOM elements may be modified outside the AngularJS context.
      * @param removeErrorObject [optional] whether the error object should be reset or not
      */
-    function fnSetAllPristine(formElement, removeErrorObject) {
+    function fnSetAllPristine(formElement, scope, removeErrorObject) {
         if (formElement) {
             $timeout(function () {
                 if (formElement.$setPristine) {
@@ -42,6 +46,15 @@ function formSrv($timeout) {
                         fnSetAllPristine(item, removeErrorObject);
                     }
                 });
+
+                //apply fixes and update angular context
+                if (scope && scope.$apply) {
+                    scopes[formElement['$name']] = scope;
+                    $timeout(function () {
+                        fix_HideNgMessageOnFormReset();
+                        scopes[formElement['$name']].$apply()
+                    }, 100);
+                }
             });
         }
     }

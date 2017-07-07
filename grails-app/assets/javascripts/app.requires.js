@@ -50,6 +50,7 @@
 
 // customjs
 //= require ../client/_customjs/bootstrapper
+//= require ../client/_customjs/fixes
 
 // ngApp
 //= require ../client/app/ng.app.requires
