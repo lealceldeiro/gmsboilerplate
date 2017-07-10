@@ -58,8 +58,23 @@ class FileManagerService {
             if (!fileContent) {
                 throw new NotFoundException("general.not_found" ,"fileCamel", true)
             }
-            fileContent.delete()
-            file.delete()
+            fileContent.delete(flush: true)
+            file.delete(flush: true)
+        }
+    }
+
+    @Synchronized("lock")
+    Boolean deleteFile(Long fileId) {
+        if(fileId) {
+            EFile file = EFile.get(fileId)
+            if(file) {
+                EFileContent fileContent = EFileContent.findByFile(file)
+                if (!fileContent) {
+                    throw new NotFoundException("general.not_found" ,"fileCamel", true)
+                }
+                fileContent.delete(flush: true)
+                file.delete(flush: true)
+            }
         }
     }
 

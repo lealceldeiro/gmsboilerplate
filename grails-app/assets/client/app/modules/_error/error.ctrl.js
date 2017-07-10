@@ -2,28 +2,32 @@
  * Created by asiel on 1/05/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('errorCtrl', errorCtrl);
+    'use strict';
 
-/*@ngInject*/
-function errorCtrl(errorSrv, indexSrv) {
+    angular
+        .module('gmsBoilerplate')
+        .controller('errorCtrl', errorCtrl);
 
-    var vm = this;
+    /*@ngInject*/
+    function errorCtrl(errorSrv, indexSrv) {
 
-    vm.wizard = {
-        init: fnInit
-    };
+        var vm = this;
 
-    fnInit();
-    return vm.wizard;
+        vm.wizard = {
+            init: fnInit
+        };
 
-    //fn
-    function fnInit() {
-        indexSrv.siteTitle = 'Error';
-        vm.wizard.title = errorSrv.title;
-        vm.wizard.message = errorSrv.message;
+        fnInit();
+        return vm.wizard;
+
+        //fn
+        function fnInit() {
+            indexSrv.siteTitle = 'Error';
+            vm.wizard.title = errorSrv.title;
+            vm.wizard.message = errorSrv.message;
+        }
     }
-}
+
+}());

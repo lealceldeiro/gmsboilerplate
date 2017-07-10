@@ -2,24 +2,28 @@
  * Created by asiel on 3/06/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .service('emailVerificationSrv', emailVerificationSrv);
+    'use strict';
 
-/*@ngInject*/
-function emailVerificationSrv(baseSrv, $http, systemSrv) {
-    var self = this;
-    var url = systemSrv.APIAbsoluteUrl + 'email/';
-    self.service = {
-        verifySubscriber: fnVerifySubscriber
-    };
+    angular
+        .module('gmsBoilerplate')
+        .service('emailVerificationSrv', emailVerificationSrv);
 
-    //fn
-    return self.service;
+    /*@ngInject*/
+    function emailVerificationSrv(baseSrv, $http, systemSrv) {
+        var self = this;
+        var url = systemSrv.APIAbsoluteUrl + 'email/';
+        self.service = {
+            verifySubscriber: fnVerifySubscriber
+        };
 
-    function fnVerifySubscriber(token) {
-        return baseSrv.resolveDeferred($http.get(url + 'verify/subscription?tkn=' + token));
+        //fn
+        return self.service;
+
+        function fnVerifySubscriber(token) {
+            return baseSrv.resolveDeferred($http.get(url + 'verify/subscription?tkn=' + token));
+        }
     }
-}
+
+}());

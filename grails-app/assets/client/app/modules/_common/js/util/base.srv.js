@@ -2,75 +2,79 @@
  * Created by Asiel on 01/05/2017.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .service('baseSrv', baseSrv);
+    'use strict';
 
-/*@ngInject*/
-function baseSrv(valueSrv, systemSrv) {
+    angular
+        .module('gmsBoilerplate')
+        .service('baseSrv', baseSrv);
 
-    var self = this;
+    /*@ngInject*/
+    function baseSrv(valueSrv, systemSrv) {
 
-    var STATUS_OK = 200;
+        var self = this;
 
-    self.service = {
-        resolveDeferred: fnResolveDeferred,
-        resolveFileRequestDeferred: fnResolveFileRequestDeferred,
+        var STATUS_OK = 200;
 
-        getParams: fnGetParams
-    };
+        self.service = {
+            resolveDeferred: fnResolveDeferred,
+            resolveFileRequestDeferred: fnResolveFileRequestDeferred,
 
-    return self.service;
+            getParams: fnGetParams
+        };
 
-    function fnResolveDeferred (deferred){
-        if (deferred.then) {
-            return deferred.then(
-                function (res) {
-                    return res ? res.data : null;
-                },
-                function (resOnErr) {
-                    return resOnErr ? resOnErr.data : null;
-                }
-            )
-        }
-    }
+        return self.service;
 
-    function fnResolveFileRequestDeferred (deferred){
-        if (deferred.then) {
-            var r = {};
-            return deferred.then(
-                function (res) {
-                    //since this is a file sent in the response, we have to build the standard response here
-                    if (res && res.status === STATUS_OK) {
-                        if (res.data[systemSrv.success_resp] === false){
-                            return res ? res.data : null;
-                        }
-                        else {
-                            r[systemSrv.success_resp] = true;
-                            r[systemSrv.item_resp] = res.data;
-                            r[systemSrv.itemUlr_resp] = res.config.url;
-                            return r;
-                        }
+        function fnResolveDeferred (deferred){
+            if (deferred.then) {
+                return deferred.then(
+                    function (res) {
+                        return res ? res.data : null;
+                    },
+                    function (resOnErr) {
+                        return resOnErr ? resOnErr.data : null;
                     }
-                },
-                function (resOnErr) {
-                    return resOnErr ? resOnErr.data : null;
-                }
-            )
+                )
+            }
+        }
+
+        function fnResolveFileRequestDeferred (deferred){
+            if (deferred.then) {
+                var r = {};
+                return deferred.then(
+                    function (res) {
+                        //since this is a file sent in the response, we have to build the standard response here
+                        if (res && res.status === STATUS_OK) {
+                            if (res.data[systemSrv.success_resp] === false){
+                                return res ? res.data : null;
+                            }
+                            else {
+                                r[systemSrv.success_resp] = true;
+                                r[systemSrv.item_resp] = res.data;
+                                r[systemSrv.itemUlr_resp] = res.config.url;
+                                return r;
+                            }
+                        }
+                    },
+                    function (resOnErr) {
+                        return resOnErr ? resOnErr.data : null;
+                    }
+                )
+            }
+        }
+
+        function fnGetParams(offset, max, criteria) {
+            var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
+            if (valueSrv.nNnN(max)) {
+                params += params === ""? "?max=" + max : "&max=" + max;
+            }
+            if (valueSrv.nNnN(criteria)) {
+                params += params === ""? "?q=" + criteria : "&q=" + criteria;
+            }
+
+            return params;
         }
     }
 
-    function fnGetParams(offset, max, criteria) {
-        var params = valueSrv.nNnN(offset) ? "?offset=" + offset : "";
-        if (valueSrv.nNnN(max)) {
-            params += params === ""? "?max=" + max : "&max=" + max;
-        }
-        if (valueSrv.nNnN(criteria)) {
-            params += params === ""? "?q=" + criteria : "&q=" + criteria;
-        }
-
-        return params;
-    }
-}
+}());

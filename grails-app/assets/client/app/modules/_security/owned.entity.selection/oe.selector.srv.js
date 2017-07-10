@@ -2,24 +2,30 @@
  * Created by asiel on 13/06/17.
  */
 
-angular
-    .module('gmsBoilerplate')
-    .service('oeSelectorSrv', oeSelectorSrv);
+(function() {
 
-/*@ngInject*/
-function oeSelectorSrv(baseSrv, systemSrv, $http) {
+    'use strict';
 
-    var self = this;
-    var url = systemSrv.APIAbsoluteUrl + 'reauthenticate/';
+    angular
+        .module('gmsBoilerplate')
+        .service('oeSelectorSrv', oeSelectorSrv);
 
-    self.service = {
-        selectNewSessionEntity: fnSelectNewSessionEntity
-    };
+    /*@ngInject*/
+    function oeSelectorSrv(baseSrv, systemSrv, $http) {
 
-    return self.service;
+        var self = this;
+        var url = systemSrv.APIAbsoluteUrl + 'reauthenticate/';
 
-    //fn
-    function fnSelectNewSessionEntity(id) {
-        return baseSrv.resolveDeferred($http.post(url, {e: id}))
+        self.service = {
+            selectNewSessionEntity: fnSelectNewSessionEntity
+        };
+
+        return self.service;
+
+        //fn
+        function fnSelectNewSessionEntity(id) {
+            return baseSrv.resolveDeferred($http.post(url, {e: id}))
+        }
     }
-}
+
+}());

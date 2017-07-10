@@ -2,27 +2,31 @@
  * Created by asiel on 15/05/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('homeCtrl', homeCtrl);
+    'use strict';
 
-/*@ngInject*/
-function homeCtrl(indexSrv) {
+    angular
+        .module('gmsBoilerplate')
+        .controller('homeCtrl', homeCtrl);
 
-    var vm = this;
+    /*@ngInject*/
+    function homeCtrl(indexSrv) {
 
-    vm.wizard = {
-        init: fnInit
-    };
+        var vm = this;
 
-    fnInit();
+        vm.wizard = {
+            init: fnInit
+        };
 
-    return vm.wizard;
+        fnInit();
 
-    //fn
-    function fnInit() {
-        indexSrv.setTitle('HOME.home');
+        return vm.wizard;
+
+        //fn
+        function fnInit() {
+            indexSrv.setTitle('HOME.home');
+        }
     }
-}
+
+}());

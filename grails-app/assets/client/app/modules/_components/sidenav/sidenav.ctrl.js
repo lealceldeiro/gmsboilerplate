@@ -2,28 +2,32 @@
  * Created by asiel on 6/06/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('GMSSideNavCtrl', GMSSideNavCtrl);
+    'use strict';
 
-/*@ngInject*/
-function GMSSideNavCtrl($mdSidenav, $scope, BROADCAST) {
-    var vm = this;
-    vm.wizard = {
-        close: fnClose
-    };
+    angular
+        .module('gmsBoilerplate')
+        .controller('GMSSideNavCtrl', GMSSideNavCtrl);
 
-    $scope.$on(BROADCAST.sidenav.close, function () {
-        fnClose();
-    });
+    /*@ngInject*/
+    function GMSSideNavCtrl($mdSidenav, $scope, BROADCAST) {
+        var vm = this;
+        vm.wizard = {
+            close: fnClose
+        };
 
-    return vm.wizard;
+        $scope.$on(BROADCAST.sidenav.close, function () {
+            fnClose();
+        });
 
-    function fnClose() {
-        // Component lookup should always be available since we are not using `ng-if`
-        $mdSidenav('snLeft').close()
-            .then(function () {});
+        return vm.wizard;
+
+        function fnClose() {
+            // Component lookup should always be available since we are not using `ng-if`
+            $mdSidenav('snLeft').close()
+                .then(function () {});
+        }
     }
-}
+
+}());

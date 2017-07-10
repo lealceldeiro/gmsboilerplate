@@ -2,94 +2,98 @@
  * Created by Asiel on 01/24/2016.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .service('ownedEntitySrv', ownedEntitySrv);
+    'use strict';
 
-/*@ngInject*/
-function ownedEntitySrv(systemSrv, $http, baseSrv) {
+    angular
+        .module('gmsBoilerplate')
+        .service('ownedEntitySrv', ownedEntitySrv);
 
-    var self = this;
-    var url = systemSrv.APIAbsoluteUrl + 'entity/';
+    /*@ngInject*/
+    function ownedEntitySrv(systemSrv, $http, baseSrv) {
 
-    self.service = {
-        sessionData: {},
+        var self = this;
+        var url = systemSrv.APIAbsoluteUrl + 'entity/';
 
-        search: fnSearch,
-        searchAll: fnSearchAll,
-        getByUsername: fnGetByUsername,
-        show: fnShow,
-        remove: fnRemove,
-        save: fnSave,
+        self.service = {
+            sessionData: {},
 
-        usersByEntity: fnUsersByEntity
-    };
+            search: fnSearch,
+            searchAll: fnSearchAll,
+            getByUsername: fnGetByUsername,
+            show: fnShow,
+            remove: fnRemove,
+            save: fnSave,
 
-    return self.service;
+            usersByEntity: fnUsersByEntity
+        };
 
-    /**
-     * Search for owned entities associated to a user
-     * @param uid User who owned entities are being searched for
-     * @param offset offset for paging
-     * @param max max for paging
-     * @param criteria criteria for searching
-     * @returns {*} Promise
-     */
-    function fnSearch(uid, offset, max, criteria) {
-        var params = baseSrv.getParams(offset, max, criteria);
+        return self.service;
 
-        var def = $http.get(url + "user/" + uid + "/" + params);
-        return baseSrv.resolveDeferred(def);
-    }
+        /**
+         * Search for owned entities associated to a user
+         * @param uid User who owned entities are being searched for
+         * @param offset offset for paging
+         * @param max max for paging
+         * @param criteria criteria for searching
+         * @returns {*} Promise
+         */
+        function fnSearch(uid, offset, max, criteria) {
+            var params = baseSrv.getParams(offset, max, criteria);
 
-    /**
-     * Search for all owned entities registered on system
-     * @param offset offset for paging
-     * @param max max for paging
-     * @param criteria criteria for searching
-     * @returns {*} Promise
-     */
-    function fnSearchAll(offset, max, criteria) {
-        var params = baseSrv.getParams(offset, max, criteria);
-
-        var def = $http.get(url + params);
-        return baseSrv.resolveDeferred(def);
-    }
-
-    function fnRemove(id) {
-        var def = $http.delete(url + id);
-        return baseSrv.resolveDeferred(def);
-    }
-
-    function fnShow(id) {
-        var def = $http.get(url + id);
-        return baseSrv.resolveDeferred(def);
-    }
-
-    function fnSave(params, id) {
-        var mUrl = url;
-
-        if (typeof id !== 'undefined' && id !== null && !isNaN(id)) {//update?
-            mUrl = url + id;
-            var def = $http.post(mUrl, params);
+            var def = $http.get(url + "user/" + uid + "/" + params);
+            return baseSrv.resolveDeferred(def);
         }
-        else {//create?
-            def = $http.put(url, params);
+
+        /**
+         * Search for all owned entities registered on system
+         * @param offset offset for paging
+         * @param max max for paging
+         * @param criteria criteria for searching
+         * @returns {*} Promise
+         */
+        function fnSearchAll(offset, max, criteria) {
+            var params = baseSrv.getParams(offset, max, criteria);
+
+            var def = $http.get(url + params);
+            return baseSrv.resolveDeferred(def);
         }
-        return baseSrv.resolveDeferred(def);
+
+        function fnRemove(id) {
+            var def = $http.delete(url + id);
+            return baseSrv.resolveDeferred(def);
+        }
+
+        function fnShow(id) {
+            var def = $http.get(url + id);
+            return baseSrv.resolveDeferred(def);
+        }
+
+        function fnSave(params, id) {
+            var mUrl = url;
+
+            if (typeof id !== 'undefined' && id !== null && !isNaN(id)) {//update?
+                mUrl = url + id;
+                var def = $http.post(mUrl, params);
+            }
+            else {//create?
+                def = $http.put(url, params);
+            }
+            return baseSrv.resolveDeferred(def);
+        }
+
+        function fnUsersByEntity(id, offset, max) {
+            var params = baseSrv.getParams(offset, max);
+
+            var def = $http.get(url + "users/" + id + params);
+            return baseSrv.resolveDeferred(def);
+        }
+
+        function fnGetByUsername(username) {
+            var def = $http.get(url + "get?username=" + username);
+            return baseSrv.resolveDeferred(def);
+        }
     }
 
-    function fnUsersByEntity(id, offset, max) {
-        var params = baseSrv.getParams(offset, max);
-
-        var def = $http.get(url + "users/" + id + params);
-        return baseSrv.resolveDeferred(def);
-    }
-
-    function fnGetByUsername(username) {
-        var def = $http.get(url + "get?username=" + username);
-        return baseSrv.resolveDeferred(def);
-    }
-}
+}());

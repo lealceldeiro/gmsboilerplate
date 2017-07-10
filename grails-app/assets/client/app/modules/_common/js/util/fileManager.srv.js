@@ -2,22 +2,27 @@
  * Created by asiel on 28/06/17.
  */
 
+(function() {
 
-angular
-.module('gmsBoilerplate')
-.service('fileManagerSrv', fileManagerSrv);
+    'use strict';
 
-/*@ngInject*/
-function fileManagerSrv(baseSrv, Upload) {
-    var self = this;
+    angular
+        .module('gmsBoilerplate')
+        .service('fileManagerSrv', fileManagerSrv);
 
-    self.service = {
-        sendFile: fnSendFile
-    };
+    /*@ngInject*/
+    function fileManagerSrv(baseSrv, Upload) {
+        var self = this;
 
-    return self.service;
+        self.service = {
+            sendFile: fnSendFile
+        };
 
-    function fnSendFile(userId, file, url, fileName) {
-        return baseSrv.resolveDeferred(Upload.upload({'url': url, 'data': {'userId': userId, 'file': file, 'fileName': fileName}}))
+        return self.service;
+
+        function fnSendFile(userId, file, url, fileName) {
+            return baseSrv.resolveDeferred(Upload.upload({'url': url, 'data': {'userId': userId, 'file': file, 'fileName': fileName}}))
+        }
     }
-}
+
+}());

@@ -302,6 +302,11 @@ class UserService {
         if(e){
             BUser_Role_OwnedEntity.removeAllRolesFromAll(e)
             configurationService.deleteUserConfiguration(id)
+            if(e.profilePicture) {
+                def p = e.profilePicture
+                e.profilePicture = null
+                fileManagerService.deleteFile(p)
+            }
             e.delete()
             return true
         }

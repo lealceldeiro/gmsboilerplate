@@ -2,53 +2,57 @@
  * Created by asiel on 3/06/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('emailVerificationCtrl', emailVerificationCtrl);
+    'use strict';
 
-/*@ngInject*/
-function emailVerificationCtrl(emailVerificationSrv, navigationSrv, systemSrv, blockSrv, indexSrv) {
-    var vm = this;
+    angular
+        .module('gmsBoilerplate')
+        .controller('emailVerificationCtrl', emailVerificationCtrl);
 
-    var keyP = 'EMAIL_VERIFICATION';
+    /*@ngInject*/
+    function emailVerificationCtrl(emailVerificationSrv, navigationSrv, systemSrv, blockSrv, indexSrv) {
+        var vm = this;
 
-    vm.wizard = {
-        code: {
-            "EMAIL_CONFIRMATION_OK": 1,
-            "EMAIL_CONFIRMATION_TOKEN_NOT_FOUND": 2,
-            "EMAIL_CONFIRMATION_TOKEN_NOT_ASSOCIATED_TO_USER": 3,
-            "EMAIL_CONFIRMATION_TOKEN_NOT_PROVIDED": 4
-        },
-        response: {
-            code: 1,
-            header: "",
-            message: ""
-        },
-        init: fnInit
-    };
+        var keyP = 'EMAIL_VERIFICATION';
 
-    fnInit();
+        vm.wizard = {
+            code: {
+                "EMAIL_CONFIRMATION_OK": 1,
+                "EMAIL_CONFIRMATION_TOKEN_NOT_FOUND": 2,
+                "EMAIL_CONFIRMATION_TOKEN_NOT_ASSOCIATED_TO_USER": 3,
+                "EMAIL_CONFIRMATION_TOKEN_NOT_PROVIDED": 4
+            },
+            response: {
+                code: 1,
+                header: "",
+                message: ""
+            },
+            init: fnInit
+        };
 
-    //fn
-    return vm.wizard;
+        fnInit();
 
-    function fnInit() {
-        blockSrv.block();
-        indexSrv.setTitle('REGISTER.verify_email');
-        var params = navigationSrv.currentParams();
-        if (params && params['token']) {
-            var fnKey = keyP + "fnInit-verifySubscriber";
-            emailVerificationSrv.verifySubscriber(params['token']).then(function (data) {
-                    systemSrv.eval(data, fnKey, false, !emailVerificationSrv.notified);
-                    emailVerificationSrv.notified = true;
-                    vm.wizard.response = systemSrv.getItems(fnKey);
-                    vm.wizard.response.header = systemSrv.getMessage(fnKey);
-                    blockSrv.unBlock();
-                }
-            )
+        //fn
+        return vm.wizard;
+
+        function fnInit() {
+            blockSrv.block();
+            indexSrv.setTitle('REGISTER.verify_email');
+            var params = navigationSrv.currentParams();
+            if (params && params['token']) {
+                var fnKey = keyP + "fnInit-verifySubscriber";
+                emailVerificationSrv.verifySubscriber(params['token']).then(function (data) {
+                        systemSrv.eval(data, fnKey, false, !emailVerificationSrv.notified);
+                        emailVerificationSrv.notified = true;
+                        vm.wizard.response = systemSrv.getItems(fnKey);
+                        vm.wizard.response.header = systemSrv.getMessage(fnKey);
+                        blockSrv.unBlock();
+                    }
+                )
+            }
         }
+
     }
 
-}
+}());

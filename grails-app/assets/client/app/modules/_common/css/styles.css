@@ -21,11 +21,10 @@
     height: auto; }
 
 /*fixes ng-messages|angular-material|ng-animate issue (see: https://github.com/angular/material/issues/9543) */
-/* TODO: fix for ng-messages issue
-.ng-untouched ~ .md-input-messages-animation {  //ng-message after an input
+.ng-untouched ~ .md-input-messages-animation {
   height: 0;
-  opacity: 0;
-}*/
+  opacity: 0; }
+
 /*******************  size   *********************/
 /*******************  color   *******************/
 /*******************  margin   *******************/
@@ -217,6 +216,9 @@ md-divider {
 
 img.error {
   border: 1px solid #dd2c00; }
+
+md-dialog {
+  position: fixed; }
 
 /*******************  size   *********************/
 /*******************  color   *******************/

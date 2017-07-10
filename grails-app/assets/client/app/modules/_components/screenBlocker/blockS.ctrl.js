@@ -2,29 +2,33 @@
  * Created by Asiel on 1/10/2017.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('blockCtrl', blockCtrl);
+    'use strict';
 
-/*@ngInject*/
-function blockCtrl($scope, blockSrv) {
+    angular
+        .module('gmsBoilerplate')
+        .controller('blockCtrl', blockCtrl);
 
-    var vm = this;
+    /*@ngInject*/
+    function blockCtrl($scope, blockSrv) {
 
-    vm.wizard = {
-        blocked: false
-    };
+        var vm = this;
 
-    $scope.$watch(
-        function () {
-            return blockSrv.isBlocked();
-        },
-        function (newVal) {
-            vm.wizard.blocked = newVal
-        }
-    );
+        vm.wizard = {
+            blocked: false
+        };
 
-    return vm.wizard;
-}
+        $scope.$watch(
+            function () {
+                return blockSrv.isBlocked();
+            },
+            function (newVal) {
+                vm.wizard.blocked = newVal
+            }
+        );
+
+        return vm.wizard;
+    }
+
+}());

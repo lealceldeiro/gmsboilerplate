@@ -2,66 +2,70 @@
  * Created by asiel on 4/06/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('emailRequestCtrl', emailRequestCtrl);
+    'use strict';
 
-/*@ngInject*/
-function emailRequestCtrl(emailRequestSrv, systemSrv, translatorSrv, blockSrv, indexSrv, registerSrv, $timeout,
-                          navigationSrv, dialogSrv, ROUTE) {
-    var vm = this;
+    angular
+        .module('gmsBoilerplate')
+        .controller('emailRequestCtrl', emailRequestCtrl);
 
-    var keyP = 'EMAIL_REQUEST';
+    /*@ngInject*/
+    function emailRequestCtrl(emailRequestSrv, systemSrv, translatorSrv, blockSrv, indexSrv, registerSrv, $timeout,
+                              navigationSrv, dialogSrv, ROUTE) {
+        var vm = this;
 
-    vm.wizard = {
-        init: fnInit,
-        sendEmail: fnSendEmail,
+        var keyP = 'EMAIL_REQUEST';
 
-        checkEmail: fnCheckEmail
-    };
+        vm.wizard = {
+            init: fnInit,
+            sendEmail: fnSendEmail,
 
-    fnInit();
+            checkEmail: fnCheckEmail
+        };
 
-    //fn
-    return vm.wizard;
+        fnInit();
 
-    function fnInit() {
-        indexSrv.setTitle('button.requestNewVerificationEmail');
-    }
-    
-    function fnSendEmail(form) {
-        if (form && form.$valid && vm.wizard.emailExists) {
-            blockSrv.block();
-            var fnKey = keyP + "fnSendEmail";
-            emailRequestSrv.requestNewEmail(vm.wizard.email).then(function (data) {
-                var e = systemSrv.eval(data, fnKey, false, true);
-                if (e) {
-                    vm.msg = {};
-                    translatorSrv.setText("REGISTER.almost_finished", vm.msg, 'headline');
-                    translatorSrv.setText("REGISTER.email_sent", vm.msg, 'text', {email: vm.wizard.email});
-                    $timeout(function () {
-                        dialogSrv.showDialog(dialogSrv.type.SUCCESS, vm.msg['headline'], vm.msg['text']);
+        //fn
+        return vm.wizard;
+
+        function fnInit() {
+            indexSrv.setTitle('button.requestNewVerificationEmail');
+        }
+
+        function fnSendEmail(form) {
+            if (form && form.$valid && vm.wizard.emailExists) {
+                blockSrv.block();
+                var fnKey = keyP + "fnSendEmail";
+                emailRequestSrv.requestNewEmail(vm.wizard.email).then(function (data) {
+                    var e = systemSrv.eval(data, fnKey, false, true);
+                    if (e) {
                         vm.msg = {};
-                    });
-                    navigationSrv.goTo(ROUTE.HOME);
-                }
-                blockSrv.unBlock();
-            })
+                        translatorSrv.setText("REGISTER.almost_finished", vm.msg, 'headline');
+                        translatorSrv.setText("REGISTER.email_sent", vm.msg, 'text', {email: vm.wizard.email});
+                        $timeout(function () {
+                            dialogSrv.showDialog(dialogSrv.type.SUCCESS, vm.msg['headline'], vm.msg['text']);
+                            vm.msg = {};
+                        });
+                        navigationSrv.goTo(ROUTE.HOME);
+                    }
+                    blockSrv.unBlock();
+                })
+            }
         }
+
+        function fnCheckEmail() {
+            vm.wizard.emailExists = false;
+            if (typeof vm.id === 'undefined' || vm.id === null) {
+                var fnKey = keyP + "fnCheckEmail";
+                registerSrv.getByEmail(vm.wizard.email).then(
+                    function (data) {
+                        vm.wizard.emailExists = systemSrv.eval(data, fnKey);
+                    }
+                )
+            }
+        }
+
     }
 
-    function fnCheckEmail() {
-        vm.wizard.emailExists = false;
-        if (typeof vm.id === 'undefined' || vm.id === null) {
-            var fnKey = keyP + "fnCheckEmail";
-            registerSrv.getByEmail(vm.wizard.email).then(
-                function (data) {
-                    vm.wizard.emailExists = systemSrv.eval(data, fnKey);
-                }
-            )
-        }
-    }
-
-}
+}());

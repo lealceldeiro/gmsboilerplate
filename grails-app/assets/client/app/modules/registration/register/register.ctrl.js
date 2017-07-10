@@ -2,117 +2,121 @@
  * Created by asiel on 26/05/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('registerCtrl', registerCtrl);
+    'use strict';
 
-/*@ngInject*/
-function registerCtrl(indexSrv, registerSrv, systemSrv, dialogSrv, blockSrv, translatorSrv, $timeout, navigationSrv, ROUTE,
-                      configSrv) {
-    var vm = this;
+    angular
+        .module('gmsBoilerplate')
+        .controller('registerCtrl', registerCtrl);
 
-    var keyP = "registerCtrl";
-    vm.wizard = {
-        passwordMatch : {},
-        init: fnInit,
+    /*@ngInject*/
+    function registerCtrl(indexSrv, registerSrv, systemSrv, dialogSrv, blockSrv, translatorSrv, $timeout, navigationSrv, ROUTE,
+                          configSrv) {
+        var vm = this;
 
-        checkUsername: fnCheckUsername,
-        checkEmail: fnCheckEmail,
-        register: fnRegister,
-        seeValidUser: fnSeeValidUser,
-        checkPasswordMatch: fnCheckPasswordMatch
-    };
+        var keyP = "registerCtrl";
+        vm.wizard = {
+            passwordMatch : {},
+            init: fnInit,
 
-    fnInit();
+            checkUsername: fnCheckUsername,
+            checkEmail: fnCheckEmail,
+            register: fnRegister,
+            seeValidUser: fnSeeValidUser,
+            checkPasswordMatch: fnCheckPasswordMatch
+        };
 
-    return vm.wizard;
+        fnInit();
 
-    //fn
-    function fnInit() {
-        if (angular.isDefined(configSrv.config.isUserRegistrationAllowed)) {
-            if (!configSrv.config.isUserRegistrationAllowed) {
-                navigationSrv.goTo(ROUTE.HOME);
-            }
-        } else {
-            configSrv.loadConfig().then(
-                function (config) {
-                    if (!configSrv.config.isUserRegistrationAllowed) {
-                        navigationSrv.goTo(ROUTE.HOME);
+        return vm.wizard;
+
+        //fn
+        function fnInit() {
+            if (angular.isDefined(configSrv.config.isUserRegistrationAllowed)) {
+                if (!configSrv.config.isUserRegistrationAllowed) {
+                    navigationSrv.goTo(ROUTE.HOME);
+                }
+            } else {
+                configSrv.loadConfig().then(
+                    function (config) {
+                        if (!configSrv.config.isUserRegistrationAllowed) {
+                            navigationSrv.goTo(ROUTE.HOME);
+                        }
                     }
-                }
-            );
+                );
+            }
+            indexSrv.setTitle('LOGIN.new_account');
         }
-        indexSrv.setTitle('LOGIN.new_account');
-    }
 
-    function fnCheckUsername() {
-        vm.wizard.userTaken = false;
-        if (typeof vm.wizard.username !== 'undefined' && vm.wizard.username !== null) {
-            var fnKey = keyP + "fnCheckUsername";
-            registerSrv.getByUsername(vm.wizard.username).then(
-                function (data) {
-                    vm.wizard.userTaken = systemSrv.eval(data, fnKey);
-                }
-            )
+        function fnCheckUsername() {
+            vm.wizard.userTaken = false;
+            if (typeof vm.wizard.username !== 'undefined' && vm.wizard.username !== null) {
+                var fnKey = keyP + "fnCheckUsername";
+                registerSrv.getByUsername(vm.wizard.username).then(
+                    function (data) {
+                        vm.wizard.userTaken = systemSrv.eval(data, fnKey);
+                    }
+                )
+            }
         }
-    }
 
-    function fnCheckEmail() {
-        vm.wizard.emailTaken = false;
-        if (typeof vm.id === 'undefined' || vm.id === null) {
-            var fnKey = keyP + "fnCheckUsername";
-            registerSrv.getByEmail(vm.wizard.email).then(
-                function (data) {
-                    vm.wizard.emailTaken = systemSrv.eval(data, fnKey);
-                }
-            )
+        function fnCheckEmail() {
+            vm.wizard.emailTaken = false;
+            if (typeof vm.id === 'undefined' || vm.id === null) {
+                var fnKey = keyP + "fnCheckUsername";
+                registerSrv.getByEmail(vm.wizard.email).then(
+                    function (data) {
+                        vm.wizard.emailTaken = systemSrv.eval(data, fnKey);
+                    }
+                )
+            }
         }
-    }
 
-    function fnRegister(form) {
-        if (form) {
-            form.$setSubmitted();
-            if (form.$valid && !vm.wizard.passwordMatch.notMatch && !vm.wizard.userTaken && !vm.wizard.emailTaken) {
-                var params = {
-                    username: vm.wizard.username,
-                    name: vm.wizard.name,
-                    email: vm.wizard.email,
-                    password: vm.wizard.password,
-                    enabled: false
-                };
-                blockSrv.block();
+        function fnRegister(form) {
+            if (form) {
+                form.$setSubmitted();
+                if (form.$valid && !vm.wizard.passwordMatch.notMatch && !vm.wizard.userTaken && !vm.wizard.emailTaken) {
+                    var params = {
+                        username: vm.wizard.username,
+                        name: vm.wizard.name,
+                        email: vm.wizard.email,
+                        password: vm.wizard.password,
+                        enabled: false
+                    };
+                    blockSrv.block();
 
-                var fnKey = keyP + "fnSave";
-                registerSrv.registerSubscriber(params).then(function (data) {
-                    var e = systemSrv.eval(data, fnKey, false, true);
-                    if (e) {
-                        vm.msg = {};
-                        translatorSrv.setText("REGISTER.almost_finished", vm.msg, 'headline');
-                        translatorSrv.setText("REGISTER.email_sent", vm.msg, 'text', {email: vm.wizard.email});
-                        $timeout(function () {
-                            dialogSrv.showDialog(dialogSrv.type.SUCCESS, vm.msg['headline'], vm.msg['text']);
+                    var fnKey = keyP + "fnSave";
+                    registerSrv.registerSubscriber(params).then(function (data) {
+                        var e = systemSrv.eval(data, fnKey, false, true);
+                        if (e) {
                             vm.msg = {};
-                        });
-                        navigationSrv.goTo(ROUTE.HOME);
-                    }
-                    blockSrv.unBlock();
-                })
+                            translatorSrv.setText("REGISTER.almost_finished", vm.msg, 'headline');
+                            translatorSrv.setText("REGISTER.email_sent", vm.msg, 'text', {email: vm.wizard.email});
+                            $timeout(function () {
+                                dialogSrv.showDialog(dialogSrv.type.SUCCESS, vm.msg['headline'], vm.msg['text']);
+                                vm.msg = {};
+                            });
+                            navigationSrv.goTo(ROUTE.HOME);
+                        }
+                        blockSrv.unBlock();
+                    })
+                }
+            }
+        }
+
+        function fnSeeValidUser() {
+            dialogSrv.showDialogValidUser();
+        }
+
+        function fnCheckPasswordMatch() {
+            delete vm.wizard.passwordMatch.notMatch;
+            if (vm.wizard.password && vm.wizard.password2 &&
+                vm.wizard.password != vm.wizard.password2) {
+                vm.wizard.passwordMatch.notMatch = true;
             }
         }
     }
 
-    function fnSeeValidUser() {
-        dialogSrv.showDialogValidUser();
-    }
-
-    function fnCheckPasswordMatch() {
-        delete vm.wizard.passwordMatch.notMatch;
-        if (vm.wizard.password && vm.wizard.password2 &&
-            vm.wizard.password != vm.wizard.password2) {
-            vm.wizard.passwordMatch.notMatch = true;
-        }
-    }
-}
+}());
 

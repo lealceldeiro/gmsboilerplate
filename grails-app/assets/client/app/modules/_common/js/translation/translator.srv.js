@@ -2,32 +2,36 @@
  * Created by asiel on 9/05/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .service('translatorSrv', translatorSrv);
+    'use strict';
 
-/*@ngInject*/
-function translatorSrv($translate) {
+    angular
+        .module('gmsBoilerplate')
+        .service('translatorSrv', translatorSrv);
 
-    var self = this;
+    /*@ngInject*/
+    function translatorSrv($translate) {
 
-    self.service = {
-        setText: fnSetText
-    };
+        var self = this;
 
-    return self.service;
+        self.service = {
+            setText: fnSetText
+        };
 
-    //fn
-    function fnSetText(i18nKey, objectWithText, textVarKey, interpolationObject) {
-        return $translate(i18nKey, interpolationObject).then(
-            function (text) {
-                objectWithText[textVarKey] = text;
-            },
-            function (textId) {
-                objectWithText[textVarKey] = textId;
-            }
-        )
+        return self.service;
+
+        //fn
+        function fnSetText(i18nKey, objectWithText, textVarKey, interpolationObject) {
+            return $translate(i18nKey, interpolationObject).then(
+                function (text) {
+                    objectWithText[textVarKey] = text;
+                },
+                function (textId) {
+                    objectWithText[textVarKey] = textId;
+                }
+            )
+        }
     }
-}
+
+}());

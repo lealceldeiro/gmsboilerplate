@@ -2,65 +2,69 @@
  * Created by Asiel on 01/20/2017.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('permissionCtrl', permissionCtrl);
+    'use strict';
 
-function permissionCtrl(indexSrv, systemSrv, permissionSrv, paginationSrv, blockSrv) {
-    var vm = this;
-    var keyP = 'PERMISSIONS_LIST';
+    angular
+        .module('gmsBoilerplate')
+        .controller('permissionCtrl', permissionCtrl);
 
-    vm.wizard = {
-        entities: {
-            all: []
-        },
-        init: fnInit,
+    function permissionCtrl(indexSrv, systemSrv, permissionSrv, paginationSrv, blockSrv) {
+        var vm = this;
+        var keyP = 'PERMISSIONS_LIST';
 
-        changePage: fnChangePage,
-        search: fnSearch,
+        vm.wizard = {
+            entities: {
+                all: []
+            },
+            init: fnInit,
 
-        searchByPageChange: fnSearchByPageChange
-    };
+            changePage: fnChangePage,
+            search: fnSearch,
 
-    vm.wizard.init();
+            searchByPageChange: fnSearchByPageChange
+        };
 
-    return vm.wizard;
+        vm.wizard.init();
 
-    //fn
-    function fnInit() {
-        indexSrv.setTitle('PERMISSIONS.permissions');
-        paginationSrv.resetPagination();
-    }
+        return vm.wizard;
 
-    function fnSearch() {
-        vm.wizard.entities.all = [];
-        var offset = paginationSrv.getOffset();
-        var max = paginationSrv.getItemsPerPage();
+        //fn
+        function fnInit() {
+            indexSrv.setTitle('PERMISSIONS.permissions');
+            paginationSrv.resetPagination();
+        }
 
-        var fnKey = keyP + "fnSearch";
-        blockSrv.setIsLoading(vm.wizard.entities, true);
-        permissionSrv.search(offset, max).then(
-            function (data) {
-                var e = systemSrv.eval(data, fnKey, false, true);
-                blockSrv.setIsLoading(vm.wizard.entities);
-                if (e) {
-                    paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
-                    vm.wizard.entities.all = systemSrv.getItems(fnKey);
+        function fnSearch() {
+            vm.wizard.entities.all = [];
+            var offset = paginationSrv.getOffset();
+            var max = paginationSrv.getItemsPerPage();
+
+            var fnKey = keyP + "fnSearch";
+            blockSrv.setIsLoading(vm.wizard.entities, true);
+            permissionSrv.search(offset, max).then(
+                function (data) {
+                    var e = systemSrv.eval(data, fnKey, false, true);
+                    blockSrv.setIsLoading(vm.wizard.entities);
+                    if (e) {
+                        paginationSrv.setTotalItems(systemSrv.getTotal(fnKey));
+                        vm.wizard.entities.all = systemSrv.getItems(fnKey);
+                    }
                 }
-            }
-        )
+            )
+
+        }
+
+        function fnChangePage(newPageNumber) {
+            paginationSrv.moveTo(newPageNumber);
+            vm.wizard.search();
+        }
+
+        function fnSearchByPageChange() {
+            fnSearch();
+        }
 
     }
 
-    function fnChangePage(newPageNumber) {
-        paginationSrv.moveTo(newPageNumber);
-        vm.wizard.search();
-    }
-
-    function fnSearchByPageChange() {
-        fnSearch();
-    }
-
-}
+}());

@@ -2,25 +2,29 @@
  * Created by Asiel on 11/6/2016.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .service('indexSrv', indexSrv);
+    'use strict';
 
-/*@ngInject*/
-function indexSrv(translatorSrv) {
+    angular
+        .module('gmsBoilerplate')
+        .service('indexSrv', indexSrv);
 
-    var self = this;
+    /*@ngInject*/
+    function indexSrv(translatorSrv) {
 
-    self.service = {
-        siteTitle: '',
-        setTitle: fnSetTitle
-    };
+        var self = this;
 
-    return self.service;
+        self.service = {
+            siteTitle: '',
+            setTitle: fnSetTitle
+        };
 
-    function fnSetTitle(i18nTitle) {
-        translatorSrv.setText(i18nTitle, self.service, 'siteTitle');
+        return self.service;
+
+        function fnSetTitle(i18nTitle) {
+            translatorSrv.setText(i18nTitle, self.service, 'siteTitle');
+        }
     }
-}
+
+}());

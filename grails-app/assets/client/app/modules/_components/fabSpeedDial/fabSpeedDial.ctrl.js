@@ -2,16 +2,20 @@
  * Created by Asiel on 2/10/2017.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('fabSpeedDial', fabSpeedDial);
+    'use strict';
 
-/*@ngInject*/
-function fabSpeedDial() {
+    angular
+        .module('gmsBoilerplate')
+        .controller('fabSpeedDial', fabSpeedDial);
 
-    this.isOpen = false;
-    this.selectedMode = 'md-fling';
-    this.selectedDirection = 'left';
-}
+    /*@ngInject*/
+    function fabSpeedDial() {
+
+        this.isOpen = false;
+        this.selectedMode = 'md-fling';
+        this.selectedDirection = 'left';
+    }
+
+}());

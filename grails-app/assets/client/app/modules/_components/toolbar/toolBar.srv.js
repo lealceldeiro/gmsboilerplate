@@ -2,63 +2,67 @@
  * Created by Asiel on 11/6/2016.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .service('toolBarSrv', toolBarSrv);
+    'use strict';
 
-/*@ngInject*/
-function toolBarSrv($rootScope, BROADCAST) {
+    angular
+        .module('gmsBoilerplate')
+        .service('toolBarSrv', toolBarSrv);
 
-    var self = this;
+    /*@ngInject*/
+    function toolBarSrv($rootScope, BROADCAST) {
 
-    self.service = {
-        buttonsArr: {},
-        actions: {},
-        toolbar: fnToolbar,
-        doAction: fnDo
-    };
+        var self = this;
 
-    return self.service;
+        self.service = {
+            buttonsArr: {},
+            actions: {},
+            toolbar: fnToolbar,
+            doAction: fnDo
+        };
 
-    //fn
-    /**
-     * Shows or hide a toolbar
-     *
-     * @param config: options for showing/hiding the toolbar. Available options are
-     *         'hide' : hides the toolbar
-     *         '<config>': an array of configuration objects i.e.:
-     *         [
-     *              {
+        return self.service;
+
+        //fn
+        /**
+         * Shows or hide a toolbar
+         *
+         * @param config: options for showing/hiding the toolbar. Available options are
+         *         'hide' : hides the toolbar
+         *         '<config>': an array of configuration objects i.e.:
+         *         [
+         *              {
              *                  aria: "Some button aria",
              *                  image: "social:ic_myIco24px",
              *                  action: function(){console.log('do something');}
              *                  showCondition:
              *              },
-     *              ...
-     *              {}
-     *         ]
-     */
-    function fnToolbar(config) {
-        if(angular.isDefined(config) && angular.isArray(config)) {
-            self.service.buttonsArr = config;
-            self.service.actions = [];
-            angular.forEach(config, function (obj) {
-                if (angular.isDefined(obj.action) && angular.isFunction(obj.action)) {
-                    self.service.actions.push(obj.action);
-                }
-            });
-            $rootScope.$broadcast(BROADCAST.component.toolbar.OPEN)
+         *              ...
+         *              {}
+         *         ]
+         */
+        function fnToolbar(config) {
+            if(angular.isDefined(config) && angular.isArray(config)) {
+                self.service.buttonsArr = config;
+                self.service.actions = [];
+                angular.forEach(config, function (obj) {
+                    if (angular.isDefined(obj.action) && angular.isFunction(obj.action)) {
+                        self.service.actions.push(obj.action);
+                    }
+                });
+                $rootScope.$broadcast(BROADCAST.component.toolbar.OPEN)
+            }
+            if (config === 'hide') {
+                $rootScope.$broadcast(BROADCAST.component.toolbar.CLOSE)
+            }
         }
-        if (config === 'hide') {
-            $rootScope.$broadcast(BROADCAST.component.toolbar.CLOSE)
+
+        function fnDo(idx) {
+            if (angular.isDefined(self.service.actions[idx]) && angular.isFunction(self.service.actions[idx])) {
+                return self.service.actions[idx]();
+            }
         }
     }
 
-    function fnDo(idx) {
-        if (angular.isDefined(self.service.actions[idx]) && angular.isFunction(self.service.actions[idx])) {
-            return self.service.actions[idx]();
-        }
-    }
-}
+}());

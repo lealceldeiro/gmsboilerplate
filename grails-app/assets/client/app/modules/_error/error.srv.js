@@ -2,22 +2,27 @@
  * Created by asiel on 1/05/17.
  */
 
-'use strict';
-angular
-    .module('gmsBoilerplate')
-    .service('errorSrv', errorSrv);
+(function() {
 
-/*@ngInject*/
-function errorSrv() {
+    'use strict';
 
-    var self = this;
+    angular
+        .module('gmsBoilerplate')
+        .service('errorSrv', errorSrv);
 
-    self.service = {
-        title: null,
-        message: null
-    };
+    /*@ngInject*/
+    function errorSrv() {
 
-    return self.service;
+        var self = this;
 
-    //
-}
+        self.service = {
+            title: null,
+            message: null
+        };
+
+        return self.service;
+
+        //
+    }
+
+}());

@@ -2,36 +2,40 @@
  * Created by Asiel on 2/10/2017.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('toolBarCtrl', toolBarCtrl);
+    'use strict';
 
-/*@ngInject*/
-function toolBarCtrl($scope, BROADCAST, toolBarSrv) {
+    angular
+        .module('gmsBoilerplate')
+        .controller('toolBarCtrl', toolBarCtrl);
 
-    var self  = this;
+    /*@ngInject*/
+    function toolBarCtrl($scope, BROADCAST, toolBarSrv) {
 
-    self.wizard = {
-        buttonsArr: [],
-        show : false,
-        isOpen: false,
-        direction: 'left',
-        doAction: fnDoAction
-    };
+        var self  = this;
 
-    $scope.$on(BROADCAST.component.toolbar.OPEN, function () {
-        self.wizard.buttonsArr = toolBarSrv.buttonsArr;
-        self.show = true;
-    });
-    $scope.$on(BROADCAST.component.toolbar.CLOSE, function () {
-        self.show = false;
-    });
+        self.wizard = {
+            buttonsArr: [],
+            show : false,
+            isOpen: false,
+            direction: 'left',
+            doAction: fnDoAction
+        };
 
-    return self.wizard;
+        $scope.$on(BROADCAST.component.toolbar.OPEN, function () {
+            self.wizard.buttonsArr = toolBarSrv.buttonsArr;
+            self.show = true;
+        });
+        $scope.$on(BROADCAST.component.toolbar.CLOSE, function () {
+            self.show = false;
+        });
 
-    function fnDoAction(idx) {
-        return toolBarSrv.doAction(idx);
+        return self.wizard;
+
+        function fnDoAction(idx) {
+            return toolBarSrv.doAction(idx);
+        }
     }
-}
+
+}());

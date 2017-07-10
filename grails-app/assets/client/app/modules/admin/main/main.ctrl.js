@@ -2,28 +2,32 @@
  * Created by Asiel on 11/6/2016.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('mainCtrl', mainCtrl);
+    'use strict';
 
-/*@ngInject*/
-function mainCtrl(indexSrv) {
+    angular
+        .module('gmsBoilerplate')
+        .controller('mainCtrl', mainCtrl);
 
-    var vm = this;
+    /*@ngInject*/
+    function mainCtrl(indexSrv) {
 
-    vm.wizard = {
-        init: fnInit
-    };
+        var vm = this;
 
-    vm.wizard.init();
+        vm.wizard = {
+            init: fnInit
+        };
 
-    return vm.wizard;
+        vm.wizard.init();
 
-    //fn
-    function fnInit() {
-        indexSrv.setTitle('MAIN.main');
+        return vm.wizard;
+
+        //fn
+        function fnInit() {
+            indexSrv.setTitle('MAIN.main');
+        }
+
     }
 
-}
+}());

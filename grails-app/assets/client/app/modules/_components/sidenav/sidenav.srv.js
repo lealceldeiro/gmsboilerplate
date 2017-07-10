@@ -2,23 +2,27 @@
  * Created by asiel on 6/06/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .service('GMSSideNavSrv', GMSSideNavSrv);
+    'use strict';
 
-/*@ngInject*/
-function GMSSideNavSrv($rootScope, BROADCAST) {
-    var self = this;
+    angular
+        .module('gmsBoilerplate')
+        .service('GMSSideNavSrv', GMSSideNavSrv);
 
-    self.service = {
-        closeSideNav: fnCloseSideNav
-    };
+    /*@ngInject*/
+    function GMSSideNavSrv($rootScope, BROADCAST) {
+        var self = this;
 
-    return self.service;
+        self.service = {
+            closeSideNav: fnCloseSideNav
+        };
 
-    function fnCloseSideNav(){
-        $rootScope.$broadcast(BROADCAST.sidenav.close)
+        return self.service;
+
+        function fnCloseSideNav(){
+            $rootScope.$broadcast(BROADCAST.sidenav.close)
+        }
     }
-}
+
+}());

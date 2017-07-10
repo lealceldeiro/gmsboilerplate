@@ -2,94 +2,98 @@
  * Created by Asiel on 11/6/2016.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .controller('sessionCtrl', sessionCtrl);
+    'use strict';
 
-/*@ngInject*/
-function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $translate, $rootScope, BROADCAST) {
+    angular
+        .module('gmsBoilerplate')
+        .controller('sessionCtrl', sessionCtrl);
 
-    var vm = this;
-    var keyP = "__SESSIONCTRL__";
+    /*@ngInject*/
+    function sessionCtrl(sessionSrv, navigationSrv, ROUTE, systemSrv, configSrv, $translate, $rootScope, BROADCAST) {
 
-    vm.wizard = {
-        isMultiEntityApp: false,
+        var vm = this;
+        var keyP = "__SESSIONCTRL__";
 
-        init: fnInit,
+        vm.wizard = {
+            isMultiEntityApp: false,
 
-        logout: fnLogout,
-        go: goTo,
+            init: fnInit,
 
-        viewProfile: fnViewProfile
-    };
+            logout: fnLogout,
+            go: goTo,
 
-    vm.wizard.init();
+            viewProfile: fnViewProfile
+        };
 
-    //region show/hiders
-    vm.wizard.can = sessionSrv.can;
-    //endregion
+        vm.wizard.init();
 
-    return vm.wizard;
+        //region show/hiders
+        vm.wizard.can = sessionSrv.can;
+        //endregion
 
-    //fn
-    function fnInit() {
-        if (angular.isDefined(configSrv.config.multiEntity)) {
-            vm.wizard.isMultiEntityApp = configSrv.config.multiEntity;
-        }
-        else { _loadConfig(); }
-        if (sessionSrv.isLogged()) {
-            vm.wizard.user = sessionSrv.currentUser();
-            vm.wizard.oEntity = sessionSrv.loginEntity();
-            vm.wizard.permissions = sessionSrv.getPermissions();
+        return vm.wizard;
 
-            var lan = sessionSrv.getLanguage();
-            if(lan){
-                configSrv.changeLanguage(lan, true);
-                $rootScope.$broadcast(BROADCAST.language.CHANGED, {lan: lan});
-            } else {
-                var fnKey = keyP + "fnInit-getConfigLanguage";
-                configSrv.getConfigLanguage(vm.wizard.user.id).then(
-                    function (data) {
-                        var it = systemSrv.eval(data, fnKey);
-                        if (it) {
-                            it = systemSrv.getItem(fnKey);
-                            if (!it) {
-                                it = $translate.preferredLanguage();
+        //fn
+        function fnInit() {
+            if (angular.isDefined(configSrv.config.multiEntity)) {
+                vm.wizard.isMultiEntityApp = configSrv.config.multiEntity;
+            }
+            else { _loadConfig(); }
+            if (sessionSrv.isLogged()) {
+                vm.wizard.user = sessionSrv.currentUser();
+                vm.wizard.oEntity = sessionSrv.loginEntity();
+                vm.wizard.permissions = sessionSrv.getPermissions();
+
+                var lan = sessionSrv.getLanguage();
+                if(lan){
+                    configSrv.changeLanguage(lan, true);
+                    $rootScope.$broadcast(BROADCAST.language.CHANGED, {lan: lan});
+                } else {
+                    var fnKey = keyP + "fnInit-getConfigLanguage";
+                    configSrv.getConfigLanguage(vm.wizard.user.id).then(
+                        function (data) {
+                            var it = systemSrv.eval(data, fnKey);
+                            if (it) {
+                                it = systemSrv.getItem(fnKey);
+                                if (!it) {
+                                    it = $translate.preferredLanguage();
+                                }
                             }
+                            else { it = $translate.preferredLanguage(); }
+                            configSrv.changeLanguage(it);
+                            $rootScope.$broadcast(BROADCAST.language.CHANGED, {lan: it});
                         }
-                        else { it = $translate.preferredLanguage(); }
-                        configSrv.changeLanguage(it);
-                        $rootScope.$broadcast(BROADCAST.language.CHANGED, {lan: it});
-                    }
-                )
+                    )
+                }
+                navigationSrv.goTo(ROUTE.MAIN)
             }
-            navigationSrv.goTo(ROUTE.MAIN)
-        }
-        else {
-            navigationSrv.goTo(navigationSrv.LOGIN_PATH);
-        }
-    }
-
-    function fnLogout() {
-        sessionSrv.logOut();
-        navigationSrv.goTo(ROUTE.LOGIN);
-    }
-
-    function goTo(r) {
-        navigationSrv.goTo(r);
-    }
-
-    function fnViewProfile() {
-        navigationSrv.goTo(ROUTE.USER_PROFILE);
-    }
-
-    function _loadConfig() {
-        configSrv.loadConfig().then(
-            function (config) {
-                vm.wizard.isMultiEntityApp = configSrv.config.multiEntity
+            else {
+                navigationSrv.goTo(navigationSrv.LOGIN_PATH);
             }
-        );
+        }
+
+        function fnLogout() {
+            sessionSrv.logOut();
+            navigationSrv.goTo(ROUTE.LOGIN);
+        }
+
+        function goTo(r) {
+            navigationSrv.goTo(r);
+        }
+
+        function fnViewProfile() {
+            navigationSrv.goTo(ROUTE.USER_PROFILE);
+        }
+
+        function _loadConfig() {
+            configSrv.loadConfig().then(
+                function (config) {
+                    vm.wizard.isMultiEntityApp = configSrv.config.multiEntity
+                }
+            );
+        }
     }
-}
+
+}());

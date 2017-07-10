@@ -2,35 +2,39 @@
  * Created by Asiel on 1/20/2017.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .service('permissionSrv',permissionSrv);
+    'use strict';
 
-/*@ngInject*/
-function permissionSrv(baseSrv, systemSrv, $http) {
+    angular
+        .module('gmsBoilerplate')
+        .service('permissionSrv',permissionSrv);
 
-    var self = this;
-    var url = systemSrv.APIAbsoluteUrl + 'permission/';
+    /*@ngInject*/
+    function permissionSrv(baseSrv, systemSrv, $http) {
 
-    self.service = {
-        search: fnSearch,
+        var self = this;
+        var url = systemSrv.APIAbsoluteUrl + 'permission/';
 
-        searchByPageChange: fnSearchByPageChange
-    };
+        self.service = {
+            search: fnSearch,
 
-    return self.service;
+            searchByPageChange: fnSearchByPageChange
+        };
 
-    //fn
-    function fnSearch(offset, max, criteria) {
-        var params = baseSrv.getParams(offset, max, criteria);
+        return self.service;
 
-        var def =  $http.get(url + params);
-        return baseSrv.resolveDeferred(def);
+        //fn
+        function fnSearch(offset, max, criteria) {
+            var params = baseSrv.getParams(offset, max, criteria);
+
+            var def =  $http.get(url + params);
+            return baseSrv.resolveDeferred(def);
+        }
+
+        function fnSearchByPageChange() {
+            fnSearch();
+        }
     }
 
-    function fnSearchByPageChange() {
-        fnSearch();
-    }
-}
+}());

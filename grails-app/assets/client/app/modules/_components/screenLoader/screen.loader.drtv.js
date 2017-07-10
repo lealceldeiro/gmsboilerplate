@@ -2,19 +2,23 @@
  * Created by Asiel on 1/10/2017.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .directive('gmsScreenLoader', gmsScreenLoader);
+    'use strict';
 
-/*@ngInject*/
-function gmsScreenLoader() {
+    angular
+        .module('gmsBoilerplate')
+        .directive('gmsScreenLoader', gmsScreenLoader);
 
-    return {
-        templateUrl: 'assets/app/modules/_components/screenLoader/screen.loader.tpl.html',
-        transclude: true,
-        restrict: 'EAC',
-        scope: {screenType: '@'}
+    /*@ngInject*/
+    function gmsScreenLoader() {
+
+        return {
+            templateUrl: 'assets/app/modules/_components/screenLoader/screen.loader.tpl.html',
+            transclude: true,
+            restrict: 'EAC',
+            scope: {screenType: '@'}
+        }
     }
-}
+
+}());

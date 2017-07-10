@@ -2,83 +2,87 @@
  * Created by asiel on 1/05/17.
  */
 
-'use strict';
+(function() {
 
-angular
-    .module('gmsBoilerplate')
-    .service('configSrv', configSrv);
+    'use strict';
 
-/*@ngInject*/
-function configSrv(baseSrv, $http, systemSrv, sessionSrv, $timeout, $translate) {
+    angular
+        .module('gmsBoilerplate')
+        .service('configSrv', configSrv);
 
-    var self = this;
-    var MAX_RETRY = 3, retries = 0;
+    /*@ngInject*/
+    function configSrv(baseSrv, $http, systemSrv, sessionSrv, $timeout, $translate) {
 
-    var url = systemSrv.APIAbsoluteUrl + "config/";
+        var self = this;
+        var MAX_RETRY = 3, retries = 0;
 
-    self.service = {
-        config:{
-            isUserRegistrationAllowed: undefined,
-            multiEntity: undefined
-        },
+        var url = systemSrv.APIAbsoluteUrl + "config/";
 
-        loadConfig: fnLoadConfig,
-        save: fnSave,
+        self.service = {
+            config:{
+                isUserRegistrationAllowed: undefined,
+                multiEntity: undefined
+            },
 
-        changeLanguage: fnChangeLanguage,
-        getConfigLanguage: fnGetConfigLanguage
-    };
+            loadConfig: fnLoadConfig,
+            save: fnSave,
 
-    return self.service;
+            changeLanguage: fnChangeLanguage,
+            getConfigLanguage: fnGetConfigLanguage
+        };
 
-    //
-    function fnLoadConfig(uid) {
-        var fnKey = "configSrvFnLoadConfig";
-        var def =  $http.get(url + (uid ? "?uid=" + uid : ""));
-        def.then(
-            function (response) {
-                if (response) {
-                    var data = response.data;
-                    var e = systemSrv.eval(data, fnKey, false, false);
-                    if (e) {
-                        self.service.config = systemSrv.getItems(fnKey);
+        return self.service;
+
+        //
+        function fnLoadConfig(uid) {
+            var fnKey = "configSrvFnLoadConfig";
+            var def =  $http.get(url + (uid ? "?uid=" + uid : ""));
+            def.then(
+                function (response) {
+                    if (response) {
+                        var data = response.data;
+                        var e = systemSrv.eval(data, fnKey, false, false);
+                        if (e) {
+                            self.service.config = systemSrv.getItems(fnKey);
+                        }
+                    }
+                    return self.service.config;
+                },
+                function (err) {
+                    if (retries++ < MAX_RETRY) {
+                        $timeout(function () {
+                            return fnLoadConfig();
+                        }, 3000)
                     }
                 }
-                return self.service.config;
-            },
-            function (err) {
-                if (retries++ < MAX_RETRY) {
-                    $timeout(function () {
-                        return fnLoadConfig();
-                    }, 3000)
-                }
-            }
-        );
-        return def;
-    }
-
-    function fnSave(params, uid) {
-        if (uid) {
-            params['userId'] = uid;
+            );
+            return def;
         }
-        return baseSrv.resolveDeferred($http.post(url, params));
-    }
 
-    function fnChangeLanguage(lan, doNotPersist) {
-        if (lan) {
-            $translate.use(lan);
-            sessionSrv.setLanguage(lan);
-            if (!doNotPersist) {
-                var u = sessionSrv.currentUser();
-                if (u) {
-                    var d = baseSrv.resolveDeferred($http.post(url + 'lan',  {'userId': u['id'], 'lan': lan}));
-                }
+        function fnSave(params, uid) {
+            if (uid) {
+                params['userId'] = uid;
             }
-            return d
+            return baseSrv.resolveDeferred($http.post(url, params));
+        }
+
+        function fnChangeLanguage(lan, doNotPersist) {
+            if (lan) {
+                $translate.use(lan);
+                sessionSrv.setLanguage(lan);
+                if (!doNotPersist) {
+                    var u = sessionSrv.currentUser();
+                    if (u) {
+                        var d = baseSrv.resolveDeferred($http.post(url + 'lan',  {'userId': u['id'], 'lan': lan}));
+                    }
+                }
+                return d
+            }
+        }
+
+        function fnGetConfigLanguage(uid) {
+            return baseSrv.resolveDeferred($http.get(url + 'lan?userId=' + uid))
         }
     }
 
-    function fnGetConfigLanguage(uid) {
-        return baseSrv.resolveDeferred($http.get(url + 'lan?userId=' + uid))
-    }
-}
+}());
